@@ -103,7 +103,7 @@ Cada etapa sigue el ciclo de la sección 5 del plan:
 3. **Pruebas primero** en reglas de cálculo: períodos, periódicos, alertas, bolsas, préstamos, deudas, normalización de nombres y QR.
 4. **Implementar** siguiendo `buenas-practicas` y `diseno-ui`.
 5. **Correr todo el harness** y **revisar** (`revision-codigo`).
-6. **PR** con enlace a la versión de prueba de Netlify y resumen escrito.
+6. **PR** con resumen escrito y, si la etapa tiene pantallas, enlace a la versión de prueba de Netlify (ver "Netlify y créditos").
 7. **Revisión del usuario** en móvil, tablet y computador; si algo no cumple, se vuelve a implementar.
 8. **Cierre** (`cierre-etapa`).
 
@@ -154,6 +154,14 @@ npm run db:test              # pruebas pgTAP de supabase/tests/
 - El CI (`.github/workflows/ci.yml`) corre cuatro trabajos que bloquean la fusión: `estatica`, `unitarias`, `base-de-datos` y `e2e`.
 - Las E2E corren contra `vite preview` del build. Donde ya hay un Chromium instalado y no se pueden descargar navegadores (la nube de Claude Code), se usa `PW_CHROMIUM_PATH=<ruta> npm run e2e -- --project=movil-android --project=computador --trace off`; los proyectos de WebKit (`movil`, `tablet`) corren en el CI.
 - Prettier no toca `.claude/`, `docs/` ni este archivo: se escriben a mano.
+
+### Netlify y créditos
+
+Cada build de Netlify gasta créditos, así que `scripts/netlify-ignore.sh` (declarado en `netlify.toml`) decide cuándo construir:
+
+- **Versión de prueba de un PR:** solo cuando el último commit lleva `[preview]` en el mensaje y cambió algo de la app (`src/`, `public/`, `index.html`, dependencias o configuración de build). Se pide una sola vez, cuando la etapa está lista para la revisión del usuario, y otra por cada ronda de correcciones. Las etapas sin pantallas no la piden.
+- **Producción (`main`):** solo si cambió algo de la app. Un PR solo de documentación no publica.
+- Las pruebas no dependen de Netlify: GitHub Actions corre el harness completo en cada push, gratis por ser un repo público.
 
 ## Estructura prevista
 
