@@ -66,6 +66,8 @@ Versiones estables verificadas en npm el **15-nov-2026**. Al iniciar la Etapa 0 
 | Fuentes sin conexión | `@fontsource/plus-jakarta-sans`, `@fontsource/jetbrains-mono` | 5.3.0 |
 | Node.js | LTS "Lithium" | 26.x (Vitest pide ≥ 22.12) |
 
+Etapa 0 (15-nov-2026): se instalaron solo los paquetes que el harness y la página vacía usan, más `jsdom` 31.0.1, `@testing-library/jest-dom` 7.0.1, `eslint-plugin-react-hooks` 7.1.1 y `eslint-plugin-react-refresh` 0.5.8. Los demás de esta tabla entran en la etapa que los necesite, con la versión indicada.
+
 ## Arquitectura de la interfaz
 
 Decidida el 15-nov-2026, antes de la Etapa 0.
@@ -133,20 +135,25 @@ Detalle y ejemplos en las skills; aquí solo la lista.
 
 ## Comandos
 
-Se crean en la Etapa 0; hasta entonces el repositorio no tiene `package.json`. Nombres previstos:
+Fijados en la Etapa 0. Node 26 (`.nvmrc`); el CLI de Supabase viene como dependencia de desarrollo y necesita Docker.
 
 ```bash
-npm run dev            # servidor de desarrollo
-npm run typecheck      # tsc --noEmit
-npm run lint           # ESLint
-npm test               # Vitest (unitarias y componentes)
-npm run e2e -- --trace off   # Playwright en móvil, tablet y computador
-supabase start         # Supabase local
-supabase db reset      # aplica migraciones y semilla desde cero
-supabase test db       # pruebas pgTAP
+npm ci                       # instala exactamente lo de package-lock.json
+npm run dev                  # servidor de desarrollo (http://localhost:5173)
+npm run build                # tsc -b + vite build → dist/
+npm run typecheck            # tsc -b --noEmit
+npm run lint                 # ESLint
+npm run format:check         # Prettier (npm run format para corregir)
+npm test                     # Vitest (unitarias y componentes, src/**/*.test.ts[x])
+npm run e2e -- --trace off   # Playwright: movil (iPhone), movil-android, tablet, computador
+npm run db:start             # Supabase local (npx supabase start)
+npm run db:reset             # aplica migraciones y semilla desde cero
+npm run db:test              # pruebas pgTAP de supabase/tests/
 ```
 
-Actualiza esta sección cuando la Etapa 0 los fije.
+- El CI (`.github/workflows/ci.yml`) corre cuatro trabajos que bloquean la fusión: `estatica`, `unitarias`, `base-de-datos` y `e2e`.
+- Las E2E corren contra `vite preview` del build. Donde ya hay un Chromium instalado y no se pueden descargar navegadores (la nube de Claude Code), se usa `PW_CHROMIUM_PATH=<ruta> npm run e2e -- --project=movil-android --project=computador --trace off`; los proyectos de WebKit (`movil`, `tablet`) corren en el CI.
+- Prettier no toca `.claude/`, `docs/` ni este archivo: se escriben a mano.
 
 ## Estructura prevista
 
