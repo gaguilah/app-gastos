@@ -1,6 +1,6 @@
 # React + TypeScript
 
-Las herramientas exactas (Vite, gestor de rutas, librería de datos) se fijan en la Etapa 0; estas reglas valen con cualquiera de ellas.
+Versiones del stack en la tabla "Stack" de `CLAUDE.md` (React 19, Tailwind 4, TypeScript 6). Las herramientas marcadas como propuestas se confirman en la Etapa 0.
 
 ## TypeScript
 - `strict: true`, `noUncheckedIndexedAccess: true`. Sin `any`; si un tipo es desconocido, `unknown` y se valida.
@@ -9,8 +9,10 @@ Las herramientas exactas (Vite, gestor de rutas, librería de datos) se fijan en
 - Tipos de dominio con nombres del negocio en español: `Gasto`, `Bolsa`, `Periodo`, `ReglaPeriodica`. Tipo `Pesos = number` (entero) como alias documentado.
 - Uniones discriminadas para estados: `{ estado: "pendiente" } | { estado: "confirmado"; confirmadoEn: string }`.
 
-## React
+## React 19
 - Componentes de función, pequeños, un archivo por componente exportado.
+- `ref` se pasa como prop normal; no uses `forwardRef` en componentes nuevos. Los componentes de shadcn ya siguen esta convención.
+- No uses APIs retiradas en React 19 (`propTypes`, `defaultProps` en funciones, `ReactDOM.render`).
 - Datos del servidor con una librería de caché de consultas (por ejemplo, TanStack Query): nada de `useEffect` + `fetch` a mano. Estado global solo para preferencias de UI.
 - Formularios con React Hook Form + el esquema de validación, usando los componentes `Form` de shadcn.
 - Las mutaciones invalidan las consultas que afectan (registrar un gasto invalida el gasto del período y el saldo de la bolsa).

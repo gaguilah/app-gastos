@@ -2,7 +2,7 @@
 
 Extraídos de `docs/design/referencias/Example*.html` (generados con Stitch, sistema tipo Material 3). Valen hasta que `DESIGN.md` los reemplace en la Etapa 1.
 
-Los tokens se definen como variables CSS con los nombres de shadcn/ui (`--background`, `--primary`, …) en `src/index.css`: `:root` para el modo claro y `.dark` para el oscuro. Tailwind los lee desde ahí. Ningún componente usa un valor fijo.
+Los tokens se definen como variables CSS con los nombres de shadcn/ui (`--background`, `--primary`, …) en `src/index.css`: `:root` para el modo claro y `.dark` para el oscuro. Con **Tailwind 4** no hay `tailwind.config.js`: las variables se exponen a Tailwind con `@theme inline { --color-primary: var(--primary); … }`, y la tipografía, el espaciado y los radios también se declaran en `@theme` (`--font-mono`, `--spacing-*`, `--radius-*`, `--text-*`). Ningún componente usa un valor fijo.
 
 ## Color
 

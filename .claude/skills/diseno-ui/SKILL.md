@@ -5,7 +5,7 @@ description: Guía de diseño UI/UX de App-Gastos (tokens de color, tipografía,
 
 # Diseño UI/UX de App-Gastos
 
-App web PWA de uso principal en el móvil, para controlar gastos en COP, en español (por defecto) e inglés. Stack de UI: React + TypeScript, Tailwind, shadcn/ui, íconos Lucide y gráficas con los charts de shadcn (Recharts).
+App web PWA de uso principal en el móvil, para controlar gastos en COP, en español (por defecto) e inglés. Stack de UI: React 19 + TypeScript, Tailwind CSS 4, shadcn/ui, íconos Lucide y gráficas con los charts de shadcn (Recharts 3). Las versiones exactas están en `CLAUDE.md`.
 
 ## Fuentes de verdad, en orden
 

@@ -31,10 +31,10 @@ React como web + PWA, Supabase como backend (segundo proyecto, separado del exis
 
 | Capa | Elección | Motivo |
 | --- | --- | --- |
-| Frontend | React + TypeScript, PWA instalable | Uso principal en el móvil sin tiendas de apps |
-| Estilos y componentes | Tailwind + shadcn/ui | Componentes accesibles, fácil de ajustar al design.md |
+| Frontend | React 19 + TypeScript, PWA instalable (versiones en CLAUDE.md) | Uso principal en el móvil sin tiendas de apps |
+| Estilos y componentes | Tailwind CSS 4 + shadcn/ui | Componentes accesibles, fácil de ajustar al design.md |
 | Íconos | Lucide (SVG) | Biblioteca SVG para categorías y la interfaz |
-| Gráficas | Por definir en la etapa de diseño (Recharts o ECharts) | Se elige según qué gráfica corresponde a cada dato |
+| Gráficas | Charts de shadcn/ui (sobre Recharts), decidido el 15-nov-2026 | Mismos tokens y componentes que el resto de la UI |
 | Idiomas | Español (por defecto) e inglés | Textos en archivos de traducción desde el inicio |
 | Backend | Supabase: PostgreSQL, Auth, Edge Functions, tareas programadas | Login, API y seguridad incluidos; capa gratuita de 500 MB por proyecto |
 | Seguridad de datos | Reglas por fila (RLS) | Cada usuario solo ve lo suyo |
@@ -311,7 +311,7 @@ El riesgo principal es la variedad de facturas y QR; el resto se controla con el
 **Pendientes por definir**
 
 - [ ] Compartir los archivos de Stitch como referencia para la etapa 1.
-- [ ] Librería de gráficas (Recharts o ECharts) en la etapa 1.
+- [x] Librería de gráficas: charts de shadcn/ui sobre Recharts (decidido el 15-nov-2026).
 - [ ] Categorías de ingreso iniciales aprobadas, gestionadas con CRUD (Salario, Extra, Venta, Otros).
 
 **Mejoras futuras**
