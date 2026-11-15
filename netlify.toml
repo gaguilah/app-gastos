@@ -3,6 +3,8 @@
   command = "npm run build"
   publish = "dist"
   # La versión de Node sale de .nvmrc.
+  # Ahorro de créditos: ver scripts/netlify-ignore.sh (las versiones de prueba se piden con "[preview]").
+  ignore = "bash scripts/netlify-ignore.sh"
 
 # SPA: toda ruta la resuelve la app (React Router llega en la Etapa 4).
 [[redirects]]

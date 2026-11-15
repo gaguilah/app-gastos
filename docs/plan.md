@@ -303,7 +303,7 @@ Las mejoras futuras (IA para recibos, correo, modo oscuro) se planifican como et
 
 | Etapa | Cierre | Especificación y PR | Decisiones |
 | --- | --- | --- | --- |
-| 0. Preparación | 15-nov-2026 | #4 · PR #5 | Repo público para que el ruleset de `main` exija los checks `estatica`, `unitarias`, `base-de-datos` y `e2e`, con GitHub Free. Cada dependencia entra en la etapa que la usa. i18n desde el día uno. Netlify publica producción desde `main` (sitio `app-gastos-gah`) y una versión de prueba por PR. Supabase local con registros desactivados y prueba pgTAP de guardia de RLS. Tablero de GitHub Projects con un issue por etapa (#6 a #17); la especificación de cada etapa se escribe en su issue. |
+| 0. Preparación | 15-nov-2026 | #4 · PR #5 | Repo público para que el ruleset de `main` exija los checks `estatica`, `unitarias`, `base-de-datos` y `e2e`, con GitHub Free. Cada dependencia entra en la etapa que la usa. i18n desde el día uno. Netlify publica producción desde `main` (sitio `app-gastos-gah`) y una versión de prueba por PR. Supabase local con registros desactivados y prueba pgTAP de guardia de RLS. Tablero de GitHub Projects con un issue por etapa (#6 a #17); la especificación de cada etapa se escribe en su issue. Para ahorrar créditos de Netlify, la versión de prueba se pide con `[preview]` en el commit y solo se construye si cambió la app (`scripts/netlify-ignore.sh`). |
 
 ## 8. Riesgos, pendientes y mejoras futuras
 
