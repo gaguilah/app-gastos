@@ -1,0 +1,24 @@
+# Netlify: producción desde main y una versión de prueba por cada PR (deploy previews).
+[build]
+  command = "npm run build"
+  publish = "dist"
+  # La versión de Node sale de .nvmrc.
+
+# SPA: toda ruta la resuelve la app (React Router llega en la Etapa 4).
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Frame-Options = "DENY"
+    Permissions-Policy = "camera=(self), geolocation=(), microphone=()"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
