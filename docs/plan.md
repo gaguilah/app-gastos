@@ -299,6 +299,12 @@ Trece etapas en orden; cada una termina con el cierre de la sección 5 y su prop
 
 Las mejoras futuras (IA para recibos, correo, modo oscuro) se planifican como etapas nuevas con el mismo ciclo.
 
+### Registro de cierres
+
+| Etapa | Cierre | Especificación y PR | Decisiones |
+| --- | --- | --- | --- |
+| 0. Preparación | 15-nov-2026 | #4 · PR #5 | Repo público para que el ruleset de `main` exija los checks `estatica`, `unitarias`, `base-de-datos` y `e2e`, con GitHub Free. Cada dependencia entra en la etapa que la usa. i18n desde el día uno. Netlify publica producción desde `main` (sitio `app-gastos-gah`) y una versión de prueba por PR. Supabase local con registros desactivados y prueba pgTAP de guardia de RLS. Tablero de GitHub Projects con un issue por etapa (#6 a #17); la especificación de cada etapa se escribe en su issue. |
+
 ## 8. Riesgos, pendientes y mejoras futuras
 
 El riesgo principal es la variedad de facturas y QR; el resto se controla con el harness.
@@ -312,7 +318,7 @@ El riesgo principal es la variedad de facturas y QR; el resto se controla con el
 
 **Pendientes por definir**
 
-- [ ] Compartir los archivos de Stitch como referencia para la etapa 1.
+- [x] Compartir los archivos de Stitch como referencia para la etapa 1 (en `docs/design/referencias/`).
 - [x] Librería de gráficas: charts de shadcn/ui sobre Recharts (decidido el 15-nov-2026).
 - [ ] Categorías de ingreso iniciales aprobadas, gestionadas con CRUD (Salario, Extra, Venta, Otros).
 
