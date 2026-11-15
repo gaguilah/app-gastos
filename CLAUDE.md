@@ -159,7 +159,7 @@ npm run db:test              # pruebas pgTAP de supabase/tests/
 
 Cada build de Netlify gasta créditos, así que `scripts/netlify-ignore.sh` (declarado en `netlify.toml`) decide cuándo construir:
 
-- **Versión de prueba de un PR:** solo cuando el último commit lleva `[preview]` en el mensaje y cambió algo de la app (`src/`, `public/`, `index.html`, dependencias o configuración de build). Se pide una sola vez, cuando la etapa está lista para la revisión del usuario, y otra por cada ronda de correcciones. Las etapas sin pantallas no la piden.
+- **Versión de prueba de un PR:** solo cuando el mensaje del último commit tiene una línea que dice exactamente `[preview]` (mencionarlo dentro de una frase no cuenta) y cambió algo de la app (`src/`, `public/`, `index.html`, dependencias o configuración de build). Se pide una sola vez, cuando la etapa está lista para la revisión del usuario, y otra por cada ronda de correcciones. Las etapas sin pantallas no la piden.
 - **Producción (`main`):** solo si cambió algo de la app. Un PR solo de documentación no publica.
 - Las pruebas no dependen de Netlify: GitHub Actions corre el harness completo en cada push, gratis por ser un repo público.
 
