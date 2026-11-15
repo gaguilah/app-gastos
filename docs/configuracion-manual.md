@@ -2,6 +2,8 @@
 
 Pasos que Claude no puede hacer desde su entorno. Se hacen una sola vez.
 
+**Estado (15-nov-2026):** los cuatro pasos están hechos. Falta agregar al ruleset **Require a pull request before merging** (recomendado).
+
 ## 1. Netlify: publicación y versión de prueba por PR
 
 1. En [app.netlify.com](https://app.netlify.com), **Add new project → Import an existing project → GitHub** y elige `gaguilah/app-gastos`.
@@ -15,7 +17,8 @@ Pasos que Claude no puede hacer desde su entorno. Se hacen una sola vez.
 1. En GitHub, **tu perfil → Projects → New project → Board**. Nombre: "App-Gastos".
 2. Columnas (campo *Status*): **Por hacer, Especificando, En desarrollo, En revisión, Cerrado**.
 3. En **Settings → Manage access** del proyecto o desde el repo (**Projects → Link a project**), enlázalo con `gaguilah/app-gastos`.
-4. Agrega el issue de la etapa en curso y muévelo de columna según avance.
+4. Hay un issue por etapa (#6 = Etapa 1 … #17 = Etapa 12); la especificación de cada etapa se escribe en su issue.
+5. En **⋯ → Workflows**: *Item added* → Por hacer, *Item closed* y *Pull request merged* → Cerrado, *Item reopened* → Por hacer.
 
 ## 3. Proteger `main` con los checks del CI
 
