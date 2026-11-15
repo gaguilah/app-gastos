@@ -1,0 +1,322 @@
+# Plan – App de Gastos Personales
+
+Nov 14, 2026 · @Giovanni
+
+## 1. Resumen y alcance
+
+App web (PWA) para registrar gastos mensuales que se descuentan de un presupuesto por período, con ingresos, bolsas de dinero (Efectivo, Nequi, Daviplata), gastos periódicos con confirmación, préstamos realizados y deudas. Uso principal en el móvil, para un solo usuario inicialmente, con autenticación, en pesos colombianos (COP) y en español (por defecto) e inglés.
+
+**Incluido en el MVP**
+
+- Autenticación con email y contraseña.
+- Período configurable (día de inicio fijo) con presupuesto propio, independiente de los ingresos.
+- Gastos, ingresos, bolsas y ajustes de saldo.
+- Gastos periódicos con confirmación, pausa y fin indefinido o por número de repeticiones.
+- Préstamos realizados y deudas (incluidas compras con tarjeta de crédito) con control de cuotas.
+- Gestión con CRUD de categorías (con subcategoría opcional), formas de pago, bolsas, lugares y personas/entidades.
+- Lectura del QR de factura electrónica DIAN desde una foto (la foto no se guarda).
+- Filtros, panel, reportes con gráficas, exportación a Excel (lo filtrado) y PDF (las gráficas).
+- Alertas push desde el 70 % del presupuesto en incrementos de 5 %; recordatorios de periódicos y cuotas.
+
+**Fuera del MVP (fases futuras)**
+
+- Lectura de recibos con IA.
+- Notificaciones por correo.
+- Modo oscuro (el diseño queda preparado desde el inicio).
+- Multiusuario abierto al público.
+
+## 2. Stack definido
+
+React como web + PWA, Supabase como backend (segundo proyecto, separado del existente), Netlify para publicar y GitHub para el código.
+
+| Capa | Elección | Motivo |
+| --- | --- | --- |
+| Frontend | React + TypeScript, PWA instalable | Uso principal en el móvil sin tiendas de apps |
+| Estilos y componentes | Tailwind + shadcn/ui | Componentes accesibles, fácil de ajustar al design.md |
+| Íconos | Lucide (SVG) | Biblioteca SVG para categorías y la interfaz |
+| Gráficas | Por definir en la etapa de diseño (Recharts o ECharts) | Se elige según qué gráfica corresponde a cada dato |
+| Idiomas | Español (por defecto) e inglés | Textos en archivos de traducción desde el inicio |
+| Backend | Supabase: PostgreSQL, Auth, Edge Functions, tareas programadas | Login, API y seguridad incluidos; capa gratuita de 500 MB por proyecto |
+| Seguridad de datos | Reglas por fila (RLS) | Cada usuario solo ve lo suyo |
+| Lectura de QR | Librería de lectura de QR en el navegador | Lee el QR de la factura DIAN desde la cámara o la galería |
+| Exportación | Generación de Excel y PDF en la app | Excel con lo filtrado, PDF con las gráficas |
+| Notificaciones | Web Push de la PWA | En iPhone solo con la app instalada en la pantalla de inicio |
+| Publicación | Netlify, con versiones de prueba por cada cambio | Cada etapa se revisa en un enlace propio antes de aprobarla |
+| Código | Repositorio en GitHub + GitHub Actions + GitHub Projects | Pruebas automáticas y tablero Kanban |
+| Desarrollo | Claude Code | Implementa cada etapa con pruebas y revisión |
+
+El proyecto actual de Supabase no se toca: el nuevo proyecto tiene su propia base de datos y sus usuarios. Todo el desarrollo y las pruebas se hacen con Supabase local; el proyecto real solo recibe cambios ya aprobados.
+
+## 3. Reglas de negocio
+
+El presupuesto del período es la referencia: los gastos lo descuentan, los ingresos con destino “presupuesto” lo aumentan, y las bolsas solo mueven saldos.
+
+### 3.1 Período y presupuesto
+
+- El período va del día 1 al fin de mes por defecto. El usuario puede fijar otro día de inicio (por ejemplo, del 15 al 14) y se mantiene hasta que lo cambie.
+- Cada período nace con el presupuesto por defecto, que se puede ajustar en ese período.
+- El presupuesto es independiente de los ingresos. Un ingreso con destino “presupuesto” aumenta el disponible del período.
+- Saldo disponible = presupuesto + ingresos con destino presupuesto − gastos que afectan el presupuesto.
+- El sobrante no se acumula ni se pierde: queda como estadística del período cerrado.
+- Al cerrar un período se guarda un resumen: presupuesto, ingresos, gastado, saldo, gasto por categoría, préstamos pendientes por cobrar y cuotas de deudas pendientes.
+
+### 3.2 Alertas de presupuesto
+
+- Notificación push al alcanzar el 70 %, 75 %, 80 %, 85 %, 90 %, 95 % y 100 % del presupuesto, y al superarlo.
+- Cada umbral se avisa una sola vez por período.
+
+### 3.3 Gastos
+
+- Campos: título, fecha, valor, lugar, origen del pago, canal (opcional), descripción u observaciones, categoría y subcategoría (opcional).
+- **Origen del pago:** una bolsa (Efectivo, Nequi, Daviplata) o un medio directo (Débito, Crédito, Transferencia).
+- **Canal (opcional):** Bre-B. Ejemplo: “Origen: Nequi · Canal: Bre-B” descuenta de la bolsa de Nequi.
+- Al registrar un gasto solo se muestran categorías de tipo gasto; las de préstamos y deudas no aparecen.
+- Una compra con tarjeta de crédito siempre se registra como deuda, aunque sea a una sola cuota (ver 3.8).
+
+### 3.4 Bolsas (Efectivo, Nequi, Daviplata)
+
+- Una bolsa por medio, con saldo propio. Se pueden crear más (por ejemplo, “Efectivo viaje”).
+- Las bolsas aparecen como origen al registrar un gasto, mostrando su saldo (“Efectivo · quedan $35.000”).
+- **Recarga** (retiro de cajero, recarga de Nequi): suma al saldo de la bolsa y no afecta el presupuesto. Sin comisión de cajero.
+- Los gastos con origen en una bolsa descuentan de la bolsa y del presupuesto en el momento de registrarse.
+- El saldo de la bolsa pasa al siguiente período.
+- **Ajustar saldo:** si el saldo real es menor que el de la app, la diferencia se registra como gasto de categoría *Gasto desconocido*.
+- **Saldo negativo:** la app advierte y permite el gasto.
+
+### 3.5 Ingresos
+
+- Campos: título, fecha, valor, descripción, categoría de ingreso y **destino** (una bolsa o el presupuesto); el valor se suma al destino.
+- El dinero recibido por un préstamo se registra como *Ingreso por préstamo*, con su destino, y no cuenta en las estadísticas de ingresos.
+
+### 3.6 Gastos periódicos
+
+- Frecuencias: diaria, semanal, quincenal, mensual, bimestral, trimestral, anual o cada N días/semanas/meses.
+- Duración indefinida o por número de repeticiones.
+- Al llegar la fecha se crea un gasto **pendiente de confirmar**, con notificación push; al confirmarlo se puede ajustar el valor.
+- Cambiar la regla aplica desde ese momento en adelante; el historial no cambia.
+- Se puede pausar y reanudar.
+- Casos especiales: día 31 en meses cortos (último día del mes), años bisiestos y fechas atrasadas sin duplicar gastos.
+
+### 3.7 Préstamos que hago
+
+- Sección propia “Préstamos”, con atajo “Es un préstamo” desde el formulario de gasto.
+- Campos: persona (sin duplicados, gestionada con CRUD), monto, fecha, origen, nota opcional y fecha acordada de pago opcional con recordatorio push.
+- Prestar **descuenta del presupuesto** y del origen.
+- El préstamo sigue abierto entre períodos y aparece en el cierre como pendiente por cobrar.
+- **Registrar pago:** pagos parciales hasta saldarlo; cada pago es un ingreso de categoría *Cobro de préstamo* con el destino elegido (bolsa o presupuesto), en el período en que llega.
+- Estados: Pendiente → Parcial → Pagado, o **No recuperado**: solo cambia el estado y cuenta como pérdida en estadísticas, sin volver a descontar.
+
+### 3.8 Deudas (lo que debo)
+
+- Sección propia “Deudas”. Incluye préstamos de bancos o personas y compras con tarjeta de crédito (a 1 o más cuotas).
+- Campos: entidad o persona, valor recibido, total a pagar, número de cuotas, valor de la cuota (fija por defecto), día de pago, origen y canal de pago, y si la cuota **afecta o no el presupuesto** (por ejemplo, una cuota por nómina no lo afecta).
+- La app calcula el interés total (total a pagar − valor recibido), el saldo pendiente y la fecha estimada de la última cuota.
+- **Solo la cuota pagada en el período** afecta el presupuesto; las cuotas futuras son estadística y proyección.
+- Cada cuota llega como pendiente de confirmar, con recordatorio push, y su valor se puede ajustar al confirmar.
+- **Abono extraordinario:** se registra y luego se edita el plan (cuotas, valor o fechas) según el acuerdo con el acreedor.
+- Las cuotas usan la categoría *Pago de préstamos*. Cada tarjeta de crédito tiene su propia categoría (por ejemplo, “Compra Tarjeta de Crédito Visa Banco X”), creada automáticamente al registrar la tarjeta, con ícono de tarjeta y color editable.
+- Las tarjetas se registran solo con un nombre descriptivo: nunca números, fechas de vencimiento ni códigos de seguridad.
+- Estados: Activa → Pagada.
+
+### 3.9 Lugares
+
+- Lista gestionada con CRUD que también se llena con lo que se escribe, sin NIT (hay gastos sin factura).
+- Nombres normalizados sin mayúsculas, tildes ni espacios extra: “Exito”, “éxito” y “EXITO” son el mismo lugar.
+- Autocompletado al escribir y sugerencia de nombres parecidos.
+
+### 3.10 Lectura del QR de factura
+
+- Se toma una foto o se elige de la galería; se lee el QR de la factura electrónica DIAN y la foto se descarta.
+- El QR llena la fecha y el valor; el usuario elige o crea el lugar y completa el resto.
+- Si la factura no tiene QR, el gasto se registra a mano. La lectura con IA queda para más adelante.
+
+### 3.11 Categorías
+
+- Modelo: ícono (SVG de Lucide), nombre, color y tipo (gasto, ingreso, préstamo, deuda).
+- Cada formulario muestra solo las categorías de su tipo.
+- Subcategorías opcionales; heredan ícono y color de su categoría.
+- Predefinidas de gasto: Alimentación, Transporte, Hogar, Servicios públicos, Salud, Educación, Entretenimiento, Ropa, Suscripciones, Mascotas, Otros y Gasto desconocido.
+- Del sistema: Ingreso por préstamo, Préstamo realizado, Cobro de préstamo, Préstamo no recuperado y Pago de préstamos.
+- Borrar una categoría muestra una advertencia; los gastos conservan el nombre, ícono y color con que se registraron.
+
+### 3.12 Formas de pago
+
+- Gestionadas con CRUD. Iniciales: Efectivo, Débito, Crédito, Transferencia, Nequi, Daviplata y Bre-B.
+- Efectivo, Nequi y Daviplata son bolsas con saldo; Bre-B es un canal.
+
+### 3.13 Filtros, reportes y exportación
+
+- Filtros: período (este período, anterior, últimos 3, este año, rango personalizado), categoría, forma de pago, lugar, rango de monto y búsqueda en título u observaciones.
+- Gráficas según el dato: proporción por categoría, comparación entre períodos y gasto acumulado contra presupuesto.
+- Excel con los gastos filtrados; PDF con las gráficas.
+
+### 3.14 Gestión de datos (CRUD)
+
+- No hay listas fijas: categorías de gasto e ingreso, subcategorías, formas de pago, bolsas, lugares y personas o entidades se gestionan con CRUD (crear, consultar, editar, eliminar).
+- Los valores iniciales (categorías predefinidas, formas de pago y categorías de ingreso Salario, Extra, Venta, Otros) son solo datos de arranque: se pueden editar o eliminar.
+- Excepción: las categorías del sistema (Gasto desconocido, Ingreso por préstamo, Préstamo realizado, Cobro de préstamo, Préstamo no recuperado, Pago de préstamos) se pueden renombrar y cambiar de ícono y color, pero no eliminar, porque bolsas, préstamos y deudas dependen de ellas.
+- Eliminar un registro en uso muestra una advertencia y conserva el historial.
+- Lugares y personas también se crean al escribirlos en un formulario; desde su CRUD se pueden renombrar, unir duplicados o eliminar.
+
+## 4. Modelo de datos
+
+Todas las entidades pertenecen a un usuario; los montos se guardan en pesos enteros (COP sin decimales) y los saldos y totales se calculan a partir de los movimientos.
+
+| Entidad | Campos principales | Relaciones |
+| --- | --- | --- |
+| Perfil | nombre, idioma, día de inicio del período, presupuesto por defecto | 1 usuario |
+| Período | fecha de inicio, fecha de fin, presupuesto, estado (abierto/cerrado), resumen al cierre | Tiene gastos, ingresos y alertas |
+| Categoría | nombre, ícono, color, tipo (gasto/ingreso/préstamo/deuda), del sistema sí/no, categoría padre (opcional), archivada | Una subcategoría apunta a su padre |
+| Forma de pago | nombre, clase (bolsa/medio directo/canal), activa | Una bolsa tiene saldo |
+| Bolsa | nombre, forma de pago asociada | Recibe recargas, ingresos y ajustes; descuenta gastos |
+| Movimiento de bolsa | tipo (recarga/ajuste/gasto/ingreso), fecha, valor | Pertenece a una bolsa |
+| Lugar | nombre visible, nombre normalizado (único) | Lo usan los gastos |
+| Persona o entidad | nombre visible, nombre normalizado (único), tipo (persona/banco/tarjeta) | La usan préstamos y deudas |
+| Gasto | título, fecha, valor, descripción, estado (confirmado/pendiente), afecta presupuesto sí/no, copia de nombre/ícono/color de la categoría | Período, categoría, lugar, origen (bolsa o medio), canal, regla periódica, préstamo o cuota de deuda (opcionales) |
+| Ingreso | título, fecha, valor, descripción, destino (bolsa o presupuesto), cuenta en estadísticas sí/no | Período, categoría de ingreso, préstamo o deuda (opcional) |
+| Regla periódica | plantilla del gasto, frecuencia, intervalo, día, inicio, repeticiones o indefinida, próxima fecha, activa/pausada | Genera gastos pendientes |
+| Préstamo realizado | monto, fecha, nota, fecha acordada (opcional), estado | Persona, gasto de salida, ingresos de cobro |
+| Deuda | valor recibido, total a pagar, cuotas, valor de cuota, día de pago, afecta presupuesto sí/no, estado | Persona o entidad, categoría (tarjeta o pago de préstamos), origen y canal |
+| Cuota de deuda | número, fecha, valor, estado (pendiente/pagada) | Deuda; al pagarse genera un gasto |
+| Abono extraordinario | fecha, valor, nota | Deuda |
+| Alerta enviada | umbral (70–100 % o más), fecha | Período; evita repetir avisos |
+| Suscripción push | dispositivo, datos de suscripción | Usuario |
+
+Criterios del modelo: la regla periódica y la deuda son plantillas que generan gastos reales, así el historial no cambia al editarlas. Los saldos (presupuesto, bolsas, deudas, préstamos) se derivan de los movimientos, nunca se escriben a mano.
+
+## 5. Metodología y forma de trabajo
+
+Cada etapa se desarrolla con tres métodos combinados y no se pasa a la siguiente sin un cierre aprobado por el usuario.
+
+| Nivel | Método | Cómo se aplica |
+| --- | --- | --- |
+| Cada etapa | Desarrollo guiado por especificación (SDD) | Antes de programar se escribe una especificación corta: qué hace, reglas y criterios de aceptación. El usuario la aprueba; luego se divide en tareas y se implementa |
+| Reglas de cálculo | Pruebas primero (TDD) | Para períodos, periódicos, alertas, bolsas, préstamos, deudas y normalización de nombres se escriben primero las pruebas y después el código |
+| Seguimiento | Kanban en GitHub Projects | Columnas: Por hacer → Especificando → En desarrollo → En revisión → Cerrado |
+
+### Ciclo de cada etapa
+
+1. **Especificar:** un *issue* en GitHub con objetivo, entregables y criterios de aceptación en lista.
+2. **Aprobar la especificación:** el usuario la revisa y la aprueba o pide cambios.
+3. **Rama propia** para la etapa.
+4. **Pruebas primero** para las reglas de cálculo.
+5. **Implementar** con Claude Code siguiendo CLAUDE.md.
+6. **Revisión automática:** pruebas en GitHub Actions y revisión de código y seguridad. Si algo falla, vuelve a implementar.
+7. **Revisión del usuario** en la versión de prueba de Netlify, desde el móvil, con la lista de criterios. Si algo no cumple, vuelve a implementar.
+8. **Cierre de la etapa.**
+
+```mermaid
+flowchart LR
+  A[Especificar] --> B[Aprobar especificación] --> C[Rama propia] --> D[Pruebas primero] --> E[Implementar] --> F[Revisión automática] --> G[Revisión del usuario] --> H[Cierre]
+  B -- pide cambios --> A
+  F -- falla --> E
+  G -- no cumple --> E
+```
+
+Si las pruebas fallan o la revisión no cumple, la etapa vuelve a implementación; solo con tu aprobación llega al cierre.
+
+### Cierre de cada etapa
+
+Una etapa se da por terminada solo cuando:
+
+- [ ] Cumple todos sus criterios de aceptación.
+- [ ] Pasa todas las pruebas automáticas y la revisión de código, sin errores pendientes.
+- [ ] El usuario revisó la versión de prueba en móvil (navegador e instalada), tablet y computador, y la aprobó.
+- [ ] Se entregó un resumen escrito: qué se hizo, qué quedó pendiente y qué se decidió.
+- [ ] Se fusionó a la rama principal y se marcó la versión en GitHub (por ejemplo, “etapa-3”).
+- [ ] Se actualizó este documento y la especificación de la siguiente etapa.
+
+## 6. Harness de pruebas y revisión
+
+El harness se monta en la Etapa 0 y crece con cada etapa: ningún cambio llega a la rama principal sin pasar todas sus capas.
+
+### Capas de prueba
+
+| Capa | Qué comprueba | Cuándo corre |
+| --- | --- | --- |
+| Calidad estática | Tipos, reglas de estilo y formato | En cada cambio |
+| Reglas de cálculo (unitarias) | Fechas del período (15 al 14), próximas fechas de periódicos (día 31, bisiestos), umbrales de alerta, saldos de bolsas, cuotas, interés, normalización de nombres, lectura de QR con facturas de ejemplo | En cada cambio |
+| Base de datos | Que un usuario no vea datos de otro (RLS), que borrar una categoría conserve el historial, que no se dupliquen gastos periódicos | En cada cambio, contra Supabase local |
+| Componentes | Formularios, validaciones, filtros, categorías por tipo | En cada cambio |
+| Recorridos completos (E2E) | Flujos reales en los tres tamaños (móvil, tablet, computador); por ejemplo: crear un periódico → avanzar la fecha → confirmarlo → ver el descuento en presupuesto y bolsa | En cada solicitud de cambio |
+| Accesibilidad e idiomas | Contraste de colores, íconos con etiqueta, textos traducidos en español e inglés | En cada solicitud de cambio |
+
+### Tamaños y modos de uso
+
+La app es un solo código con diseño adaptable: se prueba en tres tamaños y en dos modos. Móvil web y móvil PWA tienen el mismo tamaño; cambia el modo.
+
+| Tamaño | Distribución esperada | Modos a probar |
+| --- | --- | --- |
+| Móvil | Una columna, navegación inferior, botón flotante, gastos en tarjetas | Navegador e instalada (PWA) |
+| Tablet | Dos columnas (lista y detalle), menú lateral plegable, botones del tamaño de un dedo | Navegador e instalada |
+| Computador | Menú lateral fijo, panel con varias gráficas, gastos en tabla, filtros visibles, uso con mouse y teclado | Navegador e instalada |
+
+**Pruebas propias de la PWA (modo instalada)**
+
+- La app se puede instalar en móvil y computador.
+- En pantalla completa nada queda tapado por la muesca o la barra del sistema.
+- Al publicar una versión nueva, la app instalada se actualiza.
+- Las notificaciones push llegan (en iPhone y iPad, solo con la app instalada).
+- Sin conexión se muestra un aviso claro.
+- Si la app está abierta en dos dispositivos, un gasto registrado en uno aparece en el otro.
+
+### Reglas del harness
+
+- Las pruebas que dependen de fechas usan un reloj fijo, para que el resultado no cambie según el día.
+- Datos de prueba propios (semillas) y facturas de ejemplo para el QR; nunca datos reales.
+- Todo corre contra Supabase local; el proyecto real solo recibe migraciones aprobadas.
+- GitHub Actions bloquea la fusión si alguna capa falla.
+- Netlify publica una versión de prueba por cada solicitud de cambio.
+
+### Trabajo con Claude Code
+
+- **CLAUDE.md** en el repositorio con: reglas de negocio de este documento, convenciones de código, cómo correr las pruebas y la definición de cierre.
+- Por cada etapa, Claude Code lee la especificación aprobada, escribe primero las pruebas de las reglas, implementa, corre todo el harness y ejecuta una revisión de código y de seguridad antes de entregar.
+- Entrega por etapa: solicitud de cambio en GitHub, enlace a la versión de prueba y resumen escrito.
+- Claude Code no fusiona ni publica en producción sin la aprobación del usuario.
+
+## 7. Etapas del proyecto
+
+Trece etapas en orden; cada una termina con el cierre de la sección 5 y su propio criterio principal. Toda etapa con pantallas debe cumplir en los tres tamaños (móvil, tablet, computador) y en ambos modos (navegador e instalada).
+
+| Etapa | Objetivo | Entregables | Criterio principal de cierre |
+| --- | --- | --- | --- |
+| 0. Preparación | Dejar listo el entorno y el harness | Repositorio en GitHub, tablero Kanban, segundo proyecto Supabase, Supabase local, Netlify con versiones de prueba, GitHub Actions, CLAUDE.md | Una página vacía publicada en Netlify y el harness corriendo en GitHub |
+| 1. Diseño de plantillas y pantallas | Definir cómo se ve y se usa la app antes de programarla | Inventario de pantallas y flujos, bocetos basados en Stitch en tres tamaños (móvil, tablet, computador), design.md (colores, tipografía, espaciado, componentes y estados, íconos, preparado para modo oscuro), elección de la librería de gráficas | El usuario aprueba todas las pantallas y el design.md |
+| 2. Base de datos y seguridad | Crear el modelo de datos | Tablas, relaciones, reglas RLS, categorías y formas de pago iniciales | Pruebas de RLS y de historial al borrar categorías en verde |
+| 3. Lógica del servidor | Reglas que no dependen de pantallas | Cálculo de períodos, generación de periódicos y cuotas, alertas, saldos de bolsas, resumen de cierre, tarea programada diaria | Todas las pruebas de reglas de cálculo en verde |
+| 4. Base del frontend | Estructura común de la app | Login, diseño adaptable a tres tamaños (navegación inferior en móvil, menú lateral en tablet y computador), español e inglés, PWA instalable, componentes del design.md | La app se instala en móvil y computador, y el login funciona en los tres tamaños |
+| 5. Gestión de datos (CRUD) | Datos de referencia | Categorías con subcategorías y tipos, formas de pago, bolsas, lugares, personas o entidades | Sin duplicados en lugares y personas; categorías filtradas por tipo |
+| 6. Presupuesto, ingresos y bolsas | Controlar el dinero disponible | Configuración del período, presupuesto, ingresos con destino, recargas y ajuste de saldo | Saldos de presupuesto y bolsas correctos en los recorridos E2E |
+| 7. Gastos y filtros | Registrar y consultar gastos | Formulario de gasto, lista agrupada por día, todos los filtros y búsqueda | Un gasto descuenta del presupuesto y de su bolsa; los filtros devuelven lo esperado |
+| 8. Gastos periódicos | Automatizar gastos repetidos | Reglas, pendientes por confirmar, pausa, edición hacia adelante | Recorrido completo crear → generar → confirmar en verde |
+| 9. Préstamos y deudas | Controlar dinero prestado y debido | Sección Préstamos (cobros parciales, no recuperado) y sección Deudas (cuotas, tarjetas, abonos, proyección) | Solo la cuota pagada afecta el presupuesto; los pendientes aparecen en el cierre |
+| 10. Lectura de QR | Registrar gastos desde la factura | Cámara o galería (en computador, subir la foto), lectura del QR DIAN, formulario prellenado | Facturas de ejemplo llenan fecha y valor correctamente |
+| 11. Panel, reportes y exportación | Analizar el gasto | Panel principal, gráficas, comparación entre períodos, Excel con lo filtrado, PDF con las gráficas | Totales de gráficas y archivos coinciden con los datos |
+| 12. Notificaciones y publicación | Avisos y salida a producción | Push de alertas, periódicos y cuotas; migraciones al proyecto real; dominio; copias de seguridad | La app en producción envía las alertas del 70 % en adelante |
+
+Las mejoras futuras (IA para recibos, correo, modo oscuro) se planifican como etapas nuevas con el mismo ciclo.
+
+## 8. Riesgos, pendientes y mejoras futuras
+
+El riesgo principal es la variedad de facturas y QR; el resto se controla con el harness.
+
+| Riesgo | Efecto | Mitigación |
+| --- | --- | --- |
+| Formatos de QR distintos entre comercios | Datos incompletos al escanear | Reunir facturas reales de ejemplo en la etapa 10; si falla, registro manual |
+| Notificaciones push en iPhone | Solo funcionan con la PWA instalada | Avisos también dentro de la app; correo en una fase futura |
+| Pausa de proyectos Supabase gratuitos por inactividad (unos 7 días) | La app deja de responder si no se usa | Uso diario; reactivación desde el panel; verificar límites vigentes en supabase.com/pricing |
+| Complejidad de bolsas, préstamos y deudas | Saldos dobles o erróneos | Saldos derivados de movimientos y pruebas primero para cada regla |
+
+**Pendientes por definir**
+
+- [ ] Compartir los archivos de Stitch como referencia para la etapa 1.
+- [ ] Librería de gráficas (Recharts o ECharts) en la etapa 1.
+- [ ] Categorías de ingreso iniciales aprobadas, gestionadas con CRUD (Salario, Extra, Venta, Otros).
+
+**Mejoras futuras**
+
+- Lectura de recibos con IA para facturas sin QR.
+- Notificaciones por correo.
+- Modo oscuro.
+- Presupuesto por categoría, si se necesita más adelante.
