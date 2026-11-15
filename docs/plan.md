@@ -8,7 +8,7 @@ App web (PWA) para registrar gastos mensuales que se descuentan de un presupuest
 
 **Incluido en el MVP**
 
-- Autenticación con email y contraseña.
+- Autenticación con email y contraseña, sin registro: un solo usuario creado a mano en Supabase y registros desactivados. Todas las pantallas requieren sesión, excepto el inicio de sesión.
 - Período configurable (día de inicio fijo) con presupuesto propio, independiente de los ingresos.
 - Gastos, ingresos, bolsas y ajustes de saldo.
 - Gastos periódicos con confirmación, pausa y fin indefinido o por número de repeticiones.
@@ -35,6 +35,8 @@ React como web + PWA, Supabase como backend (segundo proyecto, separado del exis
 | Estilos y componentes | Tailwind CSS 4 + shadcn/ui | Componentes accesibles, fácil de ajustar al design.md |
 | Íconos | Lucide (SVG) | Biblioteca SVG para categorías y la interfaz |
 | Gráficas | Charts de shadcn/ui (sobre Recharts), decidido el 15-nov-2026 | Mismos tokens y componentes que el resto de la UI |
+| Rutas | React Router 8 en modo librería, decidido el 15-nov-2026 | Layout común anidado, carga diferida por pantalla y rutas protegidas |
+| Organización de componentes | Híbrida inspirada en diseño atómico: `components/ui` (shadcn), `components/shared`, `features/<módulo>/components`, `routes/` | Compone de lo pequeño a lo grande sin discutir niveles |
 | Idiomas | Español (por defecto) e inglés | Textos en archivos de traducción desde el inicio |
 | Backend | Supabase: PostgreSQL, Auth, Edge Functions, tareas programadas | Login, API y seguridad incluidos; capa gratuita de 500 MB por proyecto |
 | Seguridad de datos | Reglas por fila (RLS) | Cada usuario solo ve lo suyo |
@@ -238,7 +240,7 @@ El harness se monta en la Etapa 0 y crece con cada etapa: ningún cambio llega a
 | Reglas de cálculo (unitarias) | Fechas del período (15 al 14), próximas fechas de periódicos (día 31, bisiestos), umbrales de alerta, saldos de bolsas, cuotas, interés, normalización de nombres, lectura de QR con facturas de ejemplo | En cada cambio |
 | Base de datos | Que un usuario no vea datos de otro (RLS), que borrar una categoría conserve el historial, que no se dupliquen gastos periódicos | En cada cambio, contra Supabase local |
 | Componentes | Formularios, validaciones, filtros, categorías por tipo | En cada cambio |
-| Recorridos completos (E2E) | Flujos reales en los tres tamaños (móvil, tablet, computador); por ejemplo: crear un periódico → avanzar la fecha → confirmarlo → ver el descuento en presupuesto y bolsa | En cada solicitud de cambio |
+| Recorridos completos (E2E) | Flujos reales en los tres tamaños (móvil, tablet, computador); por ejemplo: crear un periódico → avanzar la fecha → confirmarlo → ver el descuento en presupuesto y bolsa; y que sin sesión toda ruta redirija al login | En cada solicitud de cambio |
 | Accesibilidad e idiomas | Contraste de colores, íconos con etiqueta, textos traducidos en español e inglés | En cada solicitud de cambio |
 
 ### Tamaños y modos de uso
@@ -285,7 +287,7 @@ Trece etapas en orden; cada una termina con el cierre de la sección 5 y su prop
 | 1. Diseño de plantillas y pantallas | Definir cómo se ve y se usa la app antes de programarla | Inventario de pantallas y flujos, bocetos basados en Stitch en tres tamaños (móvil, tablet, computador), design.md (colores, tipografía, espaciado, componentes y estados, íconos, preparado para modo oscuro), elección de la librería de gráficas | El usuario aprueba todas las pantallas y el design.md |
 | 2. Base de datos y seguridad | Crear el modelo de datos | Tablas, relaciones, reglas RLS, categorías y formas de pago iniciales | Pruebas de RLS y de historial al borrar categorías en verde |
 | 3. Lógica del servidor | Reglas que no dependen de pantallas | Cálculo de períodos, generación de periódicos y cuotas, alertas, saldos de bolsas, resumen de cierre, tarea programada diaria | Todas las pruebas de reglas de cálculo en verde |
-| 4. Base del frontend | Estructura común de la app | Login, diseño adaptable a tres tamaños (navegación inferior en móvil, menú lateral en tablet y computador), español e inglés, PWA instalable, componentes del design.md | La app se instala en móvil y computador, y el login funciona en los tres tamaños |
+| 4. Base del frontend | Estructura común de la app | Login (sin registro), rutas protegidas con layout común, diseño adaptable a tres tamaños (navegación inferior en móvil, menú lateral en tablet y computador), español e inglés, PWA instalable, componentes del design.md | La app se instala en móvil y computador, y el login funciona en los tres tamaños; sin sesión, toda ruta redirige al login |
 | 5. Gestión de datos (CRUD) | Datos de referencia | Categorías con subcategorías y tipos, formas de pago, bolsas, lugares, personas o entidades | Sin duplicados en lugares y personas; categorías filtradas por tipo |
 | 6. Presupuesto, ingresos y bolsas | Controlar el dinero disponible | Configuración del período, presupuesto, ingresos con destino, recargas y ajuste de saldo | Saldos de presupuesto y bolsas correctos en los recorridos E2E |
 | 7. Gastos y filtros | Registrar y consultar gastos | Formulario de gasto, lista agrupada por día, todos los filtros y búsqueda | Un gasto descuenta del presupuesto y de su bolsa; los filtros devuelven lo esperado |

@@ -4,6 +4,25 @@
 - El proyecto Supabase **existente no se toca**. App-Gastos usa un segundo proyecto propio.
 - Todo el desarrollo y las pruebas van contra **Supabase local** (`supabase start`). El proyecto real solo recibe migraciones aprobadas por el usuario, en la Etapa 12 o cuando él lo pida.
 
+## Auth: un solo usuario, sin registros
+
+La app no tiene registro. Para que nadie pueda crear una cuenta llamando a la API directamente, los registros se desactivan en Supabase. **Claude no aplica estos cambios en el proyecto real**: los documenta y el usuario los hace (o los aprueba de forma explícita).
+
+- **Supabase local** (`supabase/config.toml`, en la Etapa 0):
+  ```toml
+  [auth]
+  enable_signup = false
+
+  [auth.email]
+  enable_signup = false
+  ```
+  El usuario de pruebas se crea en `supabase/seed.sql` o con un script que use la clave `service_role` local.
+- **Proyecto real** (Etapa 0 o 12, lo hace el usuario en el panel de Supabase):
+  1. Authentication → Sign In / Providers → desactivar **Allow new users to sign up**.
+  2. Authentication → Users → **Add user** → crear el usuario con correo y contraseña (marcar el correo como confirmado).
+  3. Verificar que una llamada a `signUp` con la clave pública devuelve error.
+- Aun así, RLS se escribe como si hubiera varios usuarios: el plan contempla multiusuario a futuro.
+
 ## Migraciones
 - Una migración por cambio lógico: `supabase migration new <nombre_descriptivo>`. Nunca editar una migración ya fusionada a `main`; se corrige con otra nueva.
 - Toda migración se prueba con `supabase db reset` (aplica todo desde cero) antes de entregar.

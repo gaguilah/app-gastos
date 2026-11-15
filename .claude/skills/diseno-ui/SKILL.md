@@ -25,6 +25,26 @@ Tomar: tarjetas tipo *bento* con KPI, cifras en fuente monoespaciada, barras de 
 - Solo modo oscuro: el MVP es **modo claro**; el oscuro queda preparado con los mismos tokens (ver tokens.md).
 - Formatos de número mezclados (`$2,845,000`): siempre `$2.845.000` (ver "Dinero y fechas").
 
+## Organización de componentes
+
+Estructura híbrida inspirada en diseño atómico (decidida el 15-nov-2026). Se compone de lo pequeño a lo grande, sin carpetas `atoms/molecules/organisms`:
+
+| Nivel | Carpeta | Qué va ahí | Regla |
+| --- | --- | --- | --- |
+| Átomos | `src/components/ui/` | Componentes de shadcn (`Button`, `Input`, `Card`, `Dialog`, `Chart`, `Drawer`) | Se agregan con el CLI de shadcn y se ajustan solo con tokens. No metas lógica de negocio |
+| Moléculas | `src/components/shared/` | Piezas reutilizables entre módulos: campo de monto COP, selector de categoría por tipo, selector de bolsa con saldo, chip de filtro, estado vacío | Solo sube aquí lo que usan dos módulos o más |
+| Organismos | `src/features/<módulo>/components/` | Bloques de un módulo: formulario de gasto, tabla y tarjetas de gastos, tarjeta de deuda, constructor de categoría | Pueden usar `shared/` y `ui/`, nunca componentes de otro módulo |
+| Pantallas | `src/routes/` | Pantallas y el layout común (navegación, encabezado) | Solo arman organismos y leen parámetros de la ruta; no tienen estilos propios complejos |
+
+No discutas si algo es molécula u organismo: si es de un solo módulo, va en su `features/`; si lo comparten varios, va en `shared/`.
+
+## Pantallas y acceso
+
+- Todas las pantallas viven dentro del layout común protegido. La única pantalla pública es **inicio de sesión** (`/login`), sin la navegación de la app.
+- **No hay pantalla de registro** ni enlace "Crear cuenta": la app es de un solo usuario. La pantalla de login solo pide correo y contraseña.
+- El layout común muestra navegación inferior en móvil y menú lateral en tablet y computador (ver `references/layouts-3-tamanos.md`).
+- Mientras se verifica la sesión al abrir la app, se muestra una pantalla de carga breve, no un parpadeo del login.
+
 ## Reglas de diseño
 
 1. **Móvil primero.** Diseña a 360–390 px de ancho y luego amplía. Ver `references/layouts-3-tamanos.md` para móvil, tablet y computador.

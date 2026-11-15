@@ -17,8 +17,29 @@ Versiones del stack en la tabla "Stack" de `CLAUDE.md` (React 19, Tailwind 4, Ty
 - Formularios con React Hook Form + el esquema de validación, usando los componentes `Form` de shadcn.
 - Las mutaciones invalidan las consultas que afectan (registrar un gasto invalida el gasto del período y el saldo de la bolsa).
 - Actualización en tiempo real entre dispositivos (6 · PWA) con Supabase Realtime en las tablas necesarias, invalidando la caché; no dupliques la lógica de cálculo en el listener.
-- Rutas cargadas de forma diferida (`lazy`) por sección para que la PWA abra rápido en el móvil.
 - Errores: un `ErrorBoundary` por sección y mensajes traducidos; nunca mostrar el error crudo de Supabase al usuario.
+
+## Rutas (React Router 8, modo librería)
+- `createBrowserRouter` + `RouterProvider`, definidos en `src/routes/`. No se usa el modo framework (`@react-router/dev`, `react-router.config.ts`).
+- Estructura:
+  ```
+  /login                 pública (única)
+  /                      RutaProtegida → LayoutApp (navegación + encabezado + <Outlet/>)
+    index                Panel
+    gastos, ingresos, bolsas, periodicos, prestamos, deudas, categorias, reportes, ajustes…
+  *                      No encontrada (también protegida)
+  ```
+- **Protección centralizada**: un solo elemento padre (`RutaProtegida`, o un `loader` en la ruta raíz) revisa la sesión de Supabase y, sin sesión, redirige a `/login?siguiente=<ruta pedida>`. Ninguna pantalla repite la verificación.
+- Tras iniciar sesión se navega a `siguiente` solo si es una ruta interna (empieza por `/` y no por `//`), para no abrir una redirección a otro sitio.
+- Si el usuario ya tiene sesión y abre `/login`, se le lleva al panel.
+- Al cerrar sesión o vencer la sesión (`onAuthStateChange`), se limpia la caché de datos y se vuelve a `/login`.
+- Cada pantalla se carga de forma diferida con la propiedad `lazy` de la ruta, para que la PWA abra rápido en el móvil.
+- La protección en el frontend es solo de experiencia de uso: la seguridad real está en RLS.
+
+## Autenticación (un solo usuario)
+- Solo inicio de sesión con correo y contraseña (`signInWithPassword`). **No existe registro**: ninguna ruta, pantalla, enlace ni llamada a `signUp`.
+- Los registros se desactivan en Supabase Auth (ver `supabase-rls-migraciones.md`, "Auth").
+- La recuperación de contraseña se decide en la especificación de la Etapa 4.
 
 ## Estilo
 - ESLint + Prettier, sin reglas desactivadas por archivo sin un comentario que explique por qué.

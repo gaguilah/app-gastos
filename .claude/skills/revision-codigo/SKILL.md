@@ -39,6 +39,9 @@ Lee el código que cambió y el que lo rodea. Para cada punto que no se cumpla, 
 - [ ] La foto del QR no se guarda ni se envía.
 - [ ] Funciones `security definer` con `search_path = ''` y filtro por `auth.uid()`; vistas con `security_invoker`.
 - [ ] Entradas externas validadas en el borde (formularios, QR, parámetros de Edge Functions).
+- [ ] Toda ruta nueva queda dentro del layout protegido; `/login` sigue siendo la única pública y aparece en la prueba de rutas protegidas.
+- [ ] No hay registro: ninguna ruta, enlace ni llamada a `signUp`.
+- [ ] El parámetro `siguiente` del login solo acepta rutas internas.
 - [ ] Ningún cambio contra el proyecto Supabase real.
 - [ ] Para cambios grandes o de autenticación, corre también `/security-review`.
 
@@ -50,6 +53,7 @@ Lee el código que cambió y el que lo rodea. Para cada punto que no se cumpla, 
 
 ### UI, accesibilidad e idiomas (si hay pantallas)
 - [ ] Sin colores, tamaños ni textos fijos en componentes: tokens y archivos de traducción.
+- [ ] Componentes en su nivel: shadcn en `components/ui`, compartidos en `components/shared`, los de un módulo en su `features/`; ningún módulo importa componentes de otro.
 - [ ] `es.json` y `en.json` con las mismas claves.
 - [ ] Revisado en móvil, tablet y computador.
 - [ ] Lista de `diseno-ui/references/accesibilidad.md` cumplida.
