@@ -1,0 +1,2 @@
+-- Semilla de desarrollo y pruebas. Solo datos inventados, nunca datos reales ni de tarjetas.
+-- Las tablas llegan en la Etapa 2.

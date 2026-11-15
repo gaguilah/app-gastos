@@ -1,0 +1,13 @@
+dist
+coverage
+playwright-report
+test-results
+package-lock.json
+supabase/.temp
+supabase/.branches
+docs/design/referencias
+
+# Documentación y harness: se escriben a mano, sin reformatear
+.claude
+docs
+CLAUDE.md
