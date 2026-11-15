@@ -21,7 +21,7 @@ Nunca cambies una prueba para que pase sin que la especificación haya cambiado.
 
 ## Las capas
 
-| Capa | Herramienta (se confirma en Etapa 0) | Dónde | Referencia |
+| Capa | Herramienta (versiones en `CLAUDE.md`; se confirman en Etapa 0) | Dónde | Referencia |
 | --- | --- | --- | --- |
 | Calidad estática | `tsc --noEmit`, ESLint, Prettier, `impeccable detect` | Todo el repo | (esta página) |
 | Reglas de cálculo | Vitest | `src/dominio/**/*.test.ts` | `references/unitarias.md` |

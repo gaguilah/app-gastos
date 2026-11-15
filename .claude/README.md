@@ -35,4 +35,4 @@ Se declaran en `extraKnownMarketplaces` y `enabledPlugins`, así que solo se act
 - `docs/plan.md`: plan del proyecto (fuente de verdad de los requisitos).
 - `docs/design/referencias/Example*.html`: ejemplos de Stitch usados como guía de forma.
 
-El `CLAUDE.md` se crea después, apoyándose en estas skills.
+El `CLAUDE.md` de la raíz resume el proyecto, el stack con sus versiones y cuándo usar cada skill.
