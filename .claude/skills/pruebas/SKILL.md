@@ -30,6 +30,7 @@ Nunca cambies una prueba para que pase sin que la especificación haya cambiado.
 | E2E | Playwright, 3 tamaños | `e2e/*.spec.ts` | `references/e2e-playwright.md` |
 | Accesibilidad e idiomas | `@axe-core/playwright`, prueba de claves es/en | `e2e/a11y.spec.ts`, `src/i18n/*.test.ts` | `references/e2e-playwright.md` |
 | PWA (modo instalada) | Playwright + revisión manual | `e2e/pwa.spec.ts` | `references/pwa.md` |
+| Rutas protegidas y sin registro | Playwright | `e2e/rutas-protegidas.spec.ts` | `references/e2e-playwright.md` |
 
 ## Reglas del harness
 

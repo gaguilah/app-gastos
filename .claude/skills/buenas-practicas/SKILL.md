@@ -18,9 +18,11 @@ description: Convenciones de código de App-Gastos (React + TypeScript, Supabase
 src/
   dominio/       reglas de negocio puras en TypeScript: sin React, sin Supabase, sin Date.now()
   datos/         acceso a Supabase (consultas, mutaciones, tipos generados)
-  features/      una carpeta por sección: gastos, ingresos, bolsas, periodicos, prestamos, deudas, categorias, reportes…
-  components/    componentes compartidos (los de shadcn en components/ui)
-  i18n/          es.json, en.json
+  components/ui/      shadcn (átomos)
+  components/shared/  moléculas reutilizables entre módulos
+  features/<módulo>/  components/ (organismos), hooks y lógica de UI del módulo: gastos, ingresos, bolsas, periodicos, prestamos, deudas, categorias, reportes…
+  routes/             pantallas, layout común y protección de rutas (React Router 8, modo librería)
+  i18n/               es.json, en.json
 supabase/
   migrations/    SQL versionado
   tests/         pruebas pgTAP
@@ -29,6 +31,8 @@ supabase/
 
 - `dominio/` recibe la fecha de hoy y los datos como parámetros; así se prueba con un reloj fijo.
 - Los componentes no calculan saldos ni totales: los piden a `dominio/` o a la base de datos.
+- Un módulo de `features/` no importa componentes de otro módulo; lo compartido sube a `components/shared/`.
+- **Todas las rutas protegidas** salvo `/login`, y **sin registro de usuarios** (ver `references/react-ts.md`, "Rutas").
 
 ## Referencias
 

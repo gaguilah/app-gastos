@@ -41,6 +41,7 @@ Versiones estables verificadas en npm el **15-nov-2026**. Al iniciar la Etapa 0 
 | Componentes | shadcn/ui (CLI `shadcn`) | 4.23.0 |
 | Íconos | `lucide-react` | 1.73.0 |
 | Gráficas | charts de shadcn sobre `recharts` | 3.10.1 |
+| Rutas | `react-router` en **modo librería** (sin modo framework) | **8.5.1** |
 | Lenguaje | `typescript` | **6.0.3** (ver nota) |
 | Backend | Supabase: `@supabase/supabase-js` 2.119.0 y CLI `supabase` 3.1.0 | |
 | Publicación | Netlify (versión de prueba por PR) | |
@@ -56,7 +57,6 @@ Versiones estables verificadas en npm el **15-nov-2026**. Al iniciar la Etapa 0 
 | --- | --- | --- |
 | Build y servidor de desarrollo | `vite` + `@vitejs/plugin-react` | 8.3.8 · 6.3.0 |
 | PWA | `vite-plugin-pwa` | 2.0.0 |
-| Rutas | `react-router` | 8.5.1 |
 | Datos del servidor | `@tanstack/react-query` | 5.107.1 |
 | Formularios y validación | `react-hook-form` + `zod` | 7.92.0 · 4.6.7 |
 | Idiomas | `i18next` + `react-i18next` | 27.1.2 · 18.0.1 |
@@ -65,6 +65,32 @@ Versiones estables verificadas en npm el **15-nov-2026**. Al iniciar la Etapa 0 
 | Calidad | `eslint` + `typescript-eslint` + `prettier` | 10.15.0 · 8.72.2 · 3.10.1 |
 | Fuentes sin conexión | `@fontsource/plus-jakarta-sans`, `@fontsource/jetbrains-mono` | 5.3.0 |
 | Node.js | LTS "Lithium" | 26.x (Vitest pide ≥ 22.12) |
+
+## Arquitectura de la interfaz
+
+Decidida el 15-nov-2026, antes de la Etapa 0.
+
+### Componentes: estructura híbrida inspirada en diseño atómico
+
+Se compone de lo pequeño a lo grande, pero sin carpetas estrictas `atoms/molecules/organisms`:
+
+| Carpeta | Rol | Ejemplos |
+| --- | --- | --- |
+| `src/components/ui/` | Átomos: componentes de shadcn, estilizados con los tokens | `Button`, `Input`, `Card`, `Dialog`, `Chart` |
+| `src/components/shared/` | Moléculas reutilizables entre módulos | Campo de monto en COP, selector de categoría, selector de bolsa con saldo |
+| `src/features/<módulo>/components/` | Organismos de un módulo | Formulario de gasto, tabla de movimientos, tarjeta de deuda |
+| `src/routes/` | Pantallas: arman organismos dentro del layout | Panel, Gastos, Categorías, Resumen |
+
+Un componente sube a `shared/` solo cuando lo usan dos módulos o más. Detalle en la skill `diseno-ui`.
+
+### Rutas y acceso
+
+- **React Router 8 en modo librería** (`createBrowserRouter` + `RouterProvider`), sin el modo framework.
+- Un **layout común anidado** (menú lateral o navegación inferior y encabezado) envuelve todas las pantallas.
+- **Carga diferida** por pantalla (`lazy` en cada ruta).
+- **Todas las rutas están protegidas.** La única pública es `/login`. Sin sesión, cualquier ruta redirige a `/login` y, al iniciar sesión, vuelve a la ruta pedida.
+- **Un solo usuario: no hay registro.** No existe pantalla, ruta, enlace ni llamada a `signUp`. El usuario se crea a mano en Supabase. Los registros (*signups*) se desactivan en Supabase Auth (pasos en `buenas-practicas/references/supabase-rls-migraciones.md`); ese cambio lo hace el usuario o se aplica con su aprobación.
+- Las pruebas E2E verifican que cada ruta protegida redirige a `/login` sin sesión (skill `pruebas`).
 
 ## Forma de trabajo
 
@@ -94,6 +120,7 @@ Detalle y ejemplos en las skills; aquí solo la lista.
 - **Ningún texto visible** escrito en un componente: todo va en `src/i18n/es.json` y `en.json`.
 - **Ningún color, tamaño o radio fijo**: solo tokens.
 - **Nunca desactivar ni editar una prueba** para obtener verde.
+- **Solo `/login` es pública**; no hay registro de usuarios.
 
 ## Lo que Claude no hace sin aprobación explícita del usuario
 
@@ -124,11 +151,13 @@ Actualiza esta sección cuando la Etapa 0 los fije.
 ## Estructura prevista
 
 ```
-src/dominio/     reglas de negocio puras (sin React, sin Supabase, sin Date.now())
-src/datos/       acceso a Supabase y tipos generados
-src/features/    una carpeta por sección (gastos, bolsas, periodicos, prestamos, deudas…)
-src/components/  componentes compartidos (shadcn en components/ui)
-src/i18n/        es.json y en.json
+src/dominio/               reglas de negocio puras (sin React, sin Supabase, sin Date.now())
+src/datos/                 acceso a Supabase y tipos generados
+src/components/ui/         shadcn (átomos)
+src/components/shared/     moléculas reutilizables
+src/features/<módulo>/     organismos, hooks y lógica de UI de cada módulo (gastos, bolsas, periodicos, prestamos, deudas…)
+src/routes/                pantallas, layout común y protección de rutas
+src/i18n/                  es.json y en.json
 supabase/        migrations/, tests/, functions/, seed.sql
 e2e/             pruebas Playwright y fixtures (facturas QR de ejemplo)
 docs/            plan.md y design/referencias/
