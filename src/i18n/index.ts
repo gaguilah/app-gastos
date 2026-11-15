@@ -23,6 +23,3 @@ ponerLang(i18n.language);
 i18n.on("languageChanged", ponerLang);
 
 export default i18n;
-
-// Commit temporal para comprobar que el CI se pone en rojo (se revierte en el siguiente commit).
-export const errorDeTipos: number = "texto";
