@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"error-container":"#93000a","on-background":"#dfe2ef","on-secondary":"#1000a9","on-primary-fixed-variant":"#005236","surface-variant":"#31353f","secondary-container":"#3131c0","tertiary-fixed":"#54fdc4","on-primary":"#003824","surface-container-lowest":"#0a0e17","surface-container":"#1c1f29","inverse-on-surface":"#2c303a","error":"#ffb4ab","primary-fixed-dim":"#4edea3","primary-fixed":"#6ffbbe","on-primary-container":"#00422b","outline":"#86948a","secondary":"#c0c1ff","primary":"#4edea3","inverse-primary":"#006c49","tertiary":"#27e0a9","surface-tint":"#4edea3","on-primary-fixed":"#002113","on-secondary-fixed-variant":"#2f2ebe","surface-container-highest":"#31353f","surface-container-high":"#262a34","on-tertiary-fixed":"#002116","secondary-fixed":"#e1e0ff","on-tertiary":"#003827","tertiary-fixed-dim":"#27e0a9","on-secondary-fixed":"#07006c","surface":"#0f131c","outline-variant":"#3c4a42","primary-container":"#10b981","on-error":"#690005","on-surface":"#dfe2ef","surface-bright":"#353943","on-tertiary-fixed-variant":"#00513b","surface-dim":"#0f131c","inverse-surface":"#dfe2ef","tertiary-container":"#00b98a","surface-container-low":"#181b25","on-surface-variant":"#bbcabf","secondary-fixed-dim":"#c0c1ff","background":"#0f131c","on-error-container":"#ffdad6","on-tertiary-container":"#00422f","on-secondary-container":"#b0b2ff"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"space-sm":"0.5rem","space-md":"1rem","space-xs":"0.25rem","gutter-mobile":"0.75rem","gutter":"1.5rem","space-lg":"1.5rem","margin":"2rem","space-xl":"2.5rem","margin-mobile":"1rem"},"fontFamily":{"label-tag":["Plus Jakarta Sans"],"body-md":["Plus Jakarta Sans"],"headline-md":["Plus Jakarta Sans"],"headline-lg-mobile":["Plus Jakarta Sans"],"headline-xl-mobile":["Plus Jakarta Sans"],"body-sm":["Plus Jakarta Sans"],"headline-xl":["Plus Jakarta Sans"],"body-lg":["Plus Jakarta Sans"],"headline-lg":["Plus Jakarta Sans"],"label-numeric":["JetBrains Mono"],"headline-sm":["Plus Jakarta Sans"],"label-micro":["JetBrains Mono"]},"fontSize":{"label-tag":["11px",{"lineHeight":"14px","letterSpacing":"0.04em","fontWeight":"700"}],"body-md":["15px",{"lineHeight":"22px","fontWeight":"400"}],"headline-md":["24px",{"lineHeight":"32px","letterSpacing":"-0.01em","fontWeight":"600"}],"headline-lg-mobile":["26px",{"lineHeight":"34px","letterSpacing":"-0.015em","fontWeight":"600"}],"headline-xl-mobile":["32px",{"lineHeight":"40px","letterSpacing":"-0.02em","fontWeight":"700"}],"body-sm":["13px",{"lineHeight":"18px","fontWeight":"400"}],"headline-xl":["48px",{"lineHeight":"56px","letterSpacing":"-0.02em","fontWeight":"700"}],"body-lg":["18px",{"lineHeight":"28px","fontWeight":"400"}],"headline-lg":["36px",{"lineHeight":"44px","letterSpacing":"-0.02em","fontWeight":"600"}],"label-numeric":["14px",{"lineHeight":"20px","letterSpacing":"-0.01em","fontWeight":"500"}],"headline-sm":["20px",{"lineHeight":"28px","fontWeight":"600"}],"label-micro":["10px",{"lineHeight":"12px","letterSpacing":"0.06em","fontWeight":"500"}]}}}};</script></head><body class="bg-background font-body-md text-on-surface antialiased selection:bg-primary-container selection:text-on-primary-container min-h-screen"><aside class="fixed left-0 top-0 h-full w-64 bg-surface-container-low/80 backdrop-blur-xl z-50 flex flex-col justify-between p-space-lg shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex flex-col gap-space-xl"><div class="flex items-center gap-space-sm px-space-xs"><img alt="Kairo Finance Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1W6H6UZ8XBvFxlX2wZx8Q7qeT2_VYokKv7hP_npNNI-tKGRrah78XkCixfxVAWsZeQnQluGz6auJQr1bg-GZ184C9qG82G_AptsNPeFCOEWhS3xUDjEqXhySwUIIMW527h57Gjl12QbQCuqmESZGpQindx2g1W_KYR4Tlvs4qNyBy_OJZ6X4RNyA6kWmLLYAJ1kDSQb35SH3gNcbXVA7Y2GcC_eLuD_OB8H6pmQaqg-Kzdr8I9Nlo_PDcXs"/><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-on-surface tracking-tight font-bold">Kairo</span><span class="font-label-micro text-label-micro text-primary uppercase tracking-widest">Gastos OS</span></div></div><nav class="flex flex-col gap-space-xs" data-active-classes="bg-primary-container text-on-primary-container font-semibold rounded-xl shadow-[0_0_16px_rgba(16,185,129,0.25)]"><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-xl font-body-md text-body-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="dashboard" href="#"><span class="material-symbols-outlined text-xl">dashboard</span><span>Dashboard</span></a><a aria-current="page" class="flex items-center gap-space-sm px-space-md py-space-sm transition-all bg-primary-container text-on-primary-container font-semibold rounded-xl shadow-[0_0_16px_rgba(16,185,129,0.25)]" data-path="mis-gastos" href="#"><span class="material-symbols-outlined text-xl">receipt_long</span><span>Mis Gastos</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-xl font-body-md text-body-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="categorias" href="#"><span class="material-symbols-outlined text-xl">category</span><span>Categorías</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-xl font-body-md text-body-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="resumen-mensual" href="#"><span class="material-symbols-outlined text-xl">query_stats</span><span>Resumen Mensual</span></a></nav></div><div class="p-space-md rounded-xl bg-surface-container/50 backdrop-blur-md flex flex-col gap-space-xs"><div class="flex items-center justify-between text-on-surface-variant font-label-micro text-label-micro uppercase tracking-wider"><span>Sincronización</span><span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span></div><p class="font-label-numeric text-label-numeric text-on-surface">En línea • Cifrado</p></div></aside><div class="pl-64 flex flex-col min-h-screen"><header class="fixed top-0 left-64 right-0 h-16 bg-surface-container-lowest/80 backdrop-blur-xl z-40 px-gutter shadow-[0_1px_8px_rgba(0,0,0,0.04)] flex items-center justify-between"><div class="flex items-center gap-space-md"><div class="inline-flex items-center gap-space-xs px-space-md py-space-xs rounded-full bg-surface-container-high/90 text-on-surface font-label-numeric text-label-numeric shadow-inner"><span class="material-symbols-outlined text-primary text-base">calendar_today</span><span>Periodo actual: 01 Oct - 31 Oct 2024</span></div></div><div class="flex items-center gap-space-lg"><button class="relative p-space-xs text-on-surface-variant hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined">notifications</span><span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-primary"></span></button><div class="flex items-center gap-space-sm pl-space-sm"><div class="flex flex-col text-right"><span class="font-headline-sm text-body-sm text-on-surface font-semibold leading-tight">Valentina R.</span><span class="font-label-micro text-label-micro text-on-surface-variant">Plan Premium</span></div><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCUgrxUSwwnTUe9Wpp-fGb0LJHTuNAkjWszVPLAsufoIRKo4K6INjsE4B9vX3GWUL_LLxDnxjRsAVGcJ1hqkE89HV3JBNZjG0uSshuRIdDxpHBXBOCU56_rFgMWtUU_UJrEi1eH9WeT2lFNA5UA3QkN-8M0XqBxh4NNB3a-GbQuix0tbQCrwy2ZPp-2-MOiVDyq4Nevoiga-tl_HGUZtE6qojaTEObCBdH-acuJ3M1RWxKl85dL4b8ARA"/></div></div></header><main class="w-full pt-16 bg-background flex-1 px-gutter py-space-lg"><div class="flex flex-col w-full gap-space-lg">
+<!-- Ambient Chromatic Glow -->
+<div class="relative w-full">
+<div class="absolute -top-10 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
+<div class="absolute top-1/2 right-12 w-80 h-80 bg-secondary/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
+</div>
+<!-- Screen Top Bar / Header Section -->
+<section class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-xs text-on-surface-variant font-label-micro text-label-micro uppercase tracking-widest">
+<span>Control Financiero</span>
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+<span>Flujo de Salida</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface font-bold tracking-tight">Registro de Gastos</h1>
+</div>
+<!-- Quick Action Bar -->
+<div class="flex flex-wrap items-center gap-space-sm">
+<div class="flex items-center gap-space-xs px-space-md py-space-sm rounded-xl bg-surface-container-high text-on-surface font-label-numeric text-label-numeric shadow-sm">
+<span class="material-symbols-outlined text-primary text-base">date_range</span>
+<span>01 Oct - 31 Oct 2024</span>
+</div>
+<button class="inline-flex items-center gap-space-xs px-space-lg py-space-sm rounded-xl bg-primary-container text-on-primary-container font-headline-sm text-body-md font-bold shadow-[0_0_24px_rgba(16,185,129,0.35)] hover:bg-primary transition-all active:scale-95" id="openFormBtn" type="button">
+<span class="material-symbols-outlined font-bold text-lg">add_circle</span>
+<span>+ Registrar Gasto</span>
+</button>
+</div>
+</section>
+<!-- Filter & Search Controls Deck -->
+<section class="p-space-md rounded-xl bg-surface-container-low shadow-md flex flex-col gap-space-md">
+<div class="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-space-md">
+<!-- Search Input -->
+<div class="relative flex-1">
+<span class="material-symbols-outlined absolute left-space-md top-1/2 -translate-y-1/2 text-outline text-lg pointer-events-none">search</span>
+<input class="w-full pl-10 pr-space-md py-space-sm rounded-xl bg-surface-container text-on-surface placeholder:text-outline font-body-md text-body-md focus:outline-none focus:bg-surface-container-highest transition-colors shadow-inner" id="searchInput" placeholder="Buscar por título o sitio de compra..." type="text"/>
+</div>
+<!-- Category Filter Dropdown -->
+<div class="flex items-center gap-space-sm">
+<div class="relative min-w-[200px]">
+<select class="w-full appearance-none pl-space-md pr-space-xl py-space-sm rounded-xl bg-surface-container text-on-surface font-body-sm text-body-sm focus:outline-none focus:bg-surface-container-highest transition-colors cursor-pointer shadow-inner" id="categoryFilter">
+<option value="todas">Todas las Categorías</option>
+<option value="alimentacion">Alimentación &amp; Cenas</option>
+<option value="servicios">Servicios &amp; Hogar</option>
+<option value="tecnologia">Tecnología &amp; Software</option>
+<option value="transporte">Movilidad &amp; Transporte</option>
+<option value="salud">Salud &amp; Bienestar</option>
+<option value="ocio">Ocio &amp; Entretenimiento</option>
+</select>
+<span class="material-symbols-outlined absolute right-space-sm top-1/2 -translate-y-1/2 text-outline pointer-events-none text-base">expand_more</span>
+</div>
+<button class="p-space-sm rounded-xl bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors shadow-sm" title="Descargar Reporte CSV" type="button">
+<span class="material-symbols-outlined text-lg">file_download</span>
+</button>
+</div>
+</div>
+<!-- Payment Mode Filter Pills -->
+<div class="flex flex-wrap items-center gap-space-xs pt-space-xs">
+<span class="text-outline font-label-micro text-label-micro uppercase tracking-wider mr-space-xs">Modo:</span>
+<button class="filter-pill px-space-md py-space-xs rounded-full font-label-tag text-label-tag bg-surface-bright text-on-surface font-bold transition-all shadow-sm" data-filter="all" type="button">Todos (34)</button>
+<button class="filter-pill px-space-md py-space-xs rounded-full font-label-tag text-label-tag bg-surface-container-high text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest transition-all" data-filter="nequi" type="button">Nequi</button>
+<button class="filter-pill px-space-md py-space-xs rounded-full font-label-tag text-label-tag bg-surface-container-high text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest transition-all" data-filter="pse" type="button">PSE</button>
+<button class="filter-pill px-space-md py-space-xs rounded-full font-label-tag text-label-tag bg-surface-container-high text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest transition-all" data-filter="transferencia" type="button">Transferencia</button>
+<button class="filter-pill px-space-md py-space-xs rounded-full font-label-tag text-label-tag bg-surface-container-high text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest transition-all" data-filter="efectivo" type="button">Efectivo</button>
+</div>
+</section>
+<!-- Split Screen Content Layout (Form Panel + Table) -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-lg items-start">
+<!-- LEFT: Registration Panel Form (Prominent Split View) -->
+<aside class="xl:col-span-4 rounded-xl bg-surface-container-low p-space-lg shadow-xl relative overflow-hidden flex flex-col gap-space-lg" id="formContainer">
+<!-- Specular Header Line -->
+<div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-tertiary to-secondary"></div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-lg">edit_document</span>
+</div>
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-semibold leading-tight">Nuevo Gasto</h2>
+<p class="font-body-sm text-body-sm text-outline">Ingresa detalles del movimiento</p>
+</div>
+</div>
+<span class="font-label-micro text-label-micro px-space-sm py-1 rounded-full bg-primary/10 text-primary uppercase">En directo</span>
+</div>
+<form class="flex flex-col gap-space-md" id="expenseForm">
+<!-- Título del gasto -->
+<div class="flex flex-col gap-space-xs">
+<label class="font-label-tag text-label-tag text-on-surface-variant uppercase tracking-wider" for="tituloGasto">Título del Gasto</label>
+<input class="w-full px-space-md py-space-sm rounded-xl bg-surface-container text-on-surface placeholder:text-outline font-body-md text-body-md focus:outline-none focus:bg-surface-container-high transition-colors shadow-inner" id="tituloGasto" placeholder="ej: Cena con amigos, Mercado quincenal" required="" type="text"/>
+</div>
+<!-- Fecha & Monto Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-sm">
+<div class="flex flex-col gap-space-xs">
+<label class="font-label-tag text-label-tag text-on-surface-variant uppercase tracking-wider" for="fechaGasto">Fecha</label>
+<div class="relative">
+<input class="w-full px-space-md py-space-sm rounded-xl bg-surface-container text-on-surface font-label-numeric text-label-numeric focus:outline-none focus:bg-surface-container-high transition-colors shadow-inner" id="fechaGasto" required="" type="text" value="24/10/2024"/>
+<span class="material-symbols-outlined absolute right-space-sm top-1/2 -translate-y-1/2 text-outline text-base pointer-events-none">calendar_month</span>
+</div>
+</div>
+<div class="flex flex-col gap-space-xs">
+<label class="font-label-tag text-label-tag text-on-surface-variant uppercase tracking-wider" for="montoGasto">Monto (COP)</label>
+<input class="w-full px-space-md py-space-sm rounded-xl bg-surface-container text-primary font-label-numeric text-label-numeric font-bold focus:outline-none focus:bg-surface-container-high transition-colors shadow-inner" id="montoGasto" required="" type="text" value="$ 185,000 COP"/>
+</div>
+</div>
+<!-- Categoría -->
+<div class="flex flex-col gap-space-xs">
+<label class="font-label-tag text-label-tag text-on-surface-variant uppercase tracking-wider" for="categoriaGasto">Categoría</label>
+<div class="relative">
+<select class="w-full appearance-none px-space-md py-space-sm rounded-xl bg-surface-container text-on-surface font-body-sm text-body-sm focus:outline-none focus:bg-surface-container-high transition-colors shadow-inner cursor-pointer" id="categoriaGasto" required="">
+<option value="Alimentación">🍜 Alimentación &amp; Restaurantes</option>
+<option value="Servicios">💡 Servicios &amp; Mantenimiento</option>
+<option value="Tecnología">💻 Tecnología &amp; Gadgets</option>
+<option value="Transporte">🚗 Transporte &amp; Combustible</option>
+<option value="Salud">💊 Salud &amp; Cuidado Personal</option>
+<option value="Ocio">🍿 Ocio &amp; Suscripciones</option>
+</select>
+<span class="material-symbols-outlined absolute right-space-sm top-1/2 -translate-y-1/2 text-outline pointer-events-none text-base">expand_more</span>
+</div>
+</div>
+<!-- Sitio de compra -->
+<div class="flex flex-col gap-space-xs">
+<label class="font-label-tag text-label-tag text-on-surface-variant uppercase tracking-wider" for="sitioCompra">Sitio de Compra</label>
+<div class="relative">
+<input class="w-full pl-9 pr-space-md py-space-sm rounded-xl bg-surface-container text-on-surface placeholder:text-outline font-body-md text-body-md focus:outline-none focus:bg-surface-container-high transition-colors shadow-inner" id="sitioCompra" placeholder="ej: Restaurante Criterión, Carulla Pepe Sierra" required="" type="text"/>
+<span class="material-symbols-outlined absolute left-space-sm top-1/2 -translate-y-1/2 text-outline text-base pointer-events-none">storefront</span>
+</div>
+</div>
+<!-- Modo de pago (Interactive selector pills) -->
+<div class="flex flex-col gap-space-xs">
+<label class="font-label-tag text-label-tag text-on-surface-variant uppercase tracking-wider">Modo de Pago</label>
+<div class="grid grid-cols-2 gap-space-xs" id="paymentModeSelector">
+<!-- Efectivo -->
+<label class="relative flex items-center gap-space-xs p-space-sm rounded-xl bg-surface-container hover:bg-surface-container-high cursor-pointer transition-colors shadow-sm">
+<input class="hidden peer" name="modo_pago" type="radio" value="Efectivo"/>
+<div class="w-7 h-7 rounded-lg bg-surface-container-highest flex items-center justify-center text-outline peer-checked:bg-amber-400/20 peer-checked:text-amber-300">
+<span class="material-symbols-outlined text-base">payments</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-tag text-label-tag text-on-surface peer-checked:font-bold">Efectivo</span>
+<span class="font-label-micro text-label-micro text-outline truncate">Físico</span>
+</div>
+</label>
+<!-- Transferencia -->
+<label class="relative flex items-center gap-space-xs p-space-sm rounded-xl bg-surface-container hover:bg-surface-container-high cursor-pointer transition-colors shadow-sm">
+<input class="hidden peer" name="modo_pago" type="radio" value="Transferencia"/>
+<div class="w-7 h-7 rounded-lg bg-surface-container-highest flex items-center justify-center text-outline peer-checked:bg-primary/20 peer-checked:text-primary">
+<span class="material-symbols-outlined text-base">sync_alt</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-tag text-label-tag text-on-surface peer-checked:font-bold">Transferencia</span>
+<span class="font-label-micro text-label-micro text-outline truncate">Bancolombia</span>
+</div>
+</label>
+<!-- PSE -->
+<label class="relative flex items-center gap-space-xs p-space-sm rounded-xl bg-surface-container hover:bg-surface-container-high cursor-pointer transition-colors shadow-sm">
+<input class="hidden peer" name="modo_pago" type="radio" value="PSE"/>
+<div class="w-7 h-7 rounded-lg bg-secondary-container/20 flex items-center justify-center text-secondary peer-checked:bg-secondary-container peer-checked:text-on-secondary">
+<span class="material-symbols-outlined text-base">lock</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-tag text-label-tag text-secondary peer-checked:font-bold">PSE</span>
+<span class="font-label-micro text-label-micro text-secondary/70 truncate">Pasarela</span>
+</div>
+</label>
+<!-- Nequi -->
+<label class="relative flex items-center gap-space-xs p-space-sm rounded-xl bg-surface-container hover:bg-surface-container-high cursor-pointer transition-colors shadow-sm">
+<input checked="" class="hidden peer" name="modo_pago" type="radio" value="Nequi"/>
+<div class="w-7 h-7 rounded-lg bg-fuchsia-900/30 flex items-center justify-center text-fuchsia-400 peer-checked:bg-fuchsia-500 peer-checked:text-surface-container-lowest">
+<span class="material-symbols-outlined text-base">bolt</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-tag text-label-tag text-fuchsia-300 peer-checked:font-bold">Nequi</span>
+<span class="font-label-micro text-label-micro text-fuchsia-400/80 truncate">Billetera</span>
+</div>
+</label>
+</div>
+</div>
+<!-- Observaciones -->
+<div class="flex flex-col gap-space-xs">
+<label class="font-label-tag text-label-tag text-on-surface-variant uppercase tracking-wider" for="observacionesGasto">Observaciones</label>
+<textarea class="w-full p-space-sm rounded-xl bg-surface-container text-on-surface placeholder:text-outline font-body-sm text-body-sm focus:outline-none focus:bg-surface-container-high transition-colors shadow-inner resize-none" id="observacionesGasto" placeholder="Compartí cuenta con David, me transfirió la mitad" rows="2">Compartí cuenta con David, me transfirió la mitad</textarea>
+</div>
+<!-- Form Submit Button -->
+<button class="w-full mt-space-xs py-space-sm rounded-xl bg-gradient-to-r from-primary via-tertiary to-primary-container text-on-primary-container font-headline-sm text-body-md font-bold tracking-wide shadow-[0_0_20px_rgba(16,185,129,0.3)] hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-space-xs" type="submit">
+<span class="material-symbols-outlined text-lg">check_circle</span>
+<span>Guardar Gasto</span>
+</button>
+</form>
+</aside>
+<!-- RIGHT: Detailed Data Table and Financial Aggregates -->
+<main class="xl:col-span-8 flex flex-col gap-space-md">
+<!-- Visual Status Strip -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+<!-- Card 1 -->
+<div class="p-space-md rounded-xl bg-surface-container-low shadow-md flex items-center justify-between">
+<div>
+<span class="font-label-micro text-label-micro uppercase text-outline">Total Período</span>
+<p class="font-label-numeric text-headline-sm text-primary font-bold mt-1">$ 2,845,000</p>
+</div>
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">trending_down</span>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="p-space-md rounded-xl bg-surface-container-low shadow-md flex items-center justify-between">
+<div>
+<span class="font-label-micro text-label-micro uppercase text-outline">Promedio por Gasto</span>
+<p class="font-label-numeric text-headline-sm text-on-surface font-bold mt-1">$ 83,676</p>
+</div>
+<div class="w-10 h-10 rounded-full bg-secondary-container/20 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined">insights</span>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="p-space-md rounded-xl bg-surface-container-low shadow-md flex items-center justify-between">
+<div>
+<span class="font-label-micro text-label-micro uppercase text-outline">Canal Predominante</span>
+<p class="font-headline-sm text-headline-sm text-fuchsia-300 font-bold mt-1">Nequi (48%)</p>
+</div>
+<div class="w-10 h-10 rounded-full bg-fuchsia-950/40 flex items-center justify-center text-fuchsia-400">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+</div>
+</div>
+</div>
+<!-- Main Ledger Table Container -->
+<div class="rounded-xl bg-surface-container-low shadow-xl overflow-hidden flex flex-col">
+<!-- Table Scroll Container -->
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="bg-surface-container-high/60 text-outline font-label-micro text-label-micro uppercase tracking-wider">
+<th class="py-space-sm pl-space-md pr-space-xs w-8 text-center">
+<input class="rounded bg-surface-container text-primary focus:ring-0 focus:outline-none cursor-pointer" id="selectAll" type="checkbox"/>
+</th>
+<th class="py-space-sm px-space-sm">Gasto &amp; Categoría</th>
+<th class="py-space-sm px-space-sm">Fecha</th>
+<th class="py-space-sm px-space-sm">Sitio de Compra</th>
+<th class="py-space-sm px-space-sm">Modo</th>
+<th class="py-space-sm px-space-md text-right">Monto (COP)</th>
+<th class="py-space-sm pr-space-md pl-space-xs text-right">Acciones</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container/60" id="expenseTableBody">
+<!-- Row 1: Cena con amigos -->
+<tr class="hover:bg-surface-container-high/40 transition-colors group">
+<td class="py-space-sm pl-space-md pr-space-xs text-center">
+<input class="row-checkbox rounded bg-surface-container text-primary focus:ring-0 cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-space-sm px-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-xl bg-amber-950/30 text-amber-300 flex items-center justify-center shadow-inner">
+<span class="material-symbols-outlined text-lg">restaurant</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-body-md text-body-md text-on-surface font-semibold truncate">Cena con amigos</span>
+<span class="font-body-sm text-body-sm text-outline truncate" title="Compartí cuenta con David, me transfirió la mitad">
+                        "Compartí cuenta con David..."
+                      </span>
+</div>
+</div>
+</td>
+<td class="py-space-sm px-space-sm font-label-numeric text-label-numeric text-on-surface-variant whitespace-nowrap">
+                  24/10/2024
+                </td>
+<td class="py-space-sm px-space-sm font-body-sm text-body-sm text-on-surface whitespace-nowrap">
+                  Restaurante Criterión
+                </td>
+<td class="py-space-sm px-space-sm whitespace-nowrap">
+<span class="inline-flex items-center gap-1 px-space-sm py-0.5 rounded-full font-label-micro text-label-micro font-bold bg-fuchsia-950/50 text-fuchsia-300 shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-fuchsia-400"></span>
+                    Nequi
+                  </span>
+</td>
+<td class="py-space-sm px-space-md text-right whitespace-nowrap">
+<span class="font-label-numeric text-body-md text-on-surface font-bold">$ 185,000</span>
+</td>
+<td class="py-space-sm pr-space-md pl-space-xs text-right whitespace-nowrap">
+<div class="inline-flex items-center gap-space-xs opacity-80 group-hover:opacity-100 transition-opacity">
+<button class="p-1 rounded-lg hover:bg-surface-container text-on-surface-variant hover:text-primary transition-colors" title="Editar" type="button">
+<span class="material-symbols-outlined text-base">edit</span>
+</button>
+<button class="p-1 rounded-lg hover:bg-surface-container text-on-surface-variant hover:text-error transition-colors" title="Eliminar" type="button">
+<span class="material-symbols-outlined text-base">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2: Mercado quincenal -->
+<tr class="hover:bg-surface-container-high/40 transition-colors group">
+<td class="py-space-sm pl-space-md pr-space-xs text-center">
+<input class="row-checkbox rounded bg-surface-container text-primary focus:ring-0 cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-space-sm px-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-xl bg-emerald-950/30 text-emerald-300 flex items-center justify-center shadow-inner">
+<span class="material-symbols-outlined text-lg">local_grocery_store</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-body-md text-body-md text-on-surface font-semibold truncate">Mercado quincenal</span>
+<span class="font-body-sm text-body-sm text-outline truncate" title="Compras para despensa familiar completa">
+                        "Compras para despensa familiar completa"
+                      </span>
+</div>
+</div>
+</td>
+<td class="py-space-sm px-space-sm font-label-numeric text-label-numeric text-on-surface-variant whitespace-nowrap">
+                  21/10/2024
+                </td>
+<td class="py-space-sm px-space-sm font-body-sm text-body-sm text-on-surface whitespace-nowrap">
+                  Carulla Pepe Sierra
+                </td>
+<td class="py-space-sm px-space-sm whitespace-nowrap">
+<span class="inline-flex items-center gap-1 px-space-sm py-0.5 rounded-full font-label-micro text-label-micro font-bold bg-secondary-container/20 text-secondary shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                    PSE
+                  </span>
+</td>
+<td class="py-space-sm px-space-md text-right whitespace-nowrap">
+<span class="font-label-numeric text-body-md text-on-surface font-bold">$ 432,600</span>
+</td>
+<td class="py-space-sm pr-space-md pl-space-xs text-right whitespace-nowrap">
+<div class="inline-flex items-center gap-space-xs opacity-80 group-hover:opacity-100 transition-opacity">
+<button class="p-1 rounded-lg hover:bg-surface-container text-on-surface-variant hover:text-primary transition-colors" title="Editar" type="button">
+<span class="material-symbols-outlined text-base">edit</span>
+</button>
+<button class="p-1 rounded-lg hover:bg-surface-container text-on-surface-variant hover:text-error transition-colors" title="Eliminar" type="button">
+<span class="material-symbols-outlined text-base">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3: Pago de internet Fibra -->
+<tr class="hover:bg-surface-container-high/40 transition-colors group">
+<td class="py-space-sm pl-space-md pr-space-xs text-center">
+<input class="row-checkbox rounded bg-surface-container text-primary focus:ring-0 cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-space-sm px-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-xl bg-blue-950/30 text-blue-300 flex items-center justify-center shadow-inner">
+<span class="material-symbols-outlined text-lg">router</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-body-md text-body-md text-on-surface font-semibold truncate">Pago de internet</span>
+<span class="font-body-sm text-body-sm text-outline truncate" title="500 Mbps simétricos mes en curso">
+                        "500 Mbps simétricos mes en curso"
+                      </span>
+</div>
+</div>
+</td>
+<td class="py-space-sm px-space-sm font-label-numeric text-label-numeric text-on-surface-variant whitespace-nowrap">
+                  18/10/2024
+                </td>
+<td class="py-space-sm px-space-sm font-body-sm text-body-sm text-on-surface whitespace-nowrap">
+                  Claro Portal Web
+                </td>
+<td class="py-space-sm px-space-sm whitespace-nowrap">
+<span class="inline-flex items-center gap-1 px-space-sm py-0.5 rounded-full font-label-micro text-label-micro font-bold bg-primary/10 text-primary shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                    Transferencia
+                  </span>
+</td>
+<td class="py-space-sm px-space-md text-right whitespace-nowrap">
+<span class="font-label-numeric text-body-md text-on-surface font-bold">$ 94,900</span>
+</td>
+<td class="py-space-sm pr-space-md pl-space-xs text-right whitespace-nowrap">
+<div class="inline-flex items-center gap-space-xs opacity-80 group-hover:opacity-100 transition-opacity">
+<button class="p-1 rounded-lg hover:bg-surface-container text-on-surface-variant hover:text-primary transition-colors" title="Editar" type="button">
+<span class="material-symbols-outlined text-base">edit</span>
+</button>
+<button class="p-1 rounded-lg hover:bg-surface-container text-on-surface-variant hover:text-error transition-colors" title="Eliminar" type="button">
+<span class="material-symbols-outlined text-base">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4: Materiales Remodelación -->
+<tr class="hover:bg-surface-container-high/40 transition-colors group">
+<td class="py-space-sm pl-space-md pr-space-xs text-center">
+<input class="row-checkbox rounded bg-surface-container text-primary focus:ring-0 cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-space-sm px-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-xl bg-orange-950/30 text-orange-300 flex items-center justify-center shadow-inner">
+<span class="material-symbols-outlined text-lg">home_repair_service</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-body-md text-body-md text-on-surface font-semibold truncate">Herramientas &amp; Pintura</span>
+<span class="font-body-sm text-body-sm text-outline truncate" title="Arreglo del estudio y balcón">
+                        "Arreglo del estudio y balcón"
+                      </span>
+</div>
+</div>
+</td>
+<td class="py-space-sm px-space-sm font-label-numeric text-label-numeric text-on-surface-variant whitespace-nowrap">
+                  14/10/2024
+                </td>
+<td class="py-space-sm px-space-sm font-body-sm text-body-sm text-on-surface whitespace-nowrap">
+                  Homecenter Calle 80
+                </td>
+<td class="py-space-sm px-space-sm whitespace-nowrap">
+<span class="inline-flex items-center gap-1 px-space-sm py-0.5 rounded-full font-label-micro text-label-micro font-bold bg-amber-950/40 text-amber-300 shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-300"></span>
+                    Efectivo
+                  </span>
+</td>
+<td class="py-space-sm px-space-md text-right whitespace-nowrap">
+<span class="font-label-numeric text-body-md text-on-surface font-bold">$ 260,000</span>
+</td>
+<td class="py-space-sm pr-space-md pl-space-xs text-right whitespace-nowrap">
+<div class="inline-flex items-center gap-space-xs opacity-80 group-hover:opacity-100 transition-opacity">
+<button class="p-1 rounded-lg hover:bg-surface-container text-on-surface-variant hover:text-primary transition-colors" title="Editar" type="button">
+<span class="material-symbols-outlined text-base">edit</span>
+</button>
+<button class="p-1 rounded-lg hover:bg-surface-container text-on-surface-variant hover:text-error transition-colors" title="Eliminar" type="button">
+<span class="material-symbols-outlined text-base">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 5: Suscripción Desarrollador -->
+<tr class="hover:bg-surface-container-high/40 transition-colors group">
+<td class="py-space-sm pl-space-md pr-space-xs text-center">
+<input class="row-checkbox rounded bg-surface-container text-primary focus:ring-0 cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-space-sm px-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-xl bg-purple-950/30 text-purple-300 flex items-center justify-center shadow-inner">
+<span class="material-symbols-outlined text-lg">terminal</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-body-md text-body-md text-on-surface font-semibold truncate">Licencia Cloud &amp; Hosting</span>
+<span class="font-body-sm text-body-sm text-outline truncate" title="Renovación mensual servidores de staging">
+                        "Renovación mensual servidores..."
+                      </span>
+</div>
+</div>
+</td>
+<td class="py-space-sm px-space-sm font-label-numeric text-label-numeric text-on-surface-variant whitespace-nowrap">
+                  09/10/2024
+                </td>
+<td class="py-space-sm px-space-sm font-body-sm text-body-sm text-on-surface whitespace-nowrap">
+                  Vercel Inc.
+                </td>
+<td class="py-space-sm px-space-sm whitespace-nowrap">
+<span class="inline-flex items-center gap-1 px-space-sm py-0.5 rounded-full font-label-micro text-label-micro font-bold bg-secondary-container/20 text-secondary shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                    PSE
+                  </span>
+</td>
+<td class="py-space-sm px-space-md text-right whitespace-nowrap">
+<span class="font-label-numeric text-body-md text-on-surface font-bold">$ 89,500</span>
+</td>
+<td class="py-space-sm pr-space-md pl-space-xs text-right whitespace-nowrap">
+<div class="inline-flex items-center gap-space-xs opacity-80 group-hover:opacity-100 transition-opacity">
+<button class="p-1 rounded-lg hover:bg-surface-container text-on-surface-variant hover:text-primary transition-colors" title="Editar" type="button">
+<span class="material-symbols-outlined text-base">edit</span>
+</button>
+<button class="p-1 rounded-lg hover:bg-surface-container text-on-surface-variant hover:text-error transition-colors" title="Eliminar" type="button">
+<span class="material-symbols-outlined text-base">delete</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Footer / Subtotal Status Bar -->
+<div class="p-space-md bg-surface-container flex flex-col sm:flex-row items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm text-on-surface-variant font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-primary text-base">pie_chart</span>
+<span>Mostrando subtotal del filtro actual:</span>
+<span class="font-label-numeric text-label-numeric text-on-surface font-bold">34 transacciones</span>
+</div>
+<div class="flex items-center gap-space-md">
+<span class="font-label-micro text-label-micro uppercase text-outline">Total Consolidado</span>
+<div class="px-space-md py-space-xs rounded-lg bg-surface-container-high shadow-inner">
+<span class="font-label-numeric text-headline-sm text-primary font-bold">$ 2,845,000 COP</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Quick Receipt Snapshot Banner -->
+<div class="p-space-md rounded-xl bg-surface-container-high/50 flex flex-col sm:flex-row items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-md">
+<div class="w-12 h-12 rounded-xl bg-primary-container/20 text-primary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-2xl">document_scanner</span>
+</div>
+<div>
+<h4 class="font-headline-sm text-body-lg text-on-surface font-semibold">¿Tienes comprobantes impresos o capturas de pago?</h4>
+<p class="font-body-sm text-body-sm text-outline">Kairo extrae comercio, total y modo de transferencia de forma automatizada mediante OCR.</p>
+</div>
+</div>
+<button class="shrink-0 px-space-md py-space-sm rounded-xl bg-surface-container text-on-surface hover:bg-surface-bright font-label-tag text-label-tag font-bold transition-all shadow-sm" type="button">
+          Escanear Recibo
+        </button>
+</div>
+</main>
+</div>
+</div>
+<script>
+  // Dynamic Form Submission Handling
+  const expenseForm = document.getElementById('expenseForm');
+  const expenseTableBody = document.getElementById('expenseTableBody');
+  const selectAll = document.getElementById('selectAll');
+
+  // Select all table checkboxes
+  if (selectAll) {
+    selectAll.addEventListener('change', (e) => {
+      const checkboxes = document.querySelectorAll('.row-checkbox');
+      checkboxes.forEach(cb => cb.checked = e.target.checked);
+    });
+  }
+
+  // Filter Pills Highlight Behavior
+  const filterPills = document.querySelectorAll('.filter-pill');
+  filterPills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      filterPills.forEach(p => {
+        p.classList.remove('bg-surface-bright', 'text-on-surface', 'font-bold');
+        p.classList.add('bg-surface-container-high', 'text-on-surface-variant');
+      });
+      pill.classList.remove('bg-surface-container-high', 'text-on-surface-variant');
+      pill.classList.add('bg-surface-bright', 'text-on-surface', 'font-bold');
+    });
+  });
+
+  // Client-Side Entry Addition
+  if (expenseForm) {
+    expenseForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const titulo = document.getElementById('tituloGasto').value;
+      const fecha = document.getElementById('fechaGasto').value;
+      const monto = document.getElementById('montoGasto').value;
+      const categoria = document.getElementById('categoriaGasto').value;
+      const sitio = document.getElementById('sitioCompra').value;
+      const observaciones = document.getElementById('observacionesGasto').value;
+      
+      const selectedPaymentRadio = document.querySelector('input[name="modo_pago"]:checked');
+      const modoPago = selectedPaymentRadio ? selectedPaymentRadio.value : 'Efectivo';
+
+      // Badge styling by payment mode
+      let badgeHtml = '';
+      if (modoPago === 'Nequi') {
+        badgeHtml = '<span class="inline-flex items-center gap-1 px-space-sm py-0.5 rounded-full font-label-micro text-label-micro font-bold bg-fuchsia-950/50 text-fuchsia-300"><span class="w-1.5 h-1.5 rounded-full bg-fuchsia-400"></span>Nequi</span>';
+      } else if (modoPago === 'PSE') {
+        badgeHtml = '<span class="inline-flex items-center gap-1 px-space-sm py-0.5 rounded-full font-label-micro text-label-micro font-bold bg-secondary-container/20 text-secondary"><span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>PSE</span>';
+      } else if (modoPago === 'Transferencia') {
+        badgeHtml = '<span class="inline-flex items-center gap-1 px-space-sm py-0.5 rounded-full font-label-micro text-label-micro font-bold bg-primary/10 text-primary"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span>Transferencia</span>';
+      } else {
+        badgeHtml = '<span class="inline-flex items-center gap-1 px-space-sm py-0.5 rounded-full font-label-micro text-label-micro font-bold bg-amber-950/40 text-amber-300"><span class="w-1.5 h-1.5 rounded-full bg-amber-300"></span>Efectivo</span>';
+      }
+
+      // Prepend newly created row
+      const newRow = document.createElement('tr');
+      newRow.className = 'hover:bg-surface-container-high/40 transition-colors group animate-pulse';
+      newRow.innerHTML = `
+        <td class="py-space-sm pl-space-md pr-space-xs text-center">
+          <input type="checkbox" class="row-checkbox rounded bg-surface-container text-primary focus:ring-0 cursor-pointer">
+        </td>
+        <td class="py-space-sm px-space-sm">
+          <div class="flex items-center gap-space-sm">
+            <div class="w-9 h-9 rounded-xl bg-primary/15 text-primary flex items-center justify-center shadow-inner">
+              <span class="material-symbols-outlined text-lg">receipt</span>
+            </div>
+            <div class="flex flex-col min-w-0">
+              <span class="font-body-md text-body-md text-on-surface font-semibold truncate">${titulo}</span>
+              <span class="font-body-sm text-body-sm text-outline truncate" title="${observaciones}">"${observaciones.substring(0, 26)}..."</span>
+            </div>
+          </div>
+        </td>
+        <td class="py-space-sm px-space-sm font-label-numeric text-label-numeric text-on-surface-variant whitespace-nowrap">
+          ${fecha}
+        </td>
+        <td class="py-space-sm px-space-sm font-body-sm text-body-sm text-on-surface whitespace-nowrap">
+          ${sitio}
+        </td>
+        <td class="py-space-sm px-space-sm whitespace-nowrap">
+          ${badgeHtml}
+        </td>
+        <td class="py-space-sm px-space-md text-right whitespace-nowrap">
+          <span class="font-label-numeric text-body-md text-primary font-bold">${monto}</span>
+        </td>
+        <td class="py-space-sm pr-space-md pl-space-xs text-right whitespace-nowrap">
+          <div class="inline-flex items-center gap-space-xs opacity-80 group-hover:opacity-100 transition-opacity">
+            <button type="button" class="p-1 rounded-lg hover:bg-surface-container text-on-surface-variant hover:text-primary transition-colors">
+              <span class="material-symbols-outlined text-base">edit</span>
+            </button>
+            <button type="button" class="p-1 rounded-lg hover:bg-surface-container text-on-surface-variant hover:text-error transition-colors">
+              <span class="material-symbols-outlined text-base">delete</span>
+            </button>
+          </div>
+        </td>
+      `;
+
+      expenseTableBody.insertBefore(newRow, expenseTableBody.firstChild);
+      setTimeout(() => newRow.classList.remove('animate-pulse'), 1500);
+
+      // Clean inputs for next entry
+      document.getElementById('tituloGasto').value = '';
+      document.getElementById('sitioCompra').value = '';
+      document.getElementById('observacionesGasto').value = '';
+    });
+  }
+
+  // Smooth scroll to form from top button on smaller breakpoints
+  const openFormBtn = document.getElementById('openFormBtn');
+  const formContainer = document.getElementById('formContainer');
+  if (openFormBtn && formContainer) {
+    openFormBtn.addEventListener('click', () => {
+      formContainer.scrollIntoView({ behavior: 'smooth' });
+      document.getElementById('tituloGasto').focus();
+    });
+  }
+</script></main></div></body></html>
