@@ -9,7 +9,7 @@ Responde siempre en **español**. Los requisitos completos están en [`docs/plan
 1. Lo que el usuario diga en la conversación.
 2. La especificación aprobada de la etapa (issue de GitHub con la etiqueta `spec`).
 3. `docs/plan.md`: reglas de negocio (sección 3), modelo de datos (4), metodología (5), harness (6) y etapas (7).
-4. `DESIGN.md` (cuando exista, desde la Etapa 1) y las skills de `.claude/skills/`.
+4. `DESIGN.md` (aprobado en la Etapa 1) y las skills de `.claude/skills/`.
 
 Si dos fuentes chocan, gana la de número menor y la decisión se anota en la especificación para actualizar el plan al cerrar la etapa.
 

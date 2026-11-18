@@ -10,8 +10,8 @@ App web PWA de uso principal en el móvil, para controlar gastos en COP, en espa
 ## Fuentes de verdad, en orden
 
 1. **`docs/plan.md`** decide **qué** hay en cada pantalla (reglas y campos).
-2. **`DESIGN.md`** en la raíz decide **cómo se ve**, cuando exista (se crea y aprueba en la Etapa 1, idealmente con `/impeccable document`).
-3. **`references/tokens.md`** de esta skill: tokens extraídos de los ejemplos, válidos hasta que DESIGN.md los reemplace.
+2. **`DESIGN.md`** en la raíz decide **cómo se ve** (aprobado al cerrar la Etapa 1, 18-nov-2026): tokens, layouts, componentes, estados e inventario de pantallas. Las pantallas detalladas están en el lienzo de Claude Design que enlaza.
+3. **`references/tokens.md`** de esta skill: histórico. DESIGN.md lo reemplaza; si chocan, gana DESIGN.md.
 4. **`docs/design/referencias/Example*.html`**: guía de **forma** (composición, jerarquía, densidad). No son una fuente de contenido.
 
 ### Qué tomar y qué no de los ejemplos
@@ -22,7 +22,7 @@ Tomar: tarjetas tipo *bento* con KPI, cifras en fuente monoespaciada, barras de 
 - La marca "Kairo", "Plan Premium", "Sincronización bancaria", "Cifrado" ni textos de marketing.
 - Funciones que el plan no tiene: límite de presupuesto por categoría (es mejora futura), sincronización con bancos, PSE como forma de pago fija (el usuario puede crearla por CRUD).
 - Material Symbols ni emojis: los íconos son **Lucide**.
-- Solo modo oscuro: el MVP es **modo claro**; el oscuro queda preparado con los mismos tokens (ver tokens.md).
+- Solo modo oscuro: el MVP es **modo claro**; el oscuro queda preparado con los mismos tokens (ver DESIGN.md §2).
 - Formatos de número mezclados (`$2,845,000`): siempre `$2.845.000` (ver "Dinero y fechas").
 
 ## Organización de componentes

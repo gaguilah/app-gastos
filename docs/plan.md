@@ -160,6 +160,19 @@ El presupuesto del período es la referencia: los gastos lo descuentan, los ingr
 - Eliminar un registro en uso muestra una advertencia y conserva el historial.
 - Lugares y personas también se crean al escribirlos en un formulario; desde su CRUD se pueden renombrar, unir duplicados o eliminar.
 
+### 3.15 Ahorros (metas)
+
+Módulo agregado en la Etapa 1 (18-nov-2026), a partir del diseño aprobado. Sus reglas se confirman en la especificación de la Etapa 6.
+
+- Una **meta** tiene nombre, monto a alcanzar, fecha final y saldo inicial opcional. Cada meta tiene **su propia bolsa**.
+- **Aporte:** pasa dinero de una bolsa o medio a la bolsa de la meta. No es gasto y no baja el disponible del período.
+- **Aportes periódicos** (semanal, quincenal o mensual, con día y origen): llegan como **pendientes de confirmar**. Al confirmarlos se puede ajustar el valor, solo esta vez o en adelante. También se puede **omitir** uno; la fecha final no cambia y el aporte sugerido sube.
+- **Retirar:** saca dinero de la meta hacia una bolsa, con motivo.
+- **Pausar y reanudar:** detiene los aportes periódicos; lo ahorrado se queda en la meta.
+- **Eliminar:** pide a qué bolsa pasa lo ahorrado; el historial se conserva.
+- **Estados** derivados: al día, atrasada (por debajo del ritmo ideal), cumplida y pausada. El detalle muestra la proyección ("a este ritmo la cumples en …").
+- Por definir en la Etapa 6: qué pasa con el presupuesto cuando el aporte sale de un medio directo (Débito, Transferencia) y no de una bolsa.
+
 ## 4. Modelo de datos
 
 Todas las entidades pertenecen a un usuario; los montos se guardan en pesos enteros (COP sin decimales) y los saldos y totales se calculan a partir de los movimientos.
@@ -171,7 +184,9 @@ Todas las entidades pertenecen a un usuario; los montos se guardan en pesos ente
 | Categoría | nombre, ícono, color, tipo (gasto/ingreso/préstamo/deuda), del sistema sí/no, categoría padre (opcional), archivada | Una subcategoría apunta a su padre |
 | Forma de pago | nombre, clase (bolsa/medio directo/canal), activa | Una bolsa tiene saldo |
 | Bolsa | nombre, forma de pago asociada | Recibe recargas, ingresos y ajustes; descuenta gastos |
-| Movimiento de bolsa | tipo (recarga/ajuste/gasto/ingreso), fecha, valor | Pertenece a una bolsa |
+| Movimiento de bolsa | tipo (recarga/ajuste/gasto/ingreso/aporte/retiro), fecha, valor | Pertenece a una bolsa |
+| Meta de ahorro | nombre, monto a alcanzar, fecha final, estado (activa/pausada/cumplida/eliminada) | Tiene su propia bolsa; regla de aporte periódico (opcional) |
+| Regla de aporte | valor, frecuencia, día, origen, próxima fecha, activa/pausada | Genera aportes pendientes de confirmar |
 | Lugar | nombre visible, nombre normalizado (único) | Lo usan los gastos |
 | Persona o entidad | nombre visible, nombre normalizado (único), tipo (persona/banco/tarjeta) | La usan préstamos y deudas |
 | Gasto | título, fecha, valor, descripción, estado (confirmado/pendiente), afecta presupuesto sí/no, copia de nombre/ícono/color de la categoría | Período, categoría, lugar, origen (bolsa o medio), canal, regla periódica, préstamo o cuota de deuda (opcionales) |
@@ -284,12 +299,12 @@ Trece etapas en orden; cada una termina con el cierre de la sección 5 y su prop
 | Etapa | Objetivo | Entregables | Criterio principal de cierre |
 | --- | --- | --- | --- |
 | 0. Preparación | Dejar listo el entorno y el harness | Repositorio en GitHub, tablero Kanban, segundo proyecto Supabase, Supabase local, Netlify con versiones de prueba, GitHub Actions, CLAUDE.md | Una página vacía publicada en Netlify y el harness corriendo en GitHub |
-| 1. Diseño de plantillas y pantallas | Definir cómo se ve y se usa la app antes de programarla | Inventario de pantallas y flujos, bocetos basados en Stitch en tres tamaños (móvil, tablet, computador), design.md (colores, tipografía, espaciado, componentes y estados, íconos, preparado para modo oscuro), elección de la librería de gráficas | El usuario aprueba todas las pantallas y el design.md |
+| 1. Diseño de plantillas y pantallas | Definir cómo se ve y se usa la app antes de programarla | Inventario de pantallas y flujos, bocetos en tres tamaños (móvil, tablet, computador) hechos en Claude Design a partir de los ejemplos de Stitch, DESIGN.md (colores, tipografía, espaciado, componentes y estados, íconos, preparado para modo oscuro), elección de la librería de gráficas | El usuario aprueba todas las pantallas y el design.md |
 | 2. Base de datos y seguridad | Crear el modelo de datos | Tablas, relaciones, reglas RLS, categorías y formas de pago iniciales | Pruebas de RLS y de historial al borrar categorías en verde |
 | 3. Lógica del servidor | Reglas que no dependen de pantallas | Cálculo de períodos, generación de periódicos y cuotas, alertas, saldos de bolsas, resumen de cierre, tarea programada diaria | Todas las pruebas de reglas de cálculo en verde |
 | 4. Base del frontend | Estructura común de la app | Login (sin registro), rutas protegidas con layout común, diseño adaptable a tres tamaños (navegación inferior en móvil, menú lateral en tablet y computador), español e inglés, PWA instalable, componentes del design.md | La app se instala en móvil y computador, y el login funciona en los tres tamaños; sin sesión, toda ruta redirige al login |
 | 5. Gestión de datos (CRUD) | Datos de referencia | Categorías con subcategorías y tipos, formas de pago, bolsas, lugares, personas o entidades | Sin duplicados en lugares y personas; categorías filtradas por tipo |
-| 6. Presupuesto, ingresos y bolsas | Controlar el dinero disponible | Configuración del período, presupuesto, ingresos con destino, recargas y ajuste de saldo | Saldos de presupuesto y bolsas correctos en los recorridos E2E |
+| 6. Presupuesto, ingresos y bolsas | Controlar el dinero disponible | Configuración del período, presupuesto, ingresos con destino, recargas y ajuste de saldo, metas de ahorro con aportes y retiros (3.15) | Saldos de presupuesto y bolsas correctos en los recorridos E2E |
 | 7. Gastos y filtros | Registrar y consultar gastos | Formulario de gasto, lista agrupada por día, todos los filtros y búsqueda | Un gasto descuenta del presupuesto y de su bolsa; los filtros devuelven lo esperado |
 | 8. Gastos periódicos | Automatizar gastos repetidos | Reglas, pendientes por confirmar, pausa, edición hacia adelante | Recorrido completo crear → generar → confirmar en verde |
 | 9. Préstamos y deudas | Controlar dinero prestado y debido | Sección Préstamos (cobros parciales, no recuperado) y sección Deudas (cuotas, tarjetas, abonos, proyección) | Solo la cuota pagada afecta el presupuesto; los pendientes aparecen en el cierre |
@@ -304,6 +319,7 @@ Las mejoras futuras (IA para recibos, correo, modo oscuro) se planifican como et
 | Etapa | Cierre | Especificación y PR | Decisiones |
 | --- | --- | --- | --- |
 | 0. Preparación | 15-nov-2026 | #4 · PR #5 | Repo público para que el ruleset de `main` exija los checks `estatica`, `unitarias`, `base-de-datos` y `e2e`, con GitHub Free. Cada dependencia entra en la etapa que la usa. i18n desde el día uno. Netlify publica producción desde `main` (sitio `app-gastos-gah`) y una versión de prueba por PR. Supabase local con registros desactivados y prueba pgTAP de guardia de RLS. Tablero de GitHub Projects con un issue por etapa (#6 a #17); la especificación de cada etapa se escribe en su issue. Para ahorrar créditos de Netlify, la versión de prueba se pide con `[preview]` en el commit y solo se construye si cambió la app (`scripts/netlify-ignore.sh`). |
+| 1. Diseño de plantillas y pantallas | 18-nov-2026 | #6 · PR #20 y PR de cierre | Pantallas diseñadas en Claude Design ([lienzo](https://claude.ai/artifact/NQYDHYjenHaJBrSg7o6skm), 16 secciones en tres tamaños con modales y estados). Sistema de diseño en [App-Gastos Design System](https://claude.ai/artifact/KeLyaiHYpr9p7wyvstXyfJ) y resumen en PDF. `DESIGN.md` reemplaza a `diseno-ui/references/tokens.md` (misma paleta, ahora con `destructive-soft`, `warning-soft`, `warning-ink`, `chart-budget`, colores iniciales de categoría, medidas y sombras). Nuevo módulo **Ahorros** (3.15, Etapa 6). Cada sección del lienzo se implementa como una tarea propia, en la etapa que indica `DESIGN.md` §9. Gráficas con charts de shadcn sobre Recharts. Etapa sin código ni versión de prueba de Netlify. |
 
 ## 8. Riesgos, pendientes y mejoras futuras
 
