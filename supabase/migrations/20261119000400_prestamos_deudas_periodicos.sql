@@ -3,7 +3,7 @@
 -- Los estados derivados (Pendiente/Parcial/Pagado, Activa/Pagada) no se guardan: se
 -- calculan en la Etapa 3 a partir de cobros, cuotas y abonos.
 
--- Lanza check_violation si la categoría no es del tipo esperado (3.11).
+-- Lanza check_violation si una categoría del usuario no es del tipo esperado (3.11).
 create function public.exigir_tipo_categoria(p_categoria_id uuid, p_user_id uuid, p_tipo text)
 returns void
 language plpgsql
@@ -11,9 +11,10 @@ stable
 set search_path = ''
 as $$
 begin
-  if p_categoria_id is not null and not exists (
+  -- Una categoría ajena o inexistente la rechaza la llave foránea compuesta (23503).
+  if exists (
     select 1 from public.categorias
-     where id = p_categoria_id and user_id = p_user_id and tipo = p_tipo
+     where id = p_categoria_id and user_id = p_user_id and tipo <> p_tipo
   ) then
     raise exception 'La categoría debe ser de tipo %', p_tipo
       using errcode = 'check_violation';

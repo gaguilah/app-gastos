@@ -144,7 +144,7 @@ create table public.formas_pago (
   unique (id, user_id)
 );
 
--- Lanza check_violation si la forma de pago no es de la clase esperada (3.12).
+-- Lanza check_violation si una forma de pago del usuario no es de la clase esperada (3.12).
 -- La usan los triggers de bolsas, gastos, deudas y aportes.
 create function public.exigir_clase_forma_pago(p_forma_pago_id uuid, p_user_id uuid, p_clase text)
 returns void
@@ -153,9 +153,11 @@ stable
 set search_path = ''
 as $$
 begin
-  if p_forma_pago_id is not null and not exists (
+  -- Si la forma de pago no es del usuario, no se responde aquí: la llave foránea
+  -- compuesta da el error (23503) sin revelar nada de datos ajenos.
+  if exists (
     select 1 from public.formas_pago
-     where id = p_forma_pago_id and user_id = p_user_id and clase = p_clase
+     where id = p_forma_pago_id and user_id = p_user_id and clase <> p_clase
   ) then
     raise exception 'La forma de pago debe ser de clase %', p_clase
       using errcode = 'check_violation';
