@@ -16,6 +16,21 @@ select is(
   'i',
   'normalizar_nombre es immutable (sirve para una columna generada)');
 
+select results_eq(
+  $$ select public.normalizar_nombre('ÉXITO') $$,
+  $$ values ('exito'::text) $$,
+  'quita mayúsculas y tildes');
+
+select results_eq(
+  $$ select public.normalizar_nombre('  Éxito   Calle 80 ') $$,
+  $$ values ('exito calle 80'::text) $$,
+  'recorta y colapsa los espacios');
+
+select results_eq(
+  $$ select public.normalizar_nombre('Peña') $$,
+  $$ values ('pena'::text) $$,
+  'la eñe pasa a n');
+
 select throws_ok(
   $$ insert into public.lugares (user_id, nombre)
      values ('00000000-0000-0000-0000-0000000000a1', '   ') $$,
@@ -33,21 +48,6 @@ select results_eq(
       where id = '00000000-0000-0000-0000-00000000c001' $$,
   $$ values ('Peña'::text, 'pena'::text) $$,
   'el nombre visible conserva la ñ y el normalizado no la tiene');
-
-select results_eq(
-  $$ select public.normalizar_nombre('ÉXITO') $$,
-  $$ values ('exito'::text) $$,
-  'quita mayúsculas y tildes');
-
-select results_eq(
-  $$ select public.normalizar_nombre('  Éxito   Calle 80 ') $$,
-  $$ values ('exito calle 80'::text) $$,
-  'recorta y colapsa los espacios');
-
-select results_eq(
-  $$ select public.normalizar_nombre('Peña') $$,
-  $$ values ('pena'::text) $$,
-  'la eñe pasa a n');
 
 select * from finish();
 rollback;
