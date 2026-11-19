@@ -23,9 +23,9 @@ select lives_ok($$
   insert into public.reglas_periodicas (id, user_id, titulo, valor, categoria_id, bolsa_id, frecuencia, intervalo, dia, fecha_inicio, proxima_fecha) values
     ('00000000-0000-0000-0005-000000000001', '00000000-0000-0000-0000-0000000000a1', 'Arriendo', 900000,
      '00000000-0000-0000-0001-000000000001', '00000000-0000-0000-0003-000000000001', 'mensual', 1, 31, '2026-01-31', '2026-03-31');
-  insert into public.deudas (id, user_id, persona_id, categoria_id, valor_recibido, total_pagar, num_cuotas, valor_cuota, dia_pago, medio_id) values
+  insert into public.deudas (id, user_id, persona_id, categoria_id, total_pagar, num_cuotas, valor_cuota, dia_pago, medio_id) values
     ('00000000-0000-0000-0006-000000000001', '00000000-0000-0000-0000-0000000000a1', '00000000-0000-0000-0004-000000000001',
-     '00000000-0000-0000-0001-000000000002', 1000000, 1200000, 12, 100000, 5, '00000000-0000-0000-0002-000000000002');
+     '00000000-0000-0000-0001-000000000002', 1200000, 12, 100000, 5, '00000000-0000-0000-0002-000000000002');
   insert into public.metas_ahorro (id, user_id, nombre, monto_meta, fecha_final, bolsa_id) values
     ('00000000-0000-0000-0007-000000000001', '00000000-0000-0000-0000-0000000000a1', 'Viaje', 3000000, '2027-06-30', '00000000-0000-0000-0003-000000000002');
   insert into public.reglas_aporte (id, user_id, meta_id, valor, frecuencia, dia, bolsa_id, proxima_fecha) values

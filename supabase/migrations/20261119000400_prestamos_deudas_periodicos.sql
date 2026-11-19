@@ -111,8 +111,8 @@ create table public.deudas (
   -- Pago de préstamos o la categoría propia de una tarjeta (tipo deuda).
   categoria_id uuid not null,
   fecha date not null default (now() at time zone 'America/Bogota')::date,
-  valor_recibido bigint not null check (valor_recibido >= 0),
-  total_pagar bigint not null check (total_pagar >= valor_recibido),
+  -- Sin control de intereses (decisión de Giovanni del 18-nov-2026): solo el total a pagar.
+  total_pagar bigint not null check (total_pagar >= 0),
   num_cuotas integer not null check (num_cuotas > 0),
   valor_cuota bigint not null check (valor_cuota >= 0),
   dia_pago smallint not null check (dia_pago between 1 and 31),
