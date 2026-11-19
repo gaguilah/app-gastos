@@ -49,6 +49,7 @@ jobs:
       # Solo Supabase local: este trabajo nunca se enlaza con el proyecto real.
       - run: npx supabase db start
       - run: npx supabase db reset
+      - run: npx supabase db lint --fail-on error
       - run: npx supabase test db
 
   e2e:
