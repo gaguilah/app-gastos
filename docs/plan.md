@@ -82,7 +82,7 @@ El presupuesto del período es la referencia: los gastos lo descuentan, los ingr
 - **Recarga** (retiro de cajero, recarga de Nequi): suma al saldo de la bolsa y no afecta el presupuesto. Sin comisión de cajero.
 - Los gastos con origen en una bolsa descuentan de la bolsa y del presupuesto en el momento de registrarse.
 - El saldo de la bolsa pasa al siguiente período.
-- **Ajustar saldo:** si el saldo real es menor que el de la app, la diferencia se registra como gasto de categoría *Gasto desconocido*.
+- **Ajustar saldo:** si el saldo real es menor que el de la app, la diferencia se registra como gasto de categoría *Gasto desconocido*; si es mayor, como movimiento de ajuste que suma a la bolsa sin afectar el presupuesto. Todo ajuste queda registrado con el saldo contado, la fecha y una nota (decidido el 18-nov-2026).
 - **Saldo negativo:** la app advierte y permite el gasto.
 
 ### 3.5 Ingresos
@@ -111,8 +111,8 @@ El presupuesto del período es la referencia: los gastos lo descuentan, los ingr
 ### 3.8 Deudas (lo que debo)
 
 - Sección propia “Deudas”. Incluye préstamos de bancos o personas y compras con tarjeta de crédito (a 1 o más cuotas).
-- Campos: entidad o persona, valor recibido, total a pagar, número de cuotas, valor de la cuota (fija por defecto), día de pago, origen y canal de pago, y si la cuota **afecta o no el presupuesto** (por ejemplo, una cuota por nómina no lo afecta).
-- La app calcula el interés total (total a pagar − valor recibido), el saldo pendiente y la fecha estimada de la última cuota.
+- Campos: entidad o persona, total a pagar, número de cuotas, valor de la cuota (fija por defecto), día de pago, origen y canal de pago, y si la cuota **afecta o no el presupuesto** (por ejemplo, una cuota por nómina no lo afecta).
+- La app calcula el saldo pendiente (total a pagar − cuotas pagadas − abonos) y la fecha estimada de la última cuota. **Sin control de intereses** (decidido el 18-nov-2026): no se guarda el valor recibido.
 - **Solo la cuota pagada en el período** afecta el presupuesto; las cuotas futuras son estadística y proyección.
 - Cada cuota llega como pendiente de confirmar, con recordatorio push, y su valor se puede ajustar al confirmar.
 - **Abono extraordinario:** se registra y luego se edita el plan (cuotas, valor o fechas) según el acuerdo con el acreedor.
@@ -171,7 +171,7 @@ Módulo agregado en la Etapa 1 (18-nov-2026), a partir del diseño aprobado. Sus
 - **Pausar y reanudar:** detiene los aportes periódicos; lo ahorrado se queda en la meta.
 - **Eliminar:** pide a qué bolsa pasa lo ahorrado; el historial se conserva.
 - **Estados** derivados: al día, atrasada (por debajo del ritmo ideal), cumplida y pausada. El detalle muestra la proyección ("a este ritmo la cumples en …").
-- Por definir en la Etapa 6: qué pasa con el presupuesto cuando el aporte sale de un medio directo (Débito, Transferencia) y no de una bolsa.
+- **Aporte desde un medio directo** (Débito, Transferencia): se elige en cada aporte y en la regla, con la casilla "afecta el presupuesto". Si afecta, baja el disponible del período pero no cuenta como gasto en las estadísticas. Un aporte desde una bolsa nunca afecta el presupuesto (decidido el 18-nov-2026).
 
 ## 4. Modelo de datos
 
@@ -184,16 +184,16 @@ Todas las entidades pertenecen a un usuario; los montos se guardan en pesos ente
 | Categoría | nombre, ícono, color, tipo (gasto/ingreso/préstamo/deuda), del sistema sí/no, categoría padre (opcional), archivada | Una subcategoría apunta a su padre |
 | Forma de pago | nombre, clase (bolsa/medio directo/canal), activa | Una bolsa tiene saldo |
 | Bolsa | nombre, forma de pago asociada | Recibe recargas, ingresos y ajustes; descuenta gastos |
-| Movimiento de bolsa | tipo (recarga/ajuste/gasto/ingreso/aporte/retiro), fecha, valor | Pertenece a una bolsa |
-| Meta de ahorro | nombre, monto a alcanzar, fecha final, estado (activa/pausada/cumplida/eliminada) | Tiene su propia bolsa; regla de aporte periódico (opcional) |
-| Regla de aporte | valor, frecuencia, día, origen, próxima fecha, activa/pausada | Genera aportes pendientes de confirmar |
+| Movimiento de bolsa | tipo (recarga/ajuste/saldo inicial/aporte/retiro), sentido (entrada/salida), fecha, valor, saldo contado (solo ajustes), afecta presupuesto (solo aportes desde un medio directo), estado (pendiente/confirmado/omitido, en aportes de una regla) | Pertenece a una bolsa; meta, medio directo y regla de aporte opcionales. Gastos e ingresos no se copian aquí: apuntan a la bolsa desde su tabla |
+| Meta de ahorro | nombre, monto a alcanzar, fecha final, pausada sí/no, eliminada (fecha); los estados al día, atrasada y cumplida se derivan | Tiene su propia bolsa; regla de aporte periódico (opcional) |
+| Regla de aporte | valor, frecuencia, día, origen, afecta presupuesto (solo medio directo), próxima fecha, activa/pausada | Genera aportes pendientes de confirmar |
 | Lugar | nombre visible, nombre normalizado (único) | Lo usan los gastos |
 | Persona o entidad | nombre visible, nombre normalizado (único), tipo (persona/banco/tarjeta) | La usan préstamos y deudas |
-| Gasto | título, fecha, valor, descripción, estado (confirmado/pendiente), afecta presupuesto sí/no, copia de nombre/ícono/color de la categoría | Período, categoría, lugar, origen (bolsa o medio), canal, regla periódica, préstamo o cuota de deuda (opcionales) |
-| Ingreso | título, fecha, valor, descripción, destino (bolsa o presupuesto), cuenta en estadísticas sí/no | Período, categoría de ingreso, préstamo o deuda (opcional) |
+| Gasto | título, fecha, valor, descripción, estado (confirmado/pendiente), afecta presupuesto sí/no, es ajuste sí/no con saldo contado, copia de nombre/ícono/color de la categoría | Período (deducido de la fecha), categoría y subcategoría, lugar, origen (bolsa o medio), canal, regla periódica, préstamo o cuota de deuda (opcionales) |
+| Ingreso | título, fecha, valor, descripción, destino (bolsa o presupuesto), cuenta en estadísticas sí/no, copia de la categoría | Período (deducido de la fecha), categoría de ingreso, préstamo o deuda (opcional) |
 | Regla periódica | plantilla del gasto, frecuencia, intervalo, día, inicio, repeticiones o indefinida, próxima fecha, activa/pausada | Genera gastos pendientes |
-| Préstamo realizado | monto, fecha, nota, fecha acordada (opcional), estado | Persona, gasto de salida, ingresos de cobro |
-| Deuda | valor recibido, total a pagar, cuotas, valor de cuota, día de pago, afecta presupuesto sí/no, estado | Persona o entidad, categoría (tarjeta o pago de préstamos), origen y canal |
+| Préstamo realizado | monto, fecha, nota, fecha acordada (opcional), no recuperado sí/no (los demás estados se derivan) | Persona, gasto de salida, ingresos de cobro |
+| Deuda | fecha, total a pagar, cuotas, valor de cuota, día de pago, afecta presupuesto sí/no (estado derivado; sin intereses) | Persona o entidad, categoría (tarjeta o pago de préstamos), origen y canal |
 | Cuota de deuda | número, fecha, valor, estado (pendiente/pagada) | Deuda; al pagarse genera un gasto |
 | Abono extraordinario | fecha, valor, nota | Deuda |
 | Alerta enviada | umbral (70–100 % o más), fecha | Período; evita repetir avisos |
@@ -320,6 +320,7 @@ Las mejoras futuras (IA para recibos, correo, modo oscuro) se planifican como et
 | --- | --- | --- | --- |
 | 0. Preparación | 15-nov-2026 | #4 · PR #5 | Repo público para que el ruleset de `main` exija los checks `estatica`, `unitarias`, `base-de-datos` y `e2e`, con GitHub Free. Cada dependencia entra en la etapa que la usa. i18n desde el día uno. Netlify publica producción desde `main` (sitio `app-gastos-gah`) y una versión de prueba por PR. Supabase local con registros desactivados y prueba pgTAP de guardia de RLS. Tablero de GitHub Projects con un issue por etapa (#6 a #17); la especificación de cada etapa se escribe en su issue. Para ahorrar créditos de Netlify, la versión de prueba se pide con `[preview]` en el commit y solo se construye si cambió la app (`scripts/netlify-ignore.sh`). |
 | 1. Diseño de plantillas y pantallas | 18-nov-2026 | #6 · PR #20 y PR de cierre | Pantallas diseñadas en Claude Design ([lienzo](https://claude.ai/artifact/NQYDHYjenHaJBrSg7o6skm), 16 secciones en tres tamaños con modales y estados). Sistema de diseño en [App-Gastos Design System](https://claude.ai/artifact/KeLyaiHYpr9p7wyvstXyfJ) y resumen en PDF. `DESIGN.md` reemplaza a `diseno-ui/references/tokens.md` (misma paleta, ahora con `destructive-soft`, `warning-soft`, `warning-ink`, `chart-budget`, colores iniciales de categoría, medidas y sombras). Nuevo módulo **Ahorros** (3.15, Etapa 6). Cada sección del lienzo se implementa como una tarea propia, en la etapa que indica `DESIGN.md` §9. Gráficas con charts de shadcn sobre Recharts. Etapa sin código ni versión de prueba de Netlify. |
+| 2. Base de datos y seguridad | 18-nov-2026 | #7 · PR #22 y PR de cierre | 19 tablas en Supabase local con RLS (cuatro políticas cada una) y llaves compuestas `(x_id, user_id)` contra referencias a datos de otro usuario; 200 pruebas pgTAP. El período de gastos e ingresos se deduce de la fecha. `movimientos_bolsa` solo guarda recargas, ajustes, saldos iniciales, aportes y retiros. Gastos e ingresos copian nombre, ícono y color de la categoría; lo que está en uso se archiva y no se borra. Categorías del sistema con `clave_sistema`, protegidas por trigger. `inicializar_usuario` idempotente con trigger en `auth.users` (en la Etapa 12 se llama a mano para el usuario real). Decisiones de Giovanni: aportes desde medio directo eligen si afectan el presupuesto, ajustes registrados con saldo contado, deudas sin intereses, categorías de ingreso iniciales. `supabase db lint` en el CI. Sin cambios en `src/` ni versión de prueba de Netlify. |
 
 ## 8. Riesgos, pendientes y mejoras futuras
 
@@ -336,7 +337,7 @@ El riesgo principal es la variedad de facturas y QR; el resto se controla con el
 
 - [x] Compartir los archivos de Stitch como referencia para la etapa 1 (en `docs/design/referencias/`).
 - [x] Librería de gráficas: charts de shadcn/ui sobre Recharts (decidido el 15-nov-2026).
-- [ ] Categorías de ingreso iniciales aprobadas, gestionadas con CRUD (Salario, Extra, Venta, Otros).
+- [x] Categorías de ingreso iniciales aprobadas, gestionadas con CRUD (Salario, Extra, Venta, Otros), el 18-nov-2026.
 
 **Mejoras futuras**
 
