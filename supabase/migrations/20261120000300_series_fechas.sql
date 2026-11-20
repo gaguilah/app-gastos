@@ -44,7 +44,7 @@ begin
       else
         v_a := v_dia - 15; v_b := v_dia;
       end if;
-      v_mes := date_trunc('month', p_inicio)::date;
+      v_mes := make_date(extract(year from p_inicio)::integer, extract(month from p_inicio)::integer, 1);
       -- Fechas de la serie del mes de inicio que quedan antes de p_inicio.
       v_k := p_n
            + (case when public.dia_en_mes(v_mes, v_a) < p_inicio then 1 else 0 end)
@@ -56,7 +56,7 @@ begin
   end case;
 
   -- Si el día del mes de inicio ya pasó, la serie empieza el mes siguiente.
-  v_mes := date_trunc('month', p_inicio)::date;
+  v_mes := make_date(extract(year from p_inicio)::integer, extract(month from p_inicio)::integer, 1);
   if public.dia_en_mes(v_mes, v_dia) < p_inicio then
     v_mes := (v_mes + interval '1 month')::date;
   end if;

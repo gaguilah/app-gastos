@@ -18,9 +18,12 @@ language sql
 immutable
 set search_path = ''
 as $$
-  select (date_trunc('month', p_mes)::date
-          + (least(p_dia,
-                   extract(day from date_trunc('month', p_mes) + interval '1 month - 1 day')::int) - 1));
+  -- make_date en lugar de date_trunc, que pasaría por timestamptz y no sería inmutable.
+  with mes as (
+    select make_date(extract(year from p_mes)::integer, extract(month from p_mes)::integer, 1) as primero
+  )
+  select primero + (least(p_dia, extract(day from (primero + interval '1 month - 1 day'))::integer) - 1)
+    from mes;
 $$;
 
 -- Período que contiene p_hoy con el día de inicio p_dia (supuesto 2).
