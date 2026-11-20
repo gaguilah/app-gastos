@@ -166,7 +166,7 @@ Cada build de Netlify gasta créditos, así que `scripts/netlify-ignore.sh` (dec
 ## Estructura prevista
 
 ```
-src/dominio/               reglas de negocio puras (sin React, sin Supabase, sin Date.now())
+src/dominio/               lógica pura de presentación (sin React, sin Supabase, sin Date.now()); las reglas de cálculo viven en SQL (supabase/migrations) desde la Etapa 3
 src/datos/                 acceso a Supabase y tipos generados
 src/components/ui/         shadcn (átomos)
 src/components/shared/     moléculas reutilizables

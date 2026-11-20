@@ -1,13 +1,13 @@
 # Casos mínimos de las reglas de cálculo
 
-Cada especificación puede agregar casos; estos son el piso. Todos con reloj fijo.
+Cada especificación puede agregar casos; estos son el piso. Todos con reloj fijo. Desde la Etapa 3 las reglas viven en SQL, así que estos casos se prueban con pgTAP en `supabase/tests/`; Vitest queda para lo de presentación.
 
 ## Período (3.1)
 - Inicio 1: hoy 2026-02-10 → 2026-02-01 a 2026-02-28.
 - Inicio 1 en bisiesto: hoy 2028-02-10 → 2028-02-01 a 2028-02-29.
 - Inicio 15: hoy 2026-03-02 → 2026-02-15 a 2026-03-14; hoy 2026-03-15 → 2026-03-15 a 2026-04-14.
 - Inicio 15 cruzando el año: hoy 2026-12-20 → 2026-12-15 a 2027-01-14.
-- Inicio 31: en abril empieza el 30; en febrero, el 28 o 29 (supuesto a confirmar en la Etapa 3).
+- Inicio 31: en abril empieza el 30; en febrero, el 28 o 29 (confirmado en la Etapa 3).
 - Disponible = presupuesto + ingresos a presupuesto − gastos que afectan el presupuesto; los ingresos a una bolsa no lo cambian.
 - Gastos pendientes de confirmar no descuentan hasta confirmarse.
 

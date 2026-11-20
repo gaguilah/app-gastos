@@ -56,9 +56,10 @@ El presupuesto del período es la referencia: los gastos lo descuentan, los ingr
 ### 3.1 Período y presupuesto
 
 - El período va del día 1 al fin de mes por defecto. El usuario puede fijar otro día de inicio (por ejemplo, del 15 al 14) y se mantiene hasta que lo cambie.
+- Si el día de inicio no existe en un mes (por ejemplo, el 31), el período empieza el último día de ese mes. Al cambiar el día de inicio, el período en curso no se toca y un período de transición cubre los días hasta el nuevo inicio (decidido en la Etapa 3, 20-nov-2026).
 - Cada período nace con el presupuesto por defecto, que se puede ajustar en ese período.
 - El presupuesto es independiente de los ingresos. Un ingreso con destino “presupuesto” aumenta el disponible del período.
-- Saldo disponible = presupuesto + ingresos con destino presupuesto − gastos que afectan el presupuesto.
+- Saldo disponible = presupuesto + ingresos con destino presupuesto − gastos que afectan el presupuesto − aportes de ahorro que afectan el presupuesto. Un cobro de préstamo con destino presupuesto cuenta como ingreso del período en que llega.
 - El sobrante no se acumula ni se pierde: queda como estadística del período cerrado.
 - Al cerrar un período se guarda un resumen: presupuesto, ingresos, gastado, saldo, gasto por categoría, préstamos pendientes por cobrar y cuotas de deudas pendientes.
 
@@ -66,6 +67,8 @@ El presupuesto del período es la referencia: los gastos lo descuentan, los ingr
 
 - Notificación push al alcanzar el 70 %, 75 %, 80 %, 85 %, 90 %, 95 % y 100 % del presupuesto, y al superarlo.
 - Cada umbral se avisa una sola vez por período.
+- Si un gasto cruza varios umbrales a la vez, todos quedan registrados, pero se envía **un solo push** con el más alto (el envío llega en la Etapa 12). Un umbral avisado no se vuelve a avisar aunque el porcentaje baje (por ejemplo, al subir el presupuesto). Con presupuesto 0 no hay alertas (decidido el 20-nov-2026).
+- En pantalla, la barra y los avisos usan un degradado de amarillo a rojo del 70 % al 100 % (un token por umbral, `DESIGN.md`).
 
 ### 3.3 Gastos
 
@@ -98,6 +101,7 @@ El presupuesto del período es la referencia: los gastos lo descuentan, los ingr
 - Cambiar la regla aplica desde ese momento en adelante; el historial no cambia.
 - Se puede pausar y reanudar.
 - Casos especiales: día 31 en meses cortos (último día del mes), años bisiestos y fechas atrasadas sin duplicar gastos.
+- Quincenal: los días D y D+15 de cada mes (o D−15 y D si D+15 pasa de 31). Mientras una regla está pausada no se generan los pendientes de ese tramo. La primera fecha la calcula la base de datos al crear la regla (Etapa 3, 20-nov-2026).
 
 ### 3.7 Préstamos que hago
 
@@ -119,6 +123,7 @@ El presupuesto del período es la referencia: los gastos lo descuentan, los ingr
 - Las cuotas usan la categoría *Pago de préstamos*. Cada tarjeta de crédito tiene su propia categoría (por ejemplo, “Compra Tarjeta de Crédito Visa Banco X”), creada automáticamente al registrar la tarjeta, con ícono de tarjeta y color editable.
 - Las tarjetas se registran solo con un nombre descriptivo: nunca números, fechas de vencimiento ni códigos de seguridad.
 - Estados: Activa → Pagada.
+- El plan de cuotas lo crea la base de datos (`generar_plan_cuotas`, y la tarea diaria si falta): la primera cuota cae en el primer día de pago después de la fecha de la deuda y la última toma la diferencia para cuadrar el total (Etapa 3, 20-nov-2026).
 
 ### 3.9 Lugares
 
@@ -172,6 +177,7 @@ Módulo agregado en la Etapa 1 (18-nov-2026), a partir del diseño aprobado. Sus
 - **Eliminar:** pide a qué bolsa pasa lo ahorrado; el historial se conserva.
 - **Estados** derivados: al día, atrasada (por debajo del ritmo ideal), cumplida y pausada. El detalle muestra la proyección ("a este ritmo la cumples en …").
 - **Aporte desde un medio directo** (Débito, Transferencia): se elige en cada aporte y en la regla, con la casilla "afecta el presupuesto". Si afecta, baja el disponible del período pero no cuenta como gasto en las estadísticas. Un aporte desde una bolsa nunca afecta el presupuesto (decidido el 18-nov-2026).
+- No se generan aportes después de la fecha final ni con la meta pausada. Estado, ritmo ideal, aporte sugerido y proyección los calcula `estado_metas(hoy)` en la base de datos (Etapa 3, 20-nov-2026).
 
 ## 4. Modelo de datos
 
@@ -252,7 +258,7 @@ El harness se monta en la Etapa 0 y crece con cada etapa: ningún cambio llega a
 | Capa | Qué comprueba | Cuándo corre |
 | --- | --- | --- |
 | Calidad estática | Tipos, reglas de estilo y formato | En cada cambio |
-| Reglas de cálculo (unitarias) | Fechas del período (15 al 14), próximas fechas de periódicos (día 31, bisiestos), umbrales de alerta, saldos de bolsas, cuotas, interés, normalización de nombres, lectura de QR con facturas de ejemplo | En cada cambio |
+| Reglas de cálculo (pgTAP en SQL desde la Etapa 3; unitarias para lo de presentación) | Fechas del período (15 al 14), próximas fechas de periódicos (día 31, bisiestos), umbrales de alerta, saldos de bolsas, cuotas, normalización de nombres, lectura de QR con facturas de ejemplo | En cada cambio |
 | Base de datos | Que un usuario no vea datos de otro (RLS), que borrar una categoría conserve el historial, que no se dupliquen gastos periódicos | En cada cambio, contra Supabase local |
 | Componentes | Formularios, validaciones, filtros, categorías por tipo | En cada cambio |
 | Recorridos completos (E2E) | Flujos reales en los tres tamaños (móvil, tablet, computador); por ejemplo: crear un periódico → avanzar la fecha → confirmarlo → ver el descuento en presupuesto y bolsa; y que sin sesión toda ruta redirija al login | En cada solicitud de cambio |
@@ -321,6 +327,7 @@ Las mejoras futuras (IA para recibos, correo, modo oscuro) se planifican como et
 | 0. Preparación | 15-nov-2026 | #4 · PR #5 | Repo público para que el ruleset de `main` exija los checks `estatica`, `unitarias`, `base-de-datos` y `e2e`, con GitHub Free. Cada dependencia entra en la etapa que la usa. i18n desde el día uno. Netlify publica producción desde `main` (sitio `app-gastos-gah`) y una versión de prueba por PR. Supabase local con registros desactivados y prueba pgTAP de guardia de RLS. Tablero de GitHub Projects con un issue por etapa (#6 a #17); la especificación de cada etapa se escribe en su issue. Para ahorrar créditos de Netlify, la versión de prueba se pide con `[preview]` en el commit y solo se construye si cambió la app (`scripts/netlify-ignore.sh`). |
 | 1. Diseño de plantillas y pantallas | 18-nov-2026 | #6 · PR #20 y PR de cierre | Pantallas diseñadas en Claude Design ([lienzo](https://claude.ai/artifact/NQYDHYjenHaJBrSg7o6skm), 16 secciones en tres tamaños con modales y estados). Sistema de diseño en [App-Gastos Design System](https://claude.ai/artifact/KeLyaiHYpr9p7wyvstXyfJ) y resumen en PDF. `DESIGN.md` reemplaza a `diseno-ui/references/tokens.md` (misma paleta, ahora con `destructive-soft`, `warning-soft`, `warning-ink`, `chart-budget`, colores iniciales de categoría, medidas y sombras). Nuevo módulo **Ahorros** (3.15, Etapa 6). Cada sección del lienzo se implementa como una tarea propia, en la etapa que indica `DESIGN.md` §9. Gráficas con charts de shadcn sobre Recharts. Etapa sin código ni versión de prueba de Netlify. |
 | 2. Base de datos y seguridad | 18-nov-2026 | #7 · PR #22 y PR de cierre | 19 tablas en Supabase local con RLS (cuatro políticas cada una) y llaves compuestas `(x_id, user_id)` contra referencias a datos de otro usuario; 200 pruebas pgTAP. El período de gastos e ingresos se deduce de la fecha. `movimientos_bolsa` solo guarda recargas, ajustes, saldos iniciales, aportes y retiros. Gastos e ingresos copian nombre, ícono y color de la categoría; lo que está en uso se archiva y no se borra. Categorías del sistema con `clave_sistema`, protegidas por trigger. `inicializar_usuario` idempotente con trigger en `auth.users` (en la Etapa 12 se llama a mano para el usuario real). Decisiones de Giovanni: aportes desde medio directo eligen si afectan el presupuesto, ajustes registrados con saldo contado, deudas sin intereses, categorías de ingreso iniciales. `supabase db lint` en el CI. Sin cambios en `src/` ni versión de prueba de Netlify. |
+| 3. Lógica del servidor | 20-nov-2026 | #8 · PR #24 y PR de cierre | Las reglas de cálculo viven en SQL (funciones y vistas en Supabase), probadas con pgTAP; `src/dominio/` queda para lo de presentación. 9 migraciones y 383 pruebas pgTAP. Funciones con `p_hoy` (por defecto `hoy_bogota()`) como reloj inyectable; vistas con `security_invoker`; las funciones internas no se exponen por la API y las de la app solo a `authenticated`. Errores con códigos (`P0001`/`P0002` y una clave) en lugar de textos. Tarea diaria con pg_cron a las 00:10 de Bogotá (idempotente, se pone al día si dejó de correr) y `ponerse_al_dia()` al abrir la app. Plan de cuotas por RPC (`generar_plan_cuotas`) en vez de trigger, para no romper el historial de la Etapa 2. Decisiones de Giovanni: reglas en la base de datos; alertas con un solo push del umbral más alto y sin rearmar; degradado amarillo→rojo de 70 a 100 en `DESIGN.md`. Pendiente para las Etapas 6 y 8: editar frecuencia, día o inicio de una regla no recalcula la próxima fecha. Sin cambios en `src/` ni versión de prueba de Netlify. |
 
 ## 8. Riesgos, pendientes y mejoras futuras
 

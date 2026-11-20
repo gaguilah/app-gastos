@@ -14,8 +14,9 @@
 
 ## Período (3.1)
 - `calcularPeriodo(hoy, diaInicio)` devuelve inicio y fin. Con `diaInicio = 1`: del 1 al fin de mes. Con `diaInicio = 15`: del 15 al 14 del mes siguiente.
-- Si `diaInicio` no existe en el mes (29, 30, 31 en febrero o en meses de 30 días), el período empieza el último día de ese mes. La especificación de la Etapa 3 debe confirmar esta regla; es un supuesto hasta entonces.
-- Cambiar el día de inicio aplica desde el próximo período; el período abierto no se recorta.
+- Si `diaInicio` no existe en el mes (29, 30, 31 en febrero o en meses de 30 días), el período empieza el último día de ese mes. Confirmado en la Etapa 3 (`dia_en_mes` y `calcular_periodo` en SQL).
+- Cambiar el día de inicio aplica desde el próximo período; el período abierto no se recorta y un período de transición cubre los días hasta el nuevo inicio.
+- Desde la Etapa 3 estas reglas viven en SQL (funciones con `p_hoy`, por defecto `hoy_bogota()`) y se prueban con pgTAP; el frontend no las recalcula.
 
 ## Periódicos (3.6)
 - Próxima fecha a partir de la regla (frecuencia, intervalo, día) y la última fecha generada, nunca sumando días a "hoy".

@@ -44,12 +44,20 @@ Se definen como variables CSS con los nombres de shadcn/ui en `src/index.css`: `
 | `destructive-foreground` | Texto sobre destructive | `#ffffff` | `#410002` |
 | `destructive-soft` | Fondo de avisos de error | `#fdeceb` | `#3b1a1a` |
 | `success` | Ingresos y confirmado | `#047857` | `#27e0a9` |
-| `warning` | Presupuesto ≥ 70 % y pendiente | `#b45309` | `#fbbf24` |
+| `warning` | Pendiente y avisos (el presupuesto usa `alerta-*`) | `#b45309` | `#fbbf24` |
 | `warning-soft` | Fondo de avisos e insignia Pendiente | `#fdf0e1` | `#3a2a12` |
 | `warning-ink` | Texto sobre warning-soft | `#7a3a05` | `#fbbf24` |
+| `alerta-70` | Presupuesto ≥ 70 % | `#a16207` | `#fde047` |
+| `alerta-75` | Presupuesto ≥ 75 % | `#a5560a` | `#fdd958` |
+| `alerta-80` | Presupuesto ≥ 80 % | `#a94a0d` | `#fed168` |
+| `alerta-85` | Presupuesto ≥ 85 % | `#ae3e10` | `#feca79` |
+| `alerta-90` | Presupuesto ≥ 90 % | `#b23214` | `#fec38a` |
+| `alerta-95` | Presupuesto ≥ 95 % | `#b62617` | `#ffbb9a` |
+| `alerta-100` | Presupuesto al 100 % | `#ba1a1a` | `#ffb4ab` |
+| `alerta-superado` | Presupuesto superado | `#93000a` | `#ff8a80` |
 | `scrim` | Capa detrás de diálogos | `rgba(22,28,25,.45)` | `rgba(0,0,0,.6)` |
 
-Contraste contra blanco: `primary` 5.5:1, `secondary` 7.3:1, `warning` 5.0:1, `destructive` 6.5:1, `muted-foreground` 9.3:1 e `input` 3.2:1. `border` (1.7:1) es decorativo y nunca es el único límite de un campo.
+Contraste contra blanco: `primary` 5.5:1, `secondary` 7.3:1, `warning` 5.0:1, `destructive` 6.5:1, `muted-foreground` 9.3:1 e `input` 3.2:1. Las `alerta-*` van de 4.9:1 (`alerta-70`) a 9.4:1 (`alerta-superado`) contra blanco, y de 8.1:1 a 14.1:1 contra el fondo oscuro `#0f131c`; son un degradado de amarillo a rojo, un tono por umbral (decidido el 20-nov-2026, Etapa 3). `border` (1.7:1) es decorativo y nunca es el único límite de un campo.
 
 **Gráficas:** `chart-1` `#047857` (gasto), `chart-2` `#4343c8` (período anterior, línea punteada), `chart-3` `#b45309`, `chart-4` `#be185d`, `chart-5` `#0e7490` y `chart-budget` `#86948a` (línea discontinua del presupuesto).
 
@@ -112,7 +120,7 @@ En móvil los campos usan al menos 16 px para que iOS no haga zoom.
 | Selector de categoría | molécula `shared/` | Solo categorías del tipo que toca, con ícono y color |
 | Chip de filtro | shadcn `Toggle` | `radius-chip`, 44 px. Activo: `accent` con borde `primary` |
 | Insignia | shadcn `Badge` | `pending` (Pendiente), `ok` (Confirmado), `neutral` (Sistema). Siempre con palabra |
-| Barra de presupuesto | shadcn `Progress` | Normal < 70 %, `warning` ≥ 70 %, `destructive` ≥ 100 %, con el porcentaje escrito y "$gastado de $presupuesto" |
+| Barra de presupuesto | shadcn `Progress` | Normal < 70 %; desde el 70 % toma el token `alerta-*` del último umbral alcanzado (degradado amarillo→rojo) y `alerta-superado` por encima del 100 %. Siempre con el porcentaje escrito y "$gastado de $presupuesto" |
 | Tarjeta KPI | shadcn `Card` | `label-tag`, valor `amount-kpi` y una línea de contexto. Dos por fila en móvil y cuatro en computador |
 | Fila de movimiento | organismo de cada módulo | Ícono de categoría, título, "lugar · origen · canal", monto a la derecha. Ingreso con `+` y `success`. Pendiente con insignia |
 | Aviso | shadcn `Alert` | `warning`, `error`, `success` y barra oscura de sin conexión. Ícono y texto |
