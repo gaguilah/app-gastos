@@ -40,9 +40,7 @@ select t.periodo_id, t.user_id, t.fecha_inicio, t.fecha_fin, t.presupuesto,
       from public.periodos p
   ) t;
 
-create index gastos_user_fecha_idx on public.gastos (user_id, fecha);
-create index ingresos_user_fecha_idx on public.ingresos (user_id, fecha);
-create index movimientos_bolsa_user_fecha_idx on public.movimientos_bolsa (user_id, fecha);
+-- Los índices (user_id, fecha) de gastos, ingresos y movimientos_bolsa ya existen desde la Etapa 2.
 
 -- Ajusta una bolsa al saldo contado (3.4). Si falta dinero, crea un gasto "Gasto desconocido"
 -- por la diferencia; si sobra, un movimiento de ajuste de entrada; si cuadra, nada.

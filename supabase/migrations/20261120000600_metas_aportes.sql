@@ -109,7 +109,8 @@ begin
    where id = v.id
   returning * into v;
 
-  if r.bolsa_id is not null then
+  -- Solo si el aporte se generó desde una bolsa (sin medio directo copiado).
+  if v.medio_id is null and r.bolsa_id is not null then
     insert into public.movimientos_bolsa (user_id, bolsa_id, tipo, sentido, fecha, valor, meta_id, enlace_id)
     values (v.user_id, r.bolsa_id, 'aporte', 'salida', v.fecha, v.valor, v.meta_id, v.id);
   end if;
