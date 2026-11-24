@@ -1,3 +1,235 @@
 @import "tailwindcss" source("./");
+@import "@fontsource/plus-jakarta-sans/400.css";
+@import "@fontsource/plus-jakarta-sans/500.css";
+@import "@fontsource/plus-jakarta-sans/600.css";
+@import "@fontsource/plus-jakarta-sans/700.css";
+@import "@fontsource/jetbrains-mono/400.css";
+@import "@fontsource/jetbrains-mono/500.css";
+@import "@fontsource/jetbrains-mono/700.css";
 
-/* Los tokens de diseño (@theme) llegan con DESIGN.md en la Etapa 1. */
+/* Tokens de DESIGN.md §2. Ningún componente usa un valor fijo: si falta uno, se agrega aquí. */
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --background: #f6f8f7;
+  --foreground: #161c19;
+  --card: #ffffff;
+  --card-foreground: #161c19;
+  --popover: #ffffff;
+  --popover-foreground: #161c19;
+  --muted: #eaefec;
+  --muted-foreground: #3c4a42;
+  --primary: #047857;
+  --primary-foreground: #ffffff;
+  --secondary: #4343c8;
+  --secondary-foreground: #ffffff;
+  --accent: #d5f5e6;
+  --accent-foreground: #00422b;
+  --border: #bbcabf;
+  --input: #86948a;
+  --ring: #047857;
+  --destructive: #ba1a1a;
+  --destructive-foreground: #ffffff;
+  --destructive-soft: #fdeceb;
+  --success: #047857;
+  --warning: #b45309;
+  --warning-soft: #fdf0e1;
+  --warning-ink: #7a3a05;
+  --alerta-70: #a16207;
+  --alerta-75: #a5560a;
+  --alerta-80: #a94a0d;
+  --alerta-85: #ae3e10;
+  --alerta-90: #b23214;
+  --alerta-95: #b62617;
+  --alerta-100: #ba1a1a;
+  --alerta-superado: #93000a;
+  --scrim: rgba(22, 28, 25, 0.45);
+  --chart-1: #047857;
+  --chart-2: #4343c8;
+  --chart-3: #b45309;
+  --chart-4: #be185d;
+  --chart-5: #0e7490;
+  --chart-budget: #86948a;
+  --sombra-menu: 0 8px 24px rgba(22, 28, 25, 0.16);
+  --sombra-sheet: 0 12px 32px rgba(22, 28, 25, 0.18);
+  --sombra-dialog: 0 24px 48px rgba(22, 28, 25, 0.28);
+  --sombra-fab: 0 6px 16px rgba(4, 120, 87, 0.35);
+}
+
+/* Modo oscuro preparado (fuera del MVP): solo cambian las variables. */
+.dark {
+  --background: #0f131c;
+  --foreground: #dfe2ef;
+  --card: #1c1f29;
+  --card-foreground: #dfe2ef;
+  --popover: #262a34;
+  --popover-foreground: #dfe2ef;
+  --muted: #181b25;
+  --muted-foreground: #bbcabf;
+  --primary: #4edea3;
+  --primary-foreground: #003824;
+  --secondary: #c0c1ff;
+  --secondary-foreground: #1000a9;
+  --accent: #31353f;
+  --accent-foreground: #dfe2ef;
+  --border: #3c4a42;
+  --input: #86948a;
+  --ring: #4edea3;
+  --destructive: #ffb4ab;
+  --destructive-foreground: #410002;
+  --destructive-soft: #3b1a1a;
+  --success: #27e0a9;
+  --warning: #fbbf24;
+  --warning-soft: #3a2a12;
+  --warning-ink: #fbbf24;
+  --alerta-70: #fde047;
+  --alerta-75: #fdd958;
+  --alerta-80: #fed168;
+  --alerta-85: #feca79;
+  --alerta-90: #fec38a;
+  --alerta-95: #ffbb9a;
+  --alerta-100: #ffb4ab;
+  --alerta-superado: #ff8a80;
+  --scrim: rgba(0, 0, 0, 0.6);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-destructive-soft: var(--destructive-soft);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --color-warning-ink: var(--warning-ink);
+  --color-alerta-70: var(--alerta-70);
+  --color-alerta-75: var(--alerta-75);
+  --color-alerta-80: var(--alerta-80);
+  --color-alerta-85: var(--alerta-85);
+  --color-alerta-90: var(--alerta-90);
+  --color-alerta-95: var(--alerta-95);
+  --color-alerta-100: var(--alerta-100);
+  --color-alerta-superado: var(--alerta-superado);
+  --color-scrim: var(--scrim);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-chart-budget: var(--chart-budget);
+  --shadow-menu: var(--sombra-menu);
+  --shadow-sheet: var(--sombra-sheet);
+  --shadow-dialog: var(--sombra-dialog);
+  --shadow-fab: var(--sombra-fab);
+}
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* Tipografía (DESIGN.md §2.2). Las variantes de móvil se aplican con prefijos de tamaño. */
+  --text-headline-xl: 3rem;
+  --text-headline-xl--line-height: 3.5rem;
+  --text-headline-xl--font-weight: 700;
+  --text-headline-xl-movil: 2rem;
+  --text-headline-xl-movil--line-height: 2.5rem;
+  --text-headline-xl-movil--font-weight: 700;
+  --text-headline-lg: 2.25rem;
+  --text-headline-lg--line-height: 2.75rem;
+  --text-headline-lg--font-weight: 600;
+  --text-headline-lg-movil: 1.625rem;
+  --text-headline-lg-movil--line-height: 2.125rem;
+  --text-headline-lg-movil--font-weight: 600;
+  --text-headline-md: 1.5rem;
+  --text-headline-md--line-height: 2rem;
+  --text-headline-md--font-weight: 600;
+  --text-headline-sm: 1.25rem;
+  --text-headline-sm--line-height: 1.75rem;
+  --text-headline-sm--font-weight: 600;
+  --text-title: 1rem;
+  --text-title--line-height: 1.5rem;
+  --text-title--font-weight: 600;
+  --text-body-lg: 1.125rem;
+  --text-body-lg--line-height: 1.75rem;
+  --text-body-md: 0.9375rem;
+  --text-body-md--line-height: 1.375rem;
+  --text-body-sm: 0.8125rem;
+  --text-body-sm--line-height: 1.125rem;
+  /* Campos en móvil: al menos 16 px para que iOS no haga zoom. */
+  --text-campo: 1rem;
+  --text-campo--line-height: 1.5rem;
+  --text-label-tag: 0.6875rem;
+  --text-label-tag--line-height: 0.875rem;
+  --text-label-tag--font-weight: 700;
+  --text-label-tag--letter-spacing: 0.04em;
+  --text-amount-xl: 2rem;
+  --text-amount-xl--line-height: 2.5rem;
+  --text-amount-xl--font-weight: 700;
+  --text-amount-kpi: 1.375rem;
+  --text-amount-kpi--line-height: 1.75rem;
+  --text-amount-kpi--font-weight: 700;
+  --text-label-numeric: 0.875rem;
+  --text-label-numeric--line-height: 1.25rem;
+  --text-label-numeric--font-weight: 500;
+  --text-label-micro: 0.625rem;
+  --text-label-micro--line-height: 0.75rem;
+  --text-label-micro--font-weight: 500;
+  --text-label-micro--letter-spacing: 0.06em;
+
+  /* Espaciado y medidas (DESIGN.md §2.3): p-md, gap-sm, h-touch, w-sidebar… */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2.5rem;
+  --spacing-pagina-movil: 1rem;
+  --spacing-pagina-tablet: 1.5rem;
+  --spacing-pagina-pc: 2rem;
+  --spacing-touch: 2.75rem;
+  --spacing-campo: 3rem;
+  --spacing-fab: 3.5rem;
+  --spacing-sidebar: 16rem;
+  --spacing-sidebar-mini: 4.5rem;
+  --spacing-icono: 1.25rem;
+  --spacing-icono-sm: 1rem;
+  --spacing-icono-nav: 1.5rem;
+  --spacing-icono-estado: 2rem;
+  --spacing-tarjeta-auth: 27.5rem;
+  --spacing-hoja: 85dvh;
+
+  /* Radios */
+  --radius-chip: 0.25rem;
+  --radius-control: 0.5rem;
+  --radius-card: 0.75rem;
+  --radius-sheet: 1rem;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring;
+  }
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-background font-sans text-body-md text-foreground antialiased;
+    font-variant-numeric: tabular-nums;
+  }
+}
