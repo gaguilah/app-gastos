@@ -2,5 +2,19 @@
   "app": {
     "nombre": "App-Gastos",
     "enPreparacion": "We are getting your expense app ready."
+  },
+  "login": {
+    "error": {
+      "credenciales": "Email or password doesn’t match. Check your details and try again.",
+      "sinRed": "You’re offline. Check your connection and try again.",
+      "demasiadosIntentos": "Too many attempts in a row. Wait a few minutes and try again.",
+      "desconocido": "We couldn’t sign you in. Try again in a moment."
+    }
+  },
+  "recuperar": {
+    "error": {
+      "corta": "Your password must have at least 8 characters.",
+      "noCoinciden": "The passwords don’t match."
+    }
   }
 }
