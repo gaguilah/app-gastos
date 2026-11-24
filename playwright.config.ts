@@ -37,5 +37,12 @@ export default defineConfig({
     url: `http://localhost:${puerto}`,
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,
+    // Supabase local por defecto (mismos valores públicos de .env.example).
+    env: {
+      VITE_SUPABASE_URL: process.env.VITE_SUPABASE_URL ?? "http://127.0.0.1:54321",
+      VITE_SUPABASE_PUBLISHABLE_KEY:
+        process.env.VITE_SUPABASE_PUBLISHABLE_KEY ??
+        "sb_publishable_ACJWlzQHlZjBrEguHvfOxg_3BJgxAaH",
+    },
   },
 });

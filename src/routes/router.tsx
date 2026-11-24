@@ -1,0 +1,53 @@
+import { createBrowserRouter, type RouteObject } from "react-router";
+import { RutaProtegida } from "@/features/auth/components/RutaProtegida";
+import { SoloSinSesion } from "@/features/auth/components/SoloSinSesion";
+import { CargandoApp } from "@/components/shared/CargandoApp";
+import { modulos } from "./rutas";
+
+export type DatosRuta = { titulo: string };
+
+// Cada etapa reemplaza la pantalla "En construcción" de su módulo.
+const enConstruccion = () => ({
+  Component: async () => (await import("./EnConstruccion")).EnConstruccion,
+});
+
+// Función y no constante: el router completa los objetos de ruta al cargarlos en diferido.
+export const crearRutas = (): RouteObject[] => [
+  {
+    HydrateFallback: CargandoApp,
+    children: [
+      {
+        Component: SoloSinSesion,
+        children: [
+          { path: "/login", lazy: { Component: async () => (await import("./Login")).Login } },
+        ],
+      },
+      {
+        Component: RutaProtegida,
+        children: [
+          ...modulos.map(({ ruta, titulo }) => ({
+            path: ruta,
+            handle: { titulo } satisfies DatosRuta,
+            lazy: enConstruccion(),
+          })),
+          {
+            path: "/ajustes",
+            handle: { titulo: "nav.ajustes" } satisfies DatosRuta,
+            lazy: enConstruccion(),
+          },
+          {
+            path: "/mas",
+            handle: { titulo: "nav.mas" } satisfies DatosRuta,
+            lazy: enConstruccion(),
+          },
+          {
+            path: "*",
+            lazy: { Component: async () => (await import("./NoEncontrada")).NoEncontrada },
+          },
+        ],
+      },
+    ],
+  },
+];
+
+export const crearRouter = () => createBrowserRouter(crearRutas());

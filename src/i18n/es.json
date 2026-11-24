@@ -1,20 +1,48 @@
 {
-  "app": {
-    "nombre": "App-Gastos",
-    "enPreparacion": "Estamos preparando tu app de gastos."
-  },
   "login": {
     "error": {
       "credenciales": "El correo o la contraseña no coinciden. Revisa los datos e inténtalo de nuevo.",
       "sinRed": "No hay conexión. Revisa tu red e inténtalo de nuevo.",
       "demasiadosIntentos": "Hiciste muchos intentos seguidos. Espera unos minutos y vuelve a intentarlo.",
       "desconocido": "No pudimos iniciar sesión. Inténtalo de nuevo en un momento."
-    }
+    },
+    "titulo": "Iniciar sesión"
   },
   "recuperar": {
     "error": {
       "corta": "La contraseña debe tener al menos 8 caracteres.",
       "noCoinciden": "Las contraseñas no coinciden."
     }
+  },
+  "app": {
+    "nombre": "App-Gastos",
+    "cargando": "Cargando"
+  },
+  "nav": {
+    "inicio": "Inicio",
+    "gastos": "Gastos",
+    "registrar": "Registrar",
+    "registrarGasto": "Registrar gasto",
+    "reportes": "Reportes",
+    "mas": "Más",
+    "ingresos": "Ingresos",
+    "bolsas": "Bolsas",
+    "ahorros": "Ahorros",
+    "categorias": "Categorías",
+    "presupuesto": "Presupuesto y período",
+    "periodicos": "Gastos periódicos",
+    "prestamos": "Préstamos que hago",
+    "deudas": "Deudas",
+    "listas": "Formas de pago, lugares y personas",
+    "ajustes": "Ajustes"
+  },
+  "construccion": {
+    "titulo": "En construcción",
+    "mensaje": "Esta sección llega en una próxima versión."
+  },
+  "noEncontrada": {
+    "titulo": "No encontramos esta página",
+    "mensaje": "Revisa la dirección o vuelve a Inicio.",
+    "irInicio": "Ir a Inicio"
   }
 }
