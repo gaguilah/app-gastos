@@ -1,7 +1,7 @@
 -- Semilla de desarrollo y pruebas locales. Solo datos inventados, nunca datos reales ni de tarjetas.
 -- Nunca se aplica al proyecto Supabase real.
 --
--- Dos usuarios de prueba para iniciar sesión en local (contraseña: prueba-local-123).
+-- Usuarios de prueba para iniciar sesión en local (contraseña: prueba-local-123).
 -- Sus datos de arranque (perfil, categorías, formas de pago y bolsas) los crea el trigger
 -- al_crear_usuario. Los correos e ids no coinciden con los de las pruebas pgTAP, que crean
 -- sus propios usuarios dentro de una transacción.
@@ -18,12 +18,27 @@ insert into auth.users (
    'usuario-b@prueba.local', extensions.crypt('prueba-local-123', extensions.gen_salt('bf')), now(),
    '{"provider":"email","providers":["email"]}', '{}', now(), now(), '', '', '', '');
 
+-- Un usuario por proyecto de Playwright para la E2E de recuperación de contraseña:
+-- cada corrida le cambia la contraseña y así no choca con los demás ni con el login.
+insert into auth.users (
+  instance_id, id, aud, role, email, encrypted_password, email_confirmed_at,
+  raw_app_meta_data, raw_user_meta_data, created_at, updated_at,
+  confirmation_token, recovery_token, email_change_token_new, email_change
+)
+select '00000000-0000-0000-0000-000000000000', id::uuid, 'authenticated', 'authenticated',
+       'recuperar-' || proyecto || '@prueba.local', extensions.crypt('prueba-local-123', extensions.gen_salt('bf')), now(),
+       '{"provider":"email","providers":["email"]}', '{}', now(), now(), '', '', '', ''
+  from (values ('33333333-3333-3333-3333-333333333301', 'movil'),
+               ('33333333-3333-3333-3333-333333333302', 'movil-android'),
+               ('33333333-3333-3333-3333-333333333303', 'tablet'),
+               ('33333333-3333-3333-3333-333333333304', 'computador')) as u (id, proyecto);
+
 insert into auth.identities (id, user_id, provider_id, identity_data, provider, last_sign_in_at, created_at, updated_at)
 select gen_random_uuid(), u.id, u.id::text,
        jsonb_build_object('sub', u.id::text, 'email', u.email, 'email_verified', true),
        'email', now(), now(), now()
   from auth.users u
- where u.id in ('11111111-1111-1111-1111-111111111111', '22222222-2222-2222-2222-222222222222');
+ where u.email like '%@prueba.local';
 
 -- Datos inventados del usuario A: un período, un lugar, un gasto y un ingreso.
 insert into public.periodos (user_id, fecha_inicio, fecha_fin, presupuesto)

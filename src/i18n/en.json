@@ -6,12 +6,37 @@
       "demasiadosIntentos": "Too many attempts in a row. Wait a few minutes and try again.",
       "desconocido": "We couldn’t sign you in. Try again in a moment."
     },
-    "titulo": "Sign in"
+    "titulo": "Sign in",
+    "ayuda": "Use your email and password.",
+    "correo": "Email",
+    "contrasena": "Password",
+    "mostrarContrasena": "Show password",
+    "ocultarContrasena": "Hide password",
+    "entrar": "Sign in",
+    "entrando": "Signing in…",
+    "olvide": "Forgot your password?"
   },
   "recuperar": {
     "error": {
       "corta": "Your password must have at least 8 characters.",
-      "noCoinciden": "The passwords don’t match."
+      "noCoinciden": "The passwords don’t match.",
+      "enlaceVencido": "The link expired or was already used. Request a new one to change your password.",
+      "guardar": "We couldn’t save your password. Try again."
+    },
+    "titulo": "Reset password",
+    "ayuda": "Enter your email and we’ll send you a link to set a new password.",
+    "enviar": "Send link",
+    "enviando": "Sending…",
+    "enviado": "If that email is registered, you’ll get a link to set a new password. Check your spam folder too.",
+    "volver": "Back to sign in",
+    "nueva": {
+      "titulo": "Set a new password",
+      "ayuda": "Use at least 8 characters.",
+      "contrasena": "New password",
+      "confirmar": "Confirm password",
+      "guardar": "Save password",
+      "guardando": "Saving…",
+      "pedirOtro": "Request another link"
     }
   },
   "app": {

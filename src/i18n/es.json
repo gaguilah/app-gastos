@@ -6,12 +6,37 @@
       "demasiadosIntentos": "Hiciste muchos intentos seguidos. Espera unos minutos y vuelve a intentarlo.",
       "desconocido": "No pudimos iniciar sesión. Inténtalo de nuevo en un momento."
     },
-    "titulo": "Iniciar sesión"
+    "titulo": "Iniciar sesión",
+    "ayuda": "Entra con tu correo y tu contraseña.",
+    "correo": "Correo",
+    "contrasena": "Contraseña",
+    "mostrarContrasena": "Mostrar contraseña",
+    "ocultarContrasena": "Ocultar contraseña",
+    "entrar": "Iniciar sesión",
+    "entrando": "Iniciando sesión…",
+    "olvide": "¿Olvidaste tu contraseña?"
   },
   "recuperar": {
     "error": {
       "corta": "La contraseña debe tener al menos 8 caracteres.",
-      "noCoinciden": "Las contraseñas no coinciden."
+      "noCoinciden": "Las contraseñas no coinciden.",
+      "enlaceVencido": "El enlace venció o ya se usó. Pide uno nuevo para cambiar tu contraseña.",
+      "guardar": "No pudimos guardar la contraseña. Inténtalo de nuevo."
+    },
+    "titulo": "Recuperar contraseña",
+    "ayuda": "Escribe tu correo y te enviamos un enlace para crear una contraseña nueva.",
+    "enviar": "Enviar enlace",
+    "enviando": "Enviando…",
+    "enviado": "Si el correo está registrado, te llegará un enlace para crear una contraseña nueva. Revisa también la carpeta de spam.",
+    "volver": "Volver a iniciar sesión",
+    "nueva": {
+      "titulo": "Crea una contraseña nueva",
+      "ayuda": "Usa al menos 8 caracteres.",
+      "contrasena": "Contraseña nueva",
+      "confirmar": "Confirma la contraseña",
+      "guardar": "Guardar contraseña",
+      "guardando": "Guardando…",
+      "pedirOtro": "Pedir otro enlace"
     }
   },
   "app": {

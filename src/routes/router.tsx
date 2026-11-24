@@ -20,7 +20,16 @@ export const crearRutas = (): RouteObject[] => [
         Component: SoloSinSesion,
         children: [
           { path: "/login", lazy: { Component: async () => (await import("./Login")).Login } },
+          {
+            path: "/recuperar",
+            lazy: { Component: async () => (await import("./Recuperar")).Recuperar },
+          },
         ],
+      },
+      {
+        // Pública, pero solo funciona con la sesión que abre el enlace del correo.
+        path: "/nueva-contrasena",
+        lazy: { Component: async () => (await import("./NuevaContrasena")).NuevaContrasena },
       },
       {
         Component: RutaProtegida,

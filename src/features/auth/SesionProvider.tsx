@@ -16,7 +16,8 @@ export function SesionProvider({ children }: { children: ReactNode }) {
         cargando: false,
         sesion,
         recuperando:
-          evento === "PASSWORD_RECOVERY" || (previo.recuperando && evento !== "SIGNED_OUT"),
+          evento === "PASSWORD_RECOVERY" ||
+          (previo.recuperando && evento !== "SIGNED_OUT" && evento !== "USER_UPDATED"),
       }));
     });
     return () => data.subscription.unsubscribe();

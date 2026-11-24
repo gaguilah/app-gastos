@@ -13,8 +13,9 @@ export const supabase = createClient<Database>(url, clave, {
   auth: {
     persistSession: true,
     autoRefreshToken: true,
-    // El enlace de recuperación de contraseña vuelve con ?code= (PKCE) y abre la sesión sola.
+    // El enlace de recuperación vuelve con la sesión en la URL y la abre sola. Flujo implícito
+    // (no PKCE) para que el enlace funcione aunque el correo se abra en otro dispositivo.
     detectSessionInUrl: true,
-    flowType: "pkce",
+    flowType: "implicit",
   },
 });
