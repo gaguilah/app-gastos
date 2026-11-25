@@ -12,7 +12,7 @@ export function TarjetaAuth({
   children: ReactNode;
 }) {
   return (
-    <main className="flex min-h-dvh items-start justify-center bg-background px-pagina-movil pt-[max(var(--spacing-xl),env(safe-area-inset-top))] pb-xl md:items-center md:px-pagina-tablet">
+    <main className="flex min-h-dvh items-start justify-center bg-background px-pagina-movil pt-[max(var(--spacing-xl),var(--margen-muesca))] pb-xl md:items-center md:px-pagina-tablet">
       <div className="flex w-full max-w-tarjeta-auth flex-col gap-lg rounded-sheet border bg-card p-lg md:p-xl">
         <div className="flex flex-col gap-md">
           <span className="flex size-campo items-center justify-center rounded-card bg-primary text-primary-foreground">

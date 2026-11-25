@@ -98,18 +98,21 @@ describe("Ajustes", () => {
     expect(router.state.location.search).toBe("");
   });
 
-  it("si cerrar sesión falla, lo dice y sigue en Ajustes", async () => {
+  it("aunque el servidor falle, la sesión local ya se borró y se vuelve al login", async () => {
     const router = abrir();
     await titulo();
-    auth.signOut.mockResolvedValueOnce({ error: new AuthError("falla") });
+    const signOut = auth.signOut.getMockImplementation()!;
+    auth.signOut.mockImplementationOnce(async (opciones) => {
+      await signOut(opciones);
+      return { error: new AuthError("falla") };
+    });
     fireEvent.click(screen.getByRole("button", { name: "Cerrar sesión" }));
     const confirmar = await screen.findByRole("alertdialog");
     fireEvent.click(within(confirmar).getByRole("button", { name: "Cerrar sesión" }));
 
-    expect(await within(confirmar).findByRole("alert")).toHaveTextContent(
-      "No pudimos cerrar la sesión.",
-    );
-    expect(router.state.location.pathname).toBe("/ajustes");
+    expect(await screen.findByRole("heading", { name: "Iniciar sesión" })).toBeInTheDocument();
+    expect(router.state.location.pathname).toBe("/login");
+    expect(router.state.location.search).toBe("");
   });
 
   it("en el móvil, el idioma se elige en una hoja inferior", async () => {

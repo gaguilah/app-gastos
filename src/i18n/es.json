@@ -94,7 +94,6 @@
     "cerrarSesion": "Cerrar sesión",
     "cerrarSesionPregunta": "¿Cerrar sesión?",
     "cerrarSesionMensaje": "Para volver a entrar en este dispositivo necesitarás tu correo y tu contraseña.",
-    "cerrarSesionError": "No pudimos cerrar la sesión. Inténtalo de nuevo.",
     "aplicacion": "Aplicación",
     "version": "Versión",
     "regionEspanol": "Colombia"
@@ -108,7 +107,8 @@
       "titulo": "Hay una versión nueva",
       "mensaje": "Actualiza para tener las últimas mejoras.",
       "actualizar": "Actualizar"
-    }
+    },
+    "region": "Avisos"
   },
   "estado": {
     "error": {

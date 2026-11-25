@@ -37,6 +37,10 @@ describe("destinoTrasLogin", () => {
       "/\\otro.sitio",
       "javascript:alert(1)",
       "bolsas",
+      // El navegador borra tabuladores y saltos de línea: "/\t/otro.sitio" sería "//otro.sitio".
+      "/\t/otro.sitio",
+      "/\n/otro.sitio",
+      "/\r\n/otro.sitio",
     ])
       expect(destinoTrasLogin(desde)).toBe("/");
   });

@@ -94,7 +94,6 @@
     "cerrarSesion": "Sign out",
     "cerrarSesionPregunta": "Sign out?",
     "cerrarSesionMensaje": "To get back in on this device you'll need your email and password.",
-    "cerrarSesionError": "We couldn't sign you out. Please try again.",
     "aplicacion": "App",
     "version": "Version",
     "regionEspanol": "Colombia"
@@ -108,7 +107,8 @@
       "titulo": "A new version is available",
       "mensaje": "Update to get the latest improvements.",
       "actualizar": "Update"
-    }
+    },
+    "region": "Notifications"
   },
   "estado": {
     "error": {

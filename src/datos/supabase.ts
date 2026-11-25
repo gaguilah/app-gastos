@@ -8,6 +8,12 @@ if (!url || !clave) {
   throw new Error("Faltan VITE_SUPABASE_URL y VITE_SUPABASE_PUBLISHABLE_KEY (ver .env.example).");
 }
 
+/**
+ * El enlace del correo de recuperación llega con `type=recovery` en el hash. Se lee aquí, antes
+ * de crear el cliente, porque Supabase lo borra de la URL al abrir la sesión.
+ */
+export const llegoDesdeRecuperacion = window.location.hash.includes("type=recovery");
+
 /** Único cliente de la app. Solo la clave publicable: la secreta nunca llega al navegador. */
 export const supabase = createClient<Database>(url, clave, {
   auth: {

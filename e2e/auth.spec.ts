@@ -1,3 +1,4 @@
+import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 import { enlaceDelCorreo } from "./apoyo/correo";
 import { CONTRASENA, USUARIO } from "./apoyo/sesion";
@@ -49,18 +50,37 @@ test("recupera la contraseña con el enlace del correo", async ({ page }, info) 
   await page.getByRole("button", { name: "Enviar enlace" }).click();
   await expect(page.getByRole("status")).toContainText("Si el correo está registrado");
 
-  await page.goto(await enlaceDelCorreo(correo, desde));
+  const enlace = await enlaceDelCorreo(correo, desde);
+  await page.goto(enlace);
   await expect(page).toHaveURL(/\/nueva-contrasena/);
+  await expect(page.getByLabel("Contraseña nueva")).toBeVisible();
+  const axe = await new AxeBuilder({ page })
+    .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
+    .analyze();
+  expect(axe.violations).toEqual([]);
   await page.getByLabel("Contraseña nueva").fill(nueva);
   await page.getByLabel("Confirma la contraseña").fill(nueva);
   await page.getByRole("button", { name: "Guardar contraseña" }).click();
   await expect(page.getByRole("heading", { level: 1, name: "Inicio" })).toBeVisible();
 
-  // Entra con la contraseña nueva en una sesión limpia.
-  await page.context().clearCookies();
-  await page.evaluate(() => localStorage.clear());
+  // Desde aquí, sin sesión.
+  await page.evaluate(() => {
+    localStorage.clear();
+    sessionStorage.clear();
+  });
+
+  // El enlace ya se usó: no sirve otra vez.
+  await page.goto(enlace);
+  await expect(page.getByRole("alert")).toContainText("El enlace venció o ya se usó.");
+
+  // La contraseña de la semilla ya no entra (en una base recién creada es la anterior).
   await page.goto("/login");
   await page.getByLabel("Correo").fill(correo);
+  await page.getByLabel("Contraseña", { exact: true }).fill(CONTRASENA);
+  await page.getByRole("button", { name: "Iniciar sesión" }).click();
+  await expect(page.getByRole("alert")).toContainText("El correo o la contraseña no coinciden.");
+
+  // La nueva sí.
   await page.getByLabel("Contraseña", { exact: true }).fill(nueva);
   await page.getByRole("button", { name: "Iniciar sesión" }).click();
   await expect(page).toHaveURL("/");

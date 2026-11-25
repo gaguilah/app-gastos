@@ -60,8 +60,11 @@
 /* Alto de la franja «Sin conexión» (una línea), para que el menú lateral fijo no quede cortado. */
 :root {
   --alto-franja: 0rem;
+  /* Margen de la muesca: con la franja visible, ella ya lo ocupa. */
+  --margen-muesca: env(safe-area-inset-top);
 }
 :root:has([data-franja-sin-conexion]) {
+  --margen-muesca: 0rem;
   --alto-franja: calc(
     max(var(--spacing-sm), env(safe-area-inset-top)) + var(--spacing-sm) +
       var(--text-body-sm--line-height)

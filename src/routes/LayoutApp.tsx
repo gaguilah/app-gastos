@@ -19,7 +19,7 @@ const claseItemLateral = cn(
 function MenuLateral() {
   const { t } = useTranslation();
   return (
-    <aside className="sticky top-(--alto-franja) hidden h-[calc(100dvh-var(--alto-franja))] w-sidebar-mini shrink-0 flex-col items-center gap-lg overflow-y-auto border-r bg-card px-sm pt-[max(var(--spacing-md),env(safe-area-inset-top))] pb-md md:flex xl:w-sidebar xl:items-stretch xl:px-md xl:pt-[max(var(--spacing-lg),env(safe-area-inset-top))]">
+    <aside className="sticky top-(--alto-franja) hidden h-[calc(100dvh-var(--alto-franja))] w-sidebar-mini shrink-0 flex-col items-center gap-lg overflow-y-auto border-r bg-card px-sm pt-[max(var(--spacing-md),var(--margen-muesca))] pb-md md:flex xl:w-sidebar xl:items-stretch xl:px-md xl:pt-[max(var(--spacing-lg),var(--margen-muesca))]">
       <div className="flex items-center gap-sm">
         <span className="flex size-xl items-center justify-center rounded-control bg-primary text-primary-foreground">
           <Wallet className="size-icono" aria-hidden="true" />
@@ -112,7 +112,7 @@ export function LayoutApp() {
     <TooltipProvider>
       <div className="flex min-h-dvh">
         <MenuLateral />
-        <div className="min-w-0 flex-1 pt-[env(safe-area-inset-top)] pb-[calc(var(--spacing-bnav)+env(safe-area-inset-bottom))] md:pb-0">
+        <div className="min-w-0 flex-1 pt-(--margen-muesca) pb-[calc(var(--spacing-bnav)+env(safe-area-inset-bottom))] md:pb-0">
           <Suspense fallback={<CargandoApp />}>
             <Outlet />
           </Suspense>

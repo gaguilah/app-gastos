@@ -21,14 +21,15 @@ function Fila({
   children?: ReactNode;
 }) {
   return (
-    <div className="flex min-h-touch items-center gap-sm px-md py-sm">
+    // span y no div: la fila también va dentro de un botón, que solo admite contenido de frase.
+    <span className="flex min-h-touch items-center gap-sm px-md py-sm">
       <span className={claseIcono}>{icono}</span>
       <span className="flex min-w-0 flex-1 flex-col">
         <span className="text-title">{titulo}</span>
         {detalle && <span className="truncate text-body-sm text-muted-foreground">{detalle}</span>}
       </span>
       {children}
-    </div>
+    </span>
   );
 }
 

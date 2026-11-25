@@ -38,7 +38,6 @@ export function Campo({ etiqueta, error, invalido, type, ...props }: Props) {
             size="icon"
             className="size-campo"
             aria-label={t(visible ? "login.ocultarContrasena" : "login.mostrarContrasena")}
-            aria-pressed={visible}
             onClick={() => setVisible((v) => !v)}
           >
             {visible ? <EyeOff aria-hidden="true" /> : <Eye aria-hidden="true" />}

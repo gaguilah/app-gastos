@@ -3,6 +3,7 @@ import i18n from "../i18n";
 
 // Solo se simula la capa src/datos/ (skill pruebas). Cada prueba ajusta lo que necesite.
 vi.mock("@/datos/supabase", () => ({
+  llegoDesdeRecuperacion: false,
   supabase: {
     auth: {
       signInWithPassword: vi.fn(),

@@ -44,7 +44,7 @@ export function Login() {
           <span>{t(error)}</span>
         </Alert>
       )}
-      <form className="flex flex-col gap-md" onSubmit={entrar} noValidate={false}>
+      <form className="flex flex-col gap-md" onSubmit={entrar}>
         <Campo
           etiqueta={t("login.correo")}
           name="correo"
