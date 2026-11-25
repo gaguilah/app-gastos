@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router";
 import { Alert } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Estado, EstadoCarga, EstadoError } from "@/components/shared/Estado";
 import {
   listas,
@@ -80,60 +80,62 @@ export function Listas() {
             </TabsTrigger>
           ))}
         </TabsList>
-      </Tabs>
 
-      {consulta.isPending ? (
-        <EstadoCarga filas={4} />
-      ) : consulta.isError ? (
-        <EstadoError
-          mensaje={t("listas.error.mensaje")}
-          alReintentar={() => void consulta.refetch()}
-        />
-      ) : elementos.length === 0 ? (
-        <Estado
-          Icono={ListPlus}
-          titulo={t("listas.vacio.titulo")}
-          mensaje={t("listas.vacio.mensaje")}
-        >
-          <Button onClick={agregar}>
-            <Plus aria-hidden="true" />
-            {t("listas.agregar")}
-          </Button>
-        </Estado>
-      ) : (
-        <>
-          {lista !== "formas" &&
-            duplicados.data?.map((par) => (
-              <Alert
-                key={`${par.a.id}-${par.b.id}`}
-                variant="warning"
-                role="status"
-                className="items-center"
-              >
-                <TriangleAlert aria-hidden="true" />
-                <p className="flex-1">
-                  <strong>{t("listas.duplicado.aviso")}</strong>{" "}
-                  {t("listas.duplicado.mensaje", { a: par.a.nombre, b: par.b.nombre })}
-                </p>
-                <Button variant="secondary" onClick={() => revisar(par.a.id, par.b.id)}>
-                  {t("listas.duplicado.revisar")}
-                </Button>
-              </Alert>
-            ))}
-          <ListaElementos
-            lista={lista}
-            elementos={elementos}
-            hoy={hoy}
-            alElegir={(accion, elemento) => setAbierta({ accion, elemento })}
-          />
-        </>
-      )}
-      {lista === "formas" && !consulta.isPending && !consulta.isError && (
-        <p className="flex items-center gap-xs text-body-sm text-muted-foreground">
-          <Info className="size-icono-sm shrink-0" aria-hidden="true" />
-          {t("listas.avisoBolsas")}
-        </p>
-      )}
+        <TabsContent value={lista} className="flex flex-col gap-lg">
+          {consulta.isPending ? (
+            <EstadoCarga filas={4} />
+          ) : consulta.isError ? (
+            <EstadoError
+              mensaje={t("listas.error.mensaje")}
+              alReintentar={() => void consulta.refetch()}
+            />
+          ) : elementos.length === 0 ? (
+            <Estado
+              Icono={ListPlus}
+              titulo={t("listas.vacio.titulo")}
+              mensaje={t("listas.vacio.mensaje")}
+            >
+              <Button onClick={agregar}>
+                <Plus aria-hidden="true" />
+                {t("listas.agregar")}
+              </Button>
+            </Estado>
+          ) : (
+            <>
+              {lista !== "formas" &&
+                duplicados.data?.map((par) => (
+                  <Alert
+                    key={`${par.a.id}-${par.b.id}`}
+                    variant="warning"
+                    role="status"
+                    className="items-center"
+                  >
+                    <TriangleAlert aria-hidden="true" />
+                    <p className="flex-1">
+                      <strong>{t("listas.duplicado.aviso")}</strong>{" "}
+                      {t("listas.duplicado.mensaje", { a: par.a.nombre, b: par.b.nombre })}
+                    </p>
+                    <Button variant="secondary" onClick={() => revisar(par.a.id, par.b.id)}>
+                      {t("listas.duplicado.revisar")}
+                    </Button>
+                  </Alert>
+                ))}
+              <ListaElementos
+                lista={lista}
+                elementos={elementos}
+                hoy={hoy}
+                alElegir={(accion, elemento) => setAbierta({ accion, elemento })}
+              />
+            </>
+          )}
+          {lista === "formas" && !consulta.isPending && !consulta.isError && (
+            <p className="flex items-center gap-xs text-body-sm text-muted-foreground">
+              <Info className="size-icono-sm shrink-0" aria-hidden="true" />
+              {t("listas.avisoBolsas")}
+            </p>
+          )}
+        </TabsContent>
+      </Tabs>
 
       {abierta?.accion === "agregar" && (
         <DialogoAgregar

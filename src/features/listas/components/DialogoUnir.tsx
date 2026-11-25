@@ -68,6 +68,8 @@ export function DialogoUnir({
       abierta={abierta}
       alCambiar={alCambiar}
       rol="alertdialog"
+      // La lista de candidatos puede ser larga: el cuerpo se desplaza y los botones quedan a la vista.
+      formulario
       titulo={t("listas.unir.titulo", { nombre: nombreVisible(origen, t) })}
       pie={
         <>

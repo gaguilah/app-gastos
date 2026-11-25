@@ -105,7 +105,8 @@ export function MenuAcciones({ titulo, etiqueta, acciones }: Props) {
     </DropdownMenuItem>
   );
   return (
-    <DropdownMenu>
+    // Sin modo modal: el modal oculta el resto con aria-hidden y deja botones enfocables ahí (axe).
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>{disparador}</DropdownMenuTrigger>
       <DropdownMenuContent>
         {normales.map(opcion)}

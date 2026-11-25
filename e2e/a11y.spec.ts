@@ -28,6 +28,9 @@ for (const locale of ["es-CO", "en-US"]) {
       const rutas = [
         "/",
         "/ajustes",
+        "/categorias",
+        "/listas",
+        "/listas?lista=lugares",
         "/ruta-que-no-existe",
         ...(esMovil(info.project.name) ? ["/mas"] : []),
       ];
@@ -47,6 +50,26 @@ for (const locale of ["es-CO", "en-US"]) {
       await page.keyboard.press("Escape");
       await page.getByRole("button", { name: /Cerrar sesión|Sign out/ }).click();
       await expect(page.getByRole("alertdialog")).toBeVisible();
+      await sinViolaciones(page);
+    });
+
+    test("los menús y formularios de Categorías y Listas no tienen violaciones", async ({
+      page,
+    }) => {
+      await iniciarSesion(page, "/categorias");
+      await page
+        .getByRole("button", { name: /Acciones de «Alimentación»|Actions for “Alimentación”/ })
+        .click();
+      await expect(page.getByRole("menu").or(page.getByRole("dialog"))).toBeVisible();
+      await sinViolaciones(page);
+      await page.keyboard.press("Escape");
+      await page.getByRole("button", { name: /Nueva categoría|New category/ }).click();
+      await expect(page.getByRole("dialog")).toBeVisible();
+      await sinViolaciones(page);
+
+      await page.goto("/listas?lista=lugares");
+      await page.getByRole("button", { name: /^(Agregar|Add)$/ }).click();
+      await expect(page.getByRole("dialog")).toBeVisible();
       await sinViolaciones(page);
     });
 

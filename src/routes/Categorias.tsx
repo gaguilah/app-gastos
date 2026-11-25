@@ -3,7 +3,7 @@ import { Info, Plus, Shapes } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router";
 import { Button } from "@/components/ui/button";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Estado, EstadoCarga, EstadoError } from "@/components/shared/Estado";
 import {
   tiposCategoria,
@@ -65,40 +65,42 @@ export function Categorias() {
             </TabsTrigger>
           ))}
         </TabsList>
-      </Tabs>
 
-      {consulta.isPending ? (
-        <EstadoCarga filas={4} />
-      ) : consulta.isError ? (
-        <EstadoError
-          mensaje={t("categorias.error.mensaje")}
-          alReintentar={() => void consulta.refetch()}
-        />
-      ) : delTipo.length === 0 ? (
-        <Estado
-          Icono={Shapes}
-          titulo={t("categorias.vacio.titulo")}
-          mensaje={t("categorias.vacio.mensaje")}
-        >
-          <Button onClick={nueva}>
-            <Plus aria-hidden="true" />
-            {t("categorias.vacio.accion")}
-          </Button>
-        </Estado>
-      ) : (
-        <>
-          <ListaCategorias
-            categorias={delTipo}
-            alElegir={(accion, categoria) => setAbierta({ accion, categoria })}
-          />
-          {delTipo.some((c) => c.delSistema) && (
-            <p className="flex items-center gap-xs text-body-sm text-muted-foreground">
-              <Info className="size-icono-sm shrink-0" aria-hidden="true" />
-              {t("categorias.avisoSistema")}
-            </p>
+        <TabsContent value={tipo} className="flex flex-col gap-lg">
+          {consulta.isPending ? (
+            <EstadoCarga filas={4} />
+          ) : consulta.isError ? (
+            <EstadoError
+              mensaje={t("categorias.error.mensaje")}
+              alReintentar={() => void consulta.refetch()}
+            />
+          ) : delTipo.length === 0 ? (
+            <Estado
+              Icono={Shapes}
+              titulo={t("categorias.vacio.titulo")}
+              mensaje={t("categorias.vacio.mensaje")}
+            >
+              <Button onClick={nueva}>
+                <Plus aria-hidden="true" />
+                {t("categorias.vacio.accion")}
+              </Button>
+            </Estado>
+          ) : (
+            <>
+              <ListaCategorias
+                categorias={delTipo}
+                alElegir={(accion, categoria) => setAbierta({ accion, categoria })}
+              />
+              {delTipo.some((c) => c.delSistema) && (
+                <p className="flex items-center gap-xs text-body-sm text-muted-foreground">
+                  <Info className="size-icono-sm shrink-0" aria-hidden="true" />
+                  {t("categorias.avisoSistema")}
+                </p>
+              )}
+            </>
           )}
-        </>
-      )}
+        </TabsContent>
+      </Tabs>
 
       {(abierta?.accion === "nueva" || abierta?.accion === "editar") && (
         <FormularioCategoria
