@@ -14,5 +14,19 @@ vi.mock("@/datos/supabase", () => ({
   },
 }));
 
+// jsdom no trae matchMedia. Por defecto, pantalla de computador; `ponerMovil(true)` simula el móvil.
+let movil = false;
+export const ponerMovil = (valor: boolean) => {
+  movil = valor;
+};
+window.matchMedia = (consulta: string) =>
+  ({
+    matches: consulta.includes("max-width") ? movil : !movil,
+    media: consulta,
+    addEventListener: () => {},
+    removeEventListener: () => {},
+  }) as unknown as MediaQueryList;
+afterEach(() => ponerMovil(false));
+
 // jsdom dice que el navegador está en inglés; las pruebas parten del idioma por defecto.
 await i18n.changeLanguage("es");

@@ -59,7 +59,8 @@
     "prestamos": "Préstamos que hago",
     "deudas": "Deudas",
     "listas": "Formas de pago, lugares y personas",
-    "ajustes": "Ajustes"
+    "ajustes": "Ajustes",
+    "principal": "Principal"
   },
   "construccion": {
     "titulo": "En construcción",
@@ -69,5 +70,11 @@
     "titulo": "No encontramos esta página",
     "mensaje": "Revisa la dirección o vuelve a Inicio.",
     "irInicio": "Ir a Inicio"
+  },
+  "menu": {
+    "presupuesto": "Presupuesto",
+    "periodicos": "Periódicos",
+    "prestamos": "Préstamos",
+    "listas": "Listas"
   }
 }

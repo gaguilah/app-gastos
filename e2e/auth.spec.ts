@@ -1,9 +1,6 @@
 import { expect, test } from "@playwright/test";
 import { enlaceDelCorreo } from "./apoyo/correo";
-
-// Usuarios de supabase/seed.sql (solo existen en Supabase local).
-const USUARIO = "usuario-a@prueba.local";
-const CONTRASENA = "prueba-local-123";
+import { CONTRASENA, USUARIO } from "./apoyo/sesion";
 
 test("inicia sesión y vuelve a la ruta pedida", async ({ page }) => {
   await page.goto("/bolsas");

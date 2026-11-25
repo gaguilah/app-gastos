@@ -2,6 +2,7 @@ import { createBrowserRouter, type RouteObject } from "react-router";
 import { RutaProtegida } from "@/features/auth/components/RutaProtegida";
 import { SoloSinSesion } from "@/features/auth/components/SoloSinSesion";
 import { CargandoApp } from "@/components/shared/CargandoApp";
+import { LayoutApp } from "./LayoutApp";
 import { modulos } from "./rutas";
 
 export type DatosRuta = { titulo: string };
@@ -34,24 +35,25 @@ export const crearRutas = (): RouteObject[] => [
       {
         Component: RutaProtegida,
         children: [
-          ...modulos.map(({ ruta, titulo }) => ({
-            path: ruta,
-            handle: { titulo } satisfies DatosRuta,
-            lazy: enConstruccion(),
-          })),
           {
-            path: "/ajustes",
-            handle: { titulo: "nav.ajustes" } satisfies DatosRuta,
-            lazy: enConstruccion(),
-          },
-          {
-            path: "/mas",
-            handle: { titulo: "nav.mas" } satisfies DatosRuta,
-            lazy: enConstruccion(),
-          },
-          {
-            path: "*",
-            lazy: { Component: async () => (await import("./NoEncontrada")).NoEncontrada },
+            Component: LayoutApp,
+            children: [
+              ...modulos.map(({ ruta, titulo }) => ({
+                path: ruta,
+                handle: { titulo } satisfies DatosRuta,
+                lazy: enConstruccion(),
+              })),
+              {
+                path: "/ajustes",
+                handle: { titulo: "nav.ajustes" } satisfies DatosRuta,
+                lazy: enConstruccion(),
+              },
+              { path: "/mas", lazy: { Component: async () => (await import("./Mas")).Mas } },
+              {
+                path: "*",
+                lazy: { Component: async () => (await import("./NoEncontrada")).NoEncontrada },
+              },
+            ],
           },
         ],
       },

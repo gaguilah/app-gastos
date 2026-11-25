@@ -59,7 +59,8 @@
     "prestamos": "Loans I make",
     "deudas": "Debts",
     "listas": "Payment methods, places and people",
-    "ajustes": "Settings"
+    "ajustes": "Settings",
+    "principal": "Main"
   },
   "construccion": {
     "titulo": "Under construction",
@@ -69,5 +70,11 @@
     "titulo": "We couldn’t find this page",
     "mensaje": "Check the address or go back to Home.",
     "irInicio": "Go to Home"
+  },
+  "menu": {
+    "presupuesto": "Budget",
+    "periodicos": "Recurring",
+    "prestamos": "Loans",
+    "listas": "Lists"
   }
 }
