@@ -8,7 +8,10 @@ import { modulos } from "./rutas";
 
 export type DatosRuta = { titulo: string };
 
-// Cada etapa reemplaza la pantalla "En construcción" de su módulo.
+// Cada etapa agrega aquí la pantalla de su módulo; el resto muestra "En construcción".
+const pantallas: Partial<Record<string, RouteObject["lazy"]>> = {
+  "/categorias": { Component: async () => (await import("./Categorias")).Categorias },
+};
 const enConstruccion = () => ({
   Component: async () => (await import("./EnConstruccion")).EnConstruccion,
 });
@@ -43,7 +46,7 @@ export const crearRutas = (): RouteObject[] => [
               ...modulos.map(({ ruta, titulo }) => ({
                 path: ruta,
                 handle: { titulo } satisfies DatosRuta,
-                lazy: enConstruccion(),
+                lazy: pantallas[ruta] ?? enConstruccion(),
               })),
               {
                 path: "/ajustes",

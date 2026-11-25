@@ -7,7 +7,7 @@ import { Alert } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { CargandoApp } from "@/components/shared/CargandoApp";
 import { TarjetaAuth } from "@/features/auth/components/TarjetaAuth";
-import { Campo } from "@/features/auth/components/Campo";
+import { Campo } from "@/components/shared/Campo";
 import { BotonEnviar } from "@/features/auth/components/BotonEnviar";
 import { validarNuevaContrasena } from "@/features/auth/contrasena";
 import { claveErrorLogin } from "@/features/auth/errores";

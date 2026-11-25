@@ -81,7 +81,8 @@
     "cancelar": "Cancel",
     "guardar": "Save",
     "cerrar": "Close",
-    "acciones": "Actions for “{{nombre}}”"
+    "acciones": "Actions for “{{nombre}}”",
+    "guardando": "Saving…"
   },
   "ajustes": {
     "idioma": "Language",
@@ -204,5 +205,82 @@
     "cafe": "Brown",
     "gris": "Gray",
     "actual": "Current color"
+  },
+  "categorias": {
+    "titulo": "Categories",
+    "descripcion": "Each with its icon, color and subcategories.",
+    "nueva": "New category",
+    "pestanas": "Category types",
+    "pestana": "{{tipo}} · {{total}}",
+    "tipos": {
+      "gasto": "Expense",
+      "ingreso": "Income",
+      "prestamo": "Loan",
+      "deuda": "Debt"
+    },
+    "columnas": {
+      "categoria": "Category",
+      "subcategorias": "Subcategories",
+      "movimientos": "Entries",
+      "tipo": "Type",
+      "acciones": "Actions"
+    },
+    "sinSubcategorias": "No subcategories",
+    "movimientos_one": "{{count}} entry",
+    "movimientos_other": "{{count}} entries",
+    "delSistema": "Built in",
+    "propia": "Custom",
+    "avisoSistema": "Built-in categories can be edited, but not deleted.",
+    "acciones": {
+      "editar": "Edit",
+      "agregarSub": "Add subcategory",
+      "eliminar": "Delete",
+      "noSeElimina": "Built in: can’t be deleted"
+    },
+    "vacio": {
+      "titulo": "No categories of this type yet",
+      "mensaje": "Create the first one with its own icon and color.",
+      "accion": "Create category"
+    },
+    "error": {
+      "mensaje": "The server didn’t respond. Nothing was lost; try again in a moment."
+    },
+    "formulario": {
+      "vistaPrevia": "Preview",
+      "asiSeVera": "How it will look in your entries",
+      "sinNombre": "Category name",
+      "nombre": "Name",
+      "subcategorias": "Subcategories",
+      "nuevaSub": "New subcategory",
+      "agregar": "Add",
+      "quitarSub": "Remove “{{nombre}}”",
+      "guardar": "Save category",
+      "guardarCambios": "Save changes",
+      "editarTitulo": "Edit “{{nombre}}”",
+      "sistema": "Built-in category: you can change its name, icon, color and subcategories, but not delete it.",
+      "quitarAviso": "When you save, removed subcategories with entries are archived and history keeps them.",
+      "nombreObligatorio": "Type a name.",
+      "nombreLargo": "Use 60 characters at most.",
+      "subRepetida": "It already has a subcategory with that name."
+    },
+    "subcategoria": {
+      "titulo": "Add subcategory to “{{nombre}}”",
+      "yaTiene": "Already has: {{lista}}",
+      "hereda": "It uses the icon and color of “{{nombre}}”.",
+      "guardar": "Add subcategory"
+    },
+    "eliminar": {
+      "titulo": "Delete “{{nombre}}”?",
+      "mensaje": "Anything that already uses it keeps its name, icon and color in history and reports. It just stops showing up when you log new entries.",
+      "conSub": "Its subcategories are deleted too.",
+      "confirmar": "Delete category"
+    },
+    "avisos": {
+      "creada": "Category created",
+      "guardada": "Changes saved",
+      "eliminada": "Category deleted",
+      "archivada": "Category archived: history keeps it",
+      "subAgregada": "Subcategory added"
+    }
   }
 }
