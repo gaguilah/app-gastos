@@ -1,6 +1,120 @@
 {
+  "login": {
+    "error": {
+      "credenciales": "El correo o la contraseña no coinciden. Revisa los datos e inténtalo de nuevo.",
+      "sinRed": "No hay conexión. Revisa tu red e inténtalo de nuevo.",
+      "demasiadosIntentos": "Hiciste muchos intentos seguidos. Espera unos minutos y vuelve a intentarlo.",
+      "desconocido": "No pudimos iniciar sesión. Inténtalo de nuevo en un momento."
+    },
+    "titulo": "Iniciar sesión",
+    "ayuda": "Entra con tu correo y tu contraseña.",
+    "correo": "Correo",
+    "contrasena": "Contraseña",
+    "mostrarContrasena": "Mostrar contraseña",
+    "ocultarContrasena": "Ocultar contraseña",
+    "entrar": "Iniciar sesión",
+    "entrando": "Iniciando sesión…",
+    "olvide": "¿Olvidaste tu contraseña?"
+  },
+  "recuperar": {
+    "error": {
+      "corta": "La contraseña debe tener al menos 8 caracteres.",
+      "noCoinciden": "Las contraseñas no coinciden.",
+      "enlaceVencido": "El enlace venció o ya se usó. Pide uno nuevo para cambiar tu contraseña.",
+      "guardar": "No pudimos guardar la contraseña. Inténtalo de nuevo."
+    },
+    "titulo": "Recuperar contraseña",
+    "ayuda": "Escribe tu correo y te enviamos un enlace para crear una contraseña nueva.",
+    "enviar": "Enviar enlace",
+    "enviando": "Enviando…",
+    "enviado": "Si el correo está registrado, te llegará un enlace para crear una contraseña nueva. Revisa también la carpeta de spam.",
+    "volver": "Volver a iniciar sesión",
+    "nueva": {
+      "titulo": "Crea una contraseña nueva",
+      "ayuda": "Usa al menos 8 caracteres.",
+      "contrasena": "Contraseña nueva",
+      "confirmar": "Confirma la contraseña",
+      "guardar": "Guardar contraseña",
+      "guardando": "Guardando…",
+      "pedirOtro": "Pedir otro enlace"
+    }
+  },
   "app": {
     "nombre": "App-Gastos",
-    "enPreparacion": "Estamos preparando tu app de gastos."
+    "cargando": "Cargando"
+  },
+  "nav": {
+    "inicio": "Inicio",
+    "gastos": "Gastos",
+    "registrar": "Registrar",
+    "registrarGasto": "Registrar gasto",
+    "reportes": "Reportes",
+    "mas": "Más",
+    "ingresos": "Ingresos",
+    "bolsas": "Bolsas",
+    "ahorros": "Ahorros",
+    "categorias": "Categorías",
+    "presupuesto": "Presupuesto y período",
+    "periodicos": "Gastos periódicos",
+    "prestamos": "Préstamos que hago",
+    "deudas": "Deudas",
+    "listas": "Formas de pago, lugares y personas",
+    "ajustes": "Ajustes",
+    "principal": "Principal"
+  },
+  "construccion": {
+    "titulo": "En construcción",
+    "mensaje": "Esta sección llega en una próxima versión."
+  },
+  "noEncontrada": {
+    "titulo": "No encontramos esta página",
+    "mensaje": "Revisa la dirección o vuelve a Inicio.",
+    "irInicio": "Ir a Inicio"
+  },
+  "menu": {
+    "presupuesto": "Presupuesto",
+    "periodicos": "Periódicos",
+    "prestamos": "Préstamos",
+    "listas": "Listas"
+  },
+  "comun": {
+    "cancelar": "Cancelar",
+    "guardar": "Guardar",
+    "cerrar": "Cerrar"
+  },
+  "ajustes": {
+    "idioma": "Idioma",
+    "cambiarIdioma": "Cambiar idioma",
+    "nombreIdioma": {
+      "es": "Español",
+      "en": "English"
+    },
+    "notaMontos": "Los montos siguen en pesos colombianos: $35.000.",
+    "cuenta": "Cuenta",
+    "cerrarSesion": "Cerrar sesión",
+    "cerrarSesionPregunta": "¿Cerrar sesión?",
+    "cerrarSesionMensaje": "Para volver a entrar en este dispositivo necesitarás tu correo y tu contraseña.",
+    "aplicacion": "Aplicación",
+    "version": "Versión",
+    "regionEspanol": "Colombia"
+  },
+  "avisos": {
+    "sinConexion": {
+      "titulo": "Sin conexión.",
+      "mensaje": "Lo que necesita internet queda en pausa hasta que vuelva la señal."
+    },
+    "version": {
+      "titulo": "Hay una versión nueva",
+      "mensaje": "Actualiza para tener las últimas mejoras.",
+      "actualizar": "Actualizar"
+    },
+    "region": "Avisos"
+  },
+  "estado": {
+    "error": {
+      "titulo": "No pudimos cargar esto",
+      "mensaje": "Revisa tu conexión e inténtalo de nuevo.",
+      "reintentar": "Reintentar"
+    }
   }
 }

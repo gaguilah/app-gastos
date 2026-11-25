@@ -6,6 +6,13 @@ const chromiumPropio = process.env.PW_CHROMIUM_PATH
   ? { launchOptions: { executablePath: process.env.PW_CHROMIUM_PATH } }
   : {};
 
+// Un nombre de dispositivo mal escrito no debe pasar en silencio a una pantalla de computador.
+function dispositivo(nombre: string) {
+  const d = devices[nombre];
+  if (!d) throw new Error(`Playwright no tiene el dispositivo "${nombre}"`);
+  return d;
+}
+
 export default defineConfig({
   testDir: "e2e",
   fullyParallel: true,
@@ -20,13 +27,17 @@ export default defineConfig({
   },
   // Los mismos tamaños de diseno-ui/references/layouts-3-tamanos.md.
   projects: [
-    { name: "movil", use: { ...devices["iPhone 14"] } },
-    { name: "movil-android", use: { ...devices["Pixel 7"], ...chromiumPropio } },
-    { name: "tablet", use: { ...devices["iPad Air"] } },
+    { name: "movil", use: { ...dispositivo("iPhone 14") } },
+    { name: "movil-android", use: { ...dispositivo("Pixel 7"), ...chromiumPropio } },
+    {
+      name: "tablet",
+      // Playwright no trae «iPad Air»: un iPad con WebKit y el tamaño de DESIGN.md §3 (820 × 1180).
+      use: { ...dispositivo("iPad Pro 11"), viewport: { width: 820, height: 1180 } },
+    },
     {
       name: "computador",
       use: {
-        ...devices["Desktop Chrome"],
+        ...dispositivo("Desktop Chrome"),
         viewport: { width: 1440, height: 900 },
         ...chromiumPropio,
       },
@@ -37,5 +48,12 @@ export default defineConfig({
     url: `http://localhost:${puerto}`,
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,
+    // Supabase local por defecto (mismos valores públicos de .env.example).
+    env: {
+      VITE_SUPABASE_URL: process.env.VITE_SUPABASE_URL ?? "http://127.0.0.1:54321",
+      VITE_SUPABASE_PUBLISHABLE_KEY:
+        process.env.VITE_SUPABASE_PUBLISHABLE_KEY ??
+        "sb_publishable_ACJWlzQHlZjBrEguHvfOxg_3BJgxAaH",
+    },
   },
 });

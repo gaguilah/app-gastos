@@ -23,7 +23,9 @@ Versiones del stack en la tabla "Stack" de `CLAUDE.md` (React 19, Tailwind 4, Ty
 - `createBrowserRouter` + `RouterProvider`, definidos en `src/routes/`. No se usa el modo framework (`@react-router/dev`, `react-router.config.ts`).
 - Estructura:
   ```
-  /login                 pública (única)
+  /login                 pública
+  /recuperar             pública (pide el enlace por correo)
+  /nueva-contrasena      pública (solo sirve con la sesión de recuperación del enlace)
   /                      RutaProtegida → LayoutApp (navegación + encabezado + <Outlet/>)
     index                Panel
     gastos, ingresos, bolsas, periodicos, prestamos, deudas, categorias, reportes, ajustes…

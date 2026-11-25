@@ -1,6 +1,120 @@
 {
+  "login": {
+    "error": {
+      "credenciales": "Email or password doesn’t match. Check your details and try again.",
+      "sinRed": "You’re offline. Check your connection and try again.",
+      "demasiadosIntentos": "Too many attempts in a row. Wait a few minutes and try again.",
+      "desconocido": "We couldn’t sign you in. Try again in a moment."
+    },
+    "titulo": "Sign in",
+    "ayuda": "Use your email and password.",
+    "correo": "Email",
+    "contrasena": "Password",
+    "mostrarContrasena": "Show password",
+    "ocultarContrasena": "Hide password",
+    "entrar": "Sign in",
+    "entrando": "Signing in…",
+    "olvide": "Forgot your password?"
+  },
+  "recuperar": {
+    "error": {
+      "corta": "Your password must have at least 8 characters.",
+      "noCoinciden": "The passwords don’t match.",
+      "enlaceVencido": "The link expired or was already used. Request a new one to change your password.",
+      "guardar": "We couldn’t save your password. Try again."
+    },
+    "titulo": "Reset password",
+    "ayuda": "Enter your email and we’ll send you a link to set a new password.",
+    "enviar": "Send link",
+    "enviando": "Sending…",
+    "enviado": "If that email is registered, you’ll get a link to set a new password. Check your spam folder too.",
+    "volver": "Back to sign in",
+    "nueva": {
+      "titulo": "Set a new password",
+      "ayuda": "Use at least 8 characters.",
+      "contrasena": "New password",
+      "confirmar": "Confirm password",
+      "guardar": "Save password",
+      "guardando": "Saving…",
+      "pedirOtro": "Request another link"
+    }
+  },
   "app": {
     "nombre": "App-Gastos",
-    "enPreparacion": "We are getting your expense app ready."
+    "cargando": "Loading"
+  },
+  "nav": {
+    "inicio": "Home",
+    "gastos": "Expenses",
+    "registrar": "Log",
+    "registrarGasto": "Log expense",
+    "reportes": "Reports",
+    "mas": "More",
+    "ingresos": "Income",
+    "bolsas": "Wallets",
+    "ahorros": "Savings",
+    "categorias": "Categories",
+    "presupuesto": "Budget and period",
+    "periodicos": "Recurring expenses",
+    "prestamos": "Loans I make",
+    "deudas": "Debts",
+    "listas": "Payment methods, places and people",
+    "ajustes": "Settings",
+    "principal": "Main"
+  },
+  "construccion": {
+    "titulo": "Under construction",
+    "mensaje": "This section is coming in a future version."
+  },
+  "noEncontrada": {
+    "titulo": "We couldn’t find this page",
+    "mensaje": "Check the address or go back to Home.",
+    "irInicio": "Go to Home"
+  },
+  "menu": {
+    "presupuesto": "Budget",
+    "periodicos": "Recurring",
+    "prestamos": "Loans",
+    "listas": "Lists"
+  },
+  "comun": {
+    "cancelar": "Cancel",
+    "guardar": "Save",
+    "cerrar": "Close"
+  },
+  "ajustes": {
+    "idioma": "Language",
+    "cambiarIdioma": "Change language",
+    "nombreIdioma": {
+      "es": "Español",
+      "en": "English"
+    },
+    "notaMontos": "Amounts stay in Colombian pesos: $35.000.",
+    "cuenta": "Account",
+    "cerrarSesion": "Sign out",
+    "cerrarSesionPregunta": "Sign out?",
+    "cerrarSesionMensaje": "To get back in on this device you'll need your email and password.",
+    "aplicacion": "App",
+    "version": "Version",
+    "regionEspanol": "Colombia"
+  },
+  "avisos": {
+    "sinConexion": {
+      "titulo": "You’re offline.",
+      "mensaje": "Anything that needs the internet is paused until you’re back online."
+    },
+    "version": {
+      "titulo": "A new version is available",
+      "mensaje": "Update to get the latest improvements.",
+      "actualizar": "Update"
+    },
+    "region": "Notifications"
+  },
+  "estado": {
+    "error": {
+      "titulo": "We couldn’t load this",
+      "mensaje": "Check your connection and try again.",
+      "reintentar": "Try again"
+    }
   }
 }

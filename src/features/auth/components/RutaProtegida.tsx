@@ -1,0 +1,19 @@
+import { Navigate, Outlet, useLocation } from "react-router";
+import { PARAMETRO_SIGUIENTE } from "@/routes/rutas";
+import { CargandoApp } from "@/components/shared/CargandoApp";
+import { useSesion } from "../useSesion";
+
+/** Sin sesión, cualquier ruta hija va a /login recordando a dónde se quería ir. */
+export function RutaProtegida() {
+  const { cargando, sesion, recuperando } = useSesion();
+  const { pathname, search, hash } = useLocation();
+
+  if (cargando) return <CargandoApp />;
+  if (!sesion) {
+    const siguiente = new URLSearchParams({ [PARAMETRO_SIGUIENTE]: pathname + search + hash });
+    return <Navigate to={`/login?${siguiente}`} replace />;
+  }
+  // Quien entró con el enlace de recuperación primero crea su contraseña nueva.
+  if (recuperando) return <Navigate to="/nueva-contrasena" replace />;
+  return <Outlet />;
+}
