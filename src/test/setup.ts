@@ -40,3 +40,10 @@ afterEach(() => ponerMovil(false));
 
 // jsdom dice que el navegador está en inglés; las pruebas parten del idioma por defecto.
 await i18n.changeLanguage("es");
+
+// jsdom no trae ResizeObserver; Radix lo usa en los radios que van dentro de un <form>.
+globalThis.ResizeObserver ??= class {
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+};

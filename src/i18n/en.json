@@ -282,5 +282,105 @@
       "archivada": "Category archived: history keeps it",
       "subAgregada": "Subcategory added"
     }
+  },
+  "listas": {
+    "titulo": "Payment methods, places and people",
+    "descripcion": "Rename, merge duplicates or delete.",
+    "agregar": "Add",
+    "pestanas": "List type",
+    "pestana": {
+      "formas": "Payment methods · {{total}}",
+      "lugares": "Places · {{total}}",
+      "personas": "People · {{total}}"
+    },
+    "columnas": {
+      "formas": "Payment method",
+      "lugares": "Place",
+      "personas": "Person",
+      "usosFormas": "Expenses",
+      "usosLugares": "Expenses",
+      "usosPersonas": "Loans and debts",
+      "ultimo": "Last used",
+      "acciones": "Actions"
+    },
+    "usos": {
+      "formas_one": "{{count}} expense",
+      "formas_other": "{{count}} expenses",
+      "lugares_one": "{{count}} expense",
+      "lugares_other": "{{count}} expenses",
+      "personas_one": "{{count}} loan or debt",
+      "personas_other": "{{count}} loans or debts"
+    },
+    "ultimo": "last: {{fecha}}",
+    "sinUso": "Not used",
+    "subtipos": {
+      "medio": "Payment method",
+      "canal": "Channel",
+      "persona": "Person",
+      "banco": "Bank",
+      "tarjeta": "Card"
+    },
+    "canal": "{{nombre}} (channel)",
+    "avisoBolsas": "Wallets (Cash, Nequi, Daviplata) are managed in Wallets.",
+    "acciones": {
+      "renombrar": "Rename",
+      "unir": "Merge with…",
+      "eliminar": "Delete",
+      "sinOtro": "There’s no other of the same type to merge with"
+    },
+    "vacio": {
+      "titulo": "This list is empty",
+      "mensaje": "It fills itself as you log expenses and loans. You can also add here."
+    },
+    "error": {
+      "mensaje": "We couldn’t load your lists. The server didn’t respond; nothing was lost, try again in a moment."
+    },
+    "nuevo": {
+      "titulo": "Add to the list",
+      "tipo": "Type",
+      "nombre": "Name",
+      "ayuda": "They’re also created as you log expenses and loans.",
+      "guardar": "Add",
+      "existe": "“{{nombre}}” is already on the list. Use that one instead of creating another.",
+      "usarExistente": "Use the existing one"
+    },
+    "renombrar": {
+      "titulo": "Rename “{{nombre}}”",
+      "ayuda": "Everything logged under this name takes the new one.",
+      "guardar": "Save",
+      "yaExiste": "There’s already one with that name. You can merge them instead of renaming.",
+      "unirlos": "Merge with the existing one"
+    },
+    "unir": {
+      "titulo": "Merge “{{nombre}}” with…",
+      "conserva": "Name to keep",
+      "aviso": "Everything logged under “{{origen}}” will be under “{{destino}}”. This can’t be undone.",
+      "elige": "Choose the name to keep.",
+      "confirmar": "Merge",
+      "noSonElMismo": "Not the same"
+    },
+    "eliminar": {
+      "titulo": "Delete “{{nombre}}”?",
+      "mensaje": "Everything logged under this name keeps it in history and reports. It just stops being suggested when you log.",
+      "confirmar": "Delete"
+    },
+    "duplicado": {
+      "aviso": "Possible duplicate.",
+      "mensaje": "“{{a}}” and “{{b}}” have similar names.",
+      "revisar": "Review"
+    },
+    "avisos": {
+      "creado": "Added to the list",
+      "reactivado": "Restored: it was archived",
+      "renombrado": "Name changed",
+      "unidos": "Merged into “{{nombre}}”",
+      "eliminado": "Deleted",
+      "archivado": "Archived: history keeps it",
+      "distintos": "Done, we won’t suggest them again"
+    }
+  },
+  "fechas": {
+    "hoy": "Today",
+    "ayer": "Yesterday"
   }
 }

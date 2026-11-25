@@ -33,6 +33,14 @@ export function claveErrorDatos(error: unknown): string {
     if (clave) return `errores.servidor.${clave.replace(".", "_")}`;
   }
   if (code === "23505") return "errores.nombreRepetido";
+  // personas_nombre_check rechaza 13 o más dígitos seguidos: nunca números de tarjeta (3.8).
+  if (
+    code === "23514" &&
+    typeof message === "string" &&
+    message.includes("personas_nombre_check")
+  ) {
+    return "errores.numeroTarjeta";
+  }
   if (code === "23514") return "errores.datoInvalido";
   if (code === "42501") return "errores.sinPermiso";
   return "errores.desconocido";
@@ -41,3 +49,7 @@ export function claveErrorDatos(error: unknown): string {
 export const clavesErrorServidor = clavesServidor.map(
   (c) => `errores.servidor.${c.replace(".", "_")}`,
 );
+
+/** Nombre normalizado repetido (restricción única): la pantalla puede ofrecer unir. */
+export const esNombreRepetido = (error: unknown) =>
+  esErrorPostgrest(error) && error.code === "23505";

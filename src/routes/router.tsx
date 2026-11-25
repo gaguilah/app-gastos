@@ -11,6 +11,7 @@ export type DatosRuta = { titulo: string };
 // Cada etapa agrega aquí la pantalla de su módulo; el resto muestra "En construcción".
 const pantallas: Partial<Record<string, RouteObject["lazy"]>> = {
   "/categorias": { Component: async () => (await import("./Categorias")).Categorias },
+  "/listas": { Component: async () => (await import("./Listas")).Listas },
 };
 const enConstruccion = () => ({
   Component: async () => (await import("./EnConstruccion")).EnConstruccion,

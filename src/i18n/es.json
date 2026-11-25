@@ -282,5 +282,105 @@
       "archivada": "Categoría archivada: el historial la conserva",
       "subAgregada": "Subcategoría agregada"
     }
+  },
+  "listas": {
+    "titulo": "Formas de pago, lugares y personas",
+    "descripcion": "Renombra, une duplicados o elimina.",
+    "agregar": "Agregar",
+    "pestanas": "Tipo de lista",
+    "pestana": {
+      "formas": "Formas de pago · {{total}}",
+      "lugares": "Lugares · {{total}}",
+      "personas": "Personas · {{total}}"
+    },
+    "columnas": {
+      "formas": "Forma de pago",
+      "lugares": "Lugar",
+      "personas": "Persona",
+      "usosFormas": "Gastos",
+      "usosLugares": "Gastos",
+      "usosPersonas": "Préstamos y deudas",
+      "ultimo": "Último uso",
+      "acciones": "Acciones"
+    },
+    "usos": {
+      "formas_one": "{{count}} gasto",
+      "formas_other": "{{count}} gastos",
+      "lugares_one": "{{count}} gasto",
+      "lugares_other": "{{count}} gastos",
+      "personas_one": "{{count}} préstamo o deuda",
+      "personas_other": "{{count}} préstamos o deudas"
+    },
+    "ultimo": "último: {{fecha}}",
+    "sinUso": "Sin uso",
+    "subtipos": {
+      "medio": "Medio de pago",
+      "canal": "Canal",
+      "persona": "Persona",
+      "banco": "Banco",
+      "tarjeta": "Tarjeta"
+    },
+    "canal": "{{nombre}} (canal)",
+    "avisoBolsas": "Las bolsas (Efectivo, Nequi, Daviplata) se manejan en Bolsas.",
+    "acciones": {
+      "renombrar": "Renombrar",
+      "unir": "Unir con…",
+      "eliminar": "Eliminar",
+      "sinOtro": "No hay otro del mismo tipo para unir"
+    },
+    "vacio": {
+      "titulo": "Esta lista está vacía",
+      "mensaje": "Se llena sola al registrar gastos y préstamos. También puedes agregar aquí."
+    },
+    "error": {
+      "mensaje": "No pudimos cargar tus listas. El servidor no respondió; nada se perdió, vuelve a intentarlo en un momento."
+    },
+    "nuevo": {
+      "titulo": "Agregar a la lista",
+      "tipo": "Tipo",
+      "nombre": "Nombre",
+      "ayuda": "También se crean solos al registrar gastos y préstamos.",
+      "guardar": "Agregar",
+      "existe": "«{{nombre}}» ya está en la lista. Usa ese en lugar de crear otro.",
+      "usarExistente": "Usar el existente"
+    },
+    "renombrar": {
+      "titulo": "Renombrar «{{nombre}}»",
+      "ayuda": "Todo lo registrado con este nombre toma el nombre nuevo.",
+      "guardar": "Guardar",
+      "yaExiste": "Ya hay uno con ese nombre. Puedes unirlos en lugar de renombrar.",
+      "unirlos": "Unir con el existente"
+    },
+    "unir": {
+      "titulo": "Unir «{{nombre}}» con…",
+      "conserva": "Nombre que se conserva",
+      "aviso": "Todo lo registrado con «{{origen}}» quedará en «{{destino}}». Esto no se puede deshacer.",
+      "elige": "Elige el nombre que se conserva.",
+      "confirmar": "Unir",
+      "noSonElMismo": "No son el mismo"
+    },
+    "eliminar": {
+      "titulo": "¿Eliminar «{{nombre}}»?",
+      "mensaje": "Lo registrado con este nombre lo conserva en el historial y en los reportes. Solo dejará de sugerirse al registrar.",
+      "confirmar": "Eliminar"
+    },
+    "duplicado": {
+      "aviso": "Posible duplicado.",
+      "mensaje": "«{{a}}» y «{{b}}» tienen nombres parecidos.",
+      "revisar": "Revisar"
+    },
+    "avisos": {
+      "creado": "Agregado a la lista",
+      "reactivado": "Lo recuperamos: estaba archivado",
+      "renombrado": "Nombre cambiado",
+      "unidos": "Unidos en «{{nombre}}»",
+      "eliminado": "Eliminado",
+      "archivado": "Archivado: el historial lo conserva",
+      "distintos": "Listo, no volveremos a sugerirlos"
+    }
+  },
+  "fechas": {
+    "hoy": "Hoy",
+    "ayer": "Ayer"
   }
 }

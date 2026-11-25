@@ -17,6 +17,13 @@ describe("claveErrorDatos", () => {
     );
   });
 
+  it("un número de tarjeta en el nombre de una persona dice que no se guardan", () => {
+    const mensaje =
+      'new row for relation "personas" violates check constraint "personas_nombre_check"';
+    expect(claveErrorDatos({ code: "23514", message: mensaje })).toBe("errores.numeroTarjeta");
+    expect(claveErrorDatos({ code: "23514", message: "otra regla" })).toBe("errores.datoInvalido");
+  });
+
   it("sin red", () => {
     expect(claveErrorDatos(new TypeError("Failed to fetch"))).toBe("errores.sinRed");
   });
