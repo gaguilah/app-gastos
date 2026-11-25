@@ -80,7 +80,8 @@
   "comun": {
     "cancelar": "Cancel",
     "guardar": "Save",
-    "cerrar": "Close"
+    "cerrar": "Close",
+    "acciones": "Actions for “{{nombre}}”"
   },
   "ajustes": {
     "idioma": "Language",
@@ -139,5 +140,69 @@
       "duplicado_entidad_invalida": "This list has no duplicates to review.",
       "duplicado_no_existe": "One of the two no longer exists."
     }
+  },
+  "selector": {
+    "icono": "Icon",
+    "color": "Color"
+  },
+  "iconos": {
+    "utensils": "Food",
+    "car": "Car",
+    "house": "House",
+    "zap": "Power",
+    "heart-pulse": "Health",
+    "graduation-cap": "Education",
+    "clapperboard": "Movies",
+    "shirt": "Clothes",
+    "repeat": "Subscription",
+    "paw-print": "Pet",
+    "coffee": "Coffee",
+    "shopping-cart": "Groceries",
+    "shopping-bag": "Shopping",
+    "pizza": "Pizza",
+    "beer": "Drinks",
+    "bus": "Bus",
+    "train-front": "Train",
+    "bike": "Bike",
+    "fuel": "Fuel",
+    "plane": "Travel",
+    "pill": "Medicine",
+    "stethoscope": "Doctor",
+    "dumbbell": "Gym",
+    "baby": "Baby",
+    "book-open": "Books",
+    "music": "Music",
+    "gamepad-2": "Games",
+    "tv": "TV",
+    "wifi": "Internet",
+    "smartphone": "Phone",
+    "wrench": "Repairs",
+    "scissors": "Haircut",
+    "gift": "Gifts",
+    "building-2": "Building",
+    "receipt": "Bill",
+    "briefcase": "Work",
+    "sparkles": "Extra",
+    "tag": "Tag",
+    "wallet": "Wallet",
+    "piggy-bank": "Savings",
+    "credit-card": "Card",
+    "hand-coins": "Loan",
+    "landmark": "Bank",
+    "banknote": "Cash",
+    "circle-x": "Not recovered",
+    "circle-help": "Unknown",
+    "ellipsis": "Other"
+  },
+  "colores": {
+    "ambar": "Amber",
+    "indigo": "Indigo",
+    "verde": "Green",
+    "cian": "Cyan",
+    "rosa": "Pink",
+    "violeta": "Violet",
+    "cafe": "Brown",
+    "gris": "Gray",
+    "actual": "Current color"
   }
 }

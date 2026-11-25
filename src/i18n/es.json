@@ -80,7 +80,8 @@
   "comun": {
     "cancelar": "Cancelar",
     "guardar": "Guardar",
-    "cerrar": "Cerrar"
+    "cerrar": "Cerrar",
+    "acciones": "Acciones de «{{nombre}}»"
   },
   "ajustes": {
     "idioma": "Idioma",
@@ -139,5 +140,69 @@
       "duplicado_entidad_invalida": "Esta lista no tiene duplicados que revisar.",
       "duplicado_no_existe": "Uno de los dos ya no existe."
     }
+  },
+  "selector": {
+    "icono": "Ícono",
+    "color": "Color"
+  },
+  "iconos": {
+    "utensils": "Comida",
+    "car": "Carro",
+    "house": "Casa",
+    "zap": "Energía",
+    "heart-pulse": "Salud",
+    "graduation-cap": "Educación",
+    "clapperboard": "Cine",
+    "shirt": "Ropa",
+    "repeat": "Suscripción",
+    "paw-print": "Mascota",
+    "coffee": "Café",
+    "shopping-cart": "Mercado",
+    "shopping-bag": "Compras",
+    "pizza": "Pizza",
+    "beer": "Bebidas",
+    "bus": "Bus",
+    "train-front": "Tren",
+    "bike": "Bicicleta",
+    "fuel": "Gasolina",
+    "plane": "Viajes",
+    "pill": "Medicina",
+    "stethoscope": "Médico",
+    "dumbbell": "Gimnasio",
+    "baby": "Bebé",
+    "book-open": "Libros",
+    "music": "Música",
+    "gamepad-2": "Juegos",
+    "tv": "Televisión",
+    "wifi": "Internet",
+    "smartphone": "Celular",
+    "wrench": "Arreglos",
+    "scissors": "Peluquería",
+    "gift": "Regalos",
+    "building-2": "Edificio",
+    "receipt": "Factura",
+    "briefcase": "Trabajo",
+    "sparkles": "Extra",
+    "tag": "Etiqueta",
+    "wallet": "Billetera",
+    "piggy-bank": "Ahorro",
+    "credit-card": "Tarjeta",
+    "hand-coins": "Préstamo",
+    "landmark": "Banco",
+    "banknote": "Billete",
+    "circle-x": "No recuperado",
+    "circle-help": "Desconocido",
+    "ellipsis": "Otros"
+  },
+  "colores": {
+    "ambar": "Ámbar",
+    "indigo": "Índigo",
+    "verde": "Verde",
+    "cian": "Cian",
+    "rosa": "Rosa",
+    "violeta": "Violeta",
+    "cafe": "Café",
+    "gris": "Gris",
+    "actual": "Color actual"
   }
 }
