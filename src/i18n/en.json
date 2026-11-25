@@ -98,5 +98,16 @@
     "aplicacion": "App",
     "version": "Version",
     "regionEspanol": "Colombia"
+  },
+  "avisos": {
+    "sinConexion": {
+      "titulo": "You’re offline.",
+      "mensaje": "Anything that needs the internet is paused until you’re back online."
+    },
+    "version": {
+      "titulo": "A new version is available",
+      "mensaje": "Update to get the latest improvements.",
+      "actualizar": "Update"
+    }
   }
 }

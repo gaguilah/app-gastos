@@ -98,5 +98,16 @@
     "aplicacion": "Aplicación",
     "version": "Versión",
     "regionEspanol": "Colombia"
+  },
+  "avisos": {
+    "sinConexion": {
+      "titulo": "Sin conexión.",
+      "mensaje": "Lo que necesita internet queda en pausa hasta que vuelva la señal."
+    },
+    "version": {
+      "titulo": "Hay una versión nueva",
+      "mensaje": "Actualiza para tener las últimas mejoras.",
+      "actualizar": "Actualizar"
+    }
   }
 }

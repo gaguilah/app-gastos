@@ -3,6 +3,7 @@ import { RutaProtegida } from "@/features/auth/components/RutaProtegida";
 import { SoloSinSesion } from "@/features/auth/components/SoloSinSesion";
 import { CargandoApp } from "@/components/shared/CargandoApp";
 import { LayoutApp } from "./LayoutApp";
+import { RaizApp } from "./RaizApp";
 import { modulos } from "./rutas";
 
 export type DatosRuta = { titulo: string };
@@ -15,6 +16,7 @@ const enConstruccion = () => ({
 // Función y no constante: el router completa los objetos de ruta al cargarlos en diferido.
 export const crearRutas = (): RouteObject[] => [
   {
+    Component: RaizApp,
     HydrateFallback: CargandoApp,
     children: [
       {

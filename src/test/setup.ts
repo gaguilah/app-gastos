@@ -14,6 +14,15 @@ vi.mock("@/datos/supabase", () => ({
   },
 }));
 
+// jsdom no tiene service worker: por defecto no hay versión nueva. AvisoVersion.test cambia esto.
+vi.mock("virtual:pwa-register/react", () => ({
+  useRegisterSW: vi.fn(() => ({
+    needRefresh: [false, vi.fn()],
+    offlineReady: [false, vi.fn()],
+    updateServiceWorker: vi.fn(),
+  })),
+}));
+
 // jsdom no trae matchMedia. Por defecto, pantalla de computador; `ponerMovil(true)` simula el móvil.
 let movil = false;
 export const ponerMovil = (valor: boolean) => {

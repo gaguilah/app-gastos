@@ -5,6 +5,7 @@ import { useNavigate } from "react-router";
 import { supabase } from "@/datos/supabase";
 import { Alert } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
+import { useEnLinea } from "@/lib/useEnLinea";
 import { Ventana } from "./Ventana";
 
 type Props = { abierta: boolean; alCambiar: (abierta: boolean) => void };
@@ -13,6 +14,7 @@ type Props = { abierta: boolean; alCambiar: (abierta: boolean) => void };
 export function DialogoSalir({ abierta, alCambiar }: Props) {
   const { t } = useTranslation();
   const navegar = useNavigate();
+  const enLinea = useEnLinea();
   const [saliendo, setSaliendo] = useState(false);
   const [fallo, setFallo] = useState(false);
 
@@ -42,7 +44,7 @@ export function DialogoSalir({ abierta, alCambiar }: Props) {
           <Button variant="secondary" onClick={() => alCambiar(false)}>
             {t("comun.cancelar")}
           </Button>
-          <Button variant="destructive" onClick={salir} disabled={saliendo}>
+          <Button variant="destructive" onClick={salir} disabled={saliendo || !enLinea}>
             <LogOut aria-hidden="true" />
             {t("ajustes.cerrarSesion")}
           </Button>

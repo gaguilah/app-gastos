@@ -57,6 +57,17 @@
   --sombra-fab: 0 6px 16px rgba(4, 120, 87, 0.35);
 }
 
+/* Alto de la franja «Sin conexión» (una línea), para que el menú lateral fijo no quede cortado. */
+:root {
+  --alto-franja: 0rem;
+}
+:root:has([data-franja-sin-conexion]) {
+  --alto-franja: calc(
+    max(var(--spacing-sm), env(safe-area-inset-top)) + var(--spacing-sm) +
+      var(--text-body-sm--line-height)
+  );
+}
+
 /* Modo oscuro preparado (fuera del MVP): solo cambian las variables. */
 .dark {
   --background: #0f131c;

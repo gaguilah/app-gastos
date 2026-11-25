@@ -19,7 +19,7 @@ const claseItemLateral = cn(
 function MenuLateral() {
   const { t } = useTranslation();
   return (
-    <aside className="sticky top-0 hidden h-dvh w-sidebar-mini shrink-0 flex-col items-center gap-lg overflow-y-auto border-r bg-card px-sm pt-[max(var(--spacing-md),env(safe-area-inset-top))] pb-md md:flex xl:w-sidebar xl:items-stretch xl:px-md xl:pt-[max(var(--spacing-lg),env(safe-area-inset-top))]">
+    <aside className="sticky top-(--alto-franja) hidden h-[calc(100dvh-var(--alto-franja))] w-sidebar-mini shrink-0 flex-col items-center gap-lg overflow-y-auto border-r bg-card px-sm pt-[max(var(--spacing-md),env(safe-area-inset-top))] pb-md md:flex xl:w-sidebar xl:items-stretch xl:px-md xl:pt-[max(var(--spacing-lg),env(safe-area-inset-top))]">
       <div className="flex items-center gap-sm">
         <span className="flex size-xl items-center justify-center rounded-control bg-primary text-primary-foreground">
           <Wallet className="size-icono" aria-hidden="true" />
