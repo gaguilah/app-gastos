@@ -51,6 +51,14 @@ jobs:
       - run: npx supabase db reset
       - run: npx supabase db lint --fail-on error
       - run: npx supabase test db
+      # Los tipos de src/datos/tipos.ts deben salir de las migraciones actuales.
+      - name: Tipos generados al día
+        run: |
+          npm run db:types
+          git diff --exit-code src/datos/tipos.ts || {
+            echo "::error::src/datos/tipos.ts no está al día: corre npm run db:types y súbelo."
+            exit 1
+          }
 
   e2e:
     runs-on: ubuntu-latest
@@ -62,6 +70,9 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npx playwright install --with-deps chromium webkit
+      # Login, recuperación (correo en Mailpit) y sesión contra Supabase local, con el
+      # usuario de la semilla. Solo los servicios que usa la app.
+      - run: npx supabase start -x studio,imgproxy,edge-runtime,logflare,vector,supavisor,realtime,storage-api,postgres-meta
       - run: npm run e2e -- --trace off
       - uses: actions/upload-artifact@v7
         if: failure()

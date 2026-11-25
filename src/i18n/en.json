@@ -109,5 +109,12 @@
       "mensaje": "Update to get the latest improvements.",
       "actualizar": "Update"
     }
+  },
+  "estado": {
+    "error": {
+      "titulo": "We couldn’t load this",
+      "mensaje": "Check your connection and try again.",
+      "reintentar": "Try again"
+    }
   }
 }

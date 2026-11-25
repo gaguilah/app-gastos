@@ -109,5 +109,12 @@
       "mensaje": "Actualiza para tener las últimas mejoras.",
       "actualizar": "Actualizar"
     }
+  },
+  "estado": {
+    "error": {
+      "titulo": "No pudimos cargar esto",
+      "mensaje": "Revisa tu conexión e inténtalo de nuevo.",
+      "reintentar": "Reintentar"
+    }
   }
 }
