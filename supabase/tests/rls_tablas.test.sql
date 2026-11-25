@@ -2,16 +2,16 @@
 -- Para cada tabla, el usuario B no ve, crea, edita ni borra filas de A; un anónimo no ve
 -- nada; y B no puede apuntar a datos de A desde sus propias filas. Etapa 2, issue #7.
 begin;
-select plan(104);
+select plan(109);
 
--- Las 19 tablas de usuario. La prueba 1 exige que la lista esté completa.
+-- Las 20 tablas de usuario (pares_distintos desde la Etapa 5). La prueba 1 exige que la lista esté completa.
 create schema tests;
 create function tests.tablas() returns setof text language sql immutable as $$
   select unnest(array[
     'perfiles', 'periodos', 'categorias', 'formas_pago', 'bolsas', 'movimientos_bolsa',
     'lugares', 'personas', 'reglas_periodicas', 'prestamos', 'deudas', 'cuotas_deuda',
     'abonos_deuda', 'gastos', 'ingresos', 'alertas_enviadas', 'suscripciones_push',
-    'metas_ahorro', 'reglas_aporte'
+    'metas_ahorro', 'reglas_aporte', 'pares_distintos'
   ])
 $$;
 -- Filas de un usuario que puede ver el rol actual (respeta RLS: security invoker).
@@ -99,6 +99,8 @@ select lives_ok($$
     from public.categorias c where c.user_id = '00000000-0000-0000-0000-0000000000a1' and c.nombre = 'Salario';
   insert into public.suscripciones_push (user_id, dispositivo, endpoint, claves) values
     ('00000000-0000-0000-0000-0000000000a1', 'Celular de prueba', 'https://push.prueba.local/a', '{"p256dh":"x","auth":"y"}');
+  insert into public.pares_distintos (user_id, entidad, a_id, b_id) values
+    ('00000000-0000-0000-0000-0000000000a1', 'lugar', '00000000-0000-0000-0010-000000000001', '00000000-0000-0000-0010-000000000002');
 $$, 'montaje: A tiene filas en todas las tablas');
 
 select is_empty(
