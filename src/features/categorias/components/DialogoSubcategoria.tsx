@@ -20,13 +20,20 @@ export function DialogoSubcategoria({ abierta, alCambiar, categoria }: Props) {
   const { t } = useTranslation();
   const agregar = useAgregarSubcategoria();
   const [nombre, setNombre] = useState("");
-  const [vacio, setVacio] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const guardar = (e: React.FormEvent) => {
     e.preventDefault();
     const texto = nombre.trim();
     if (!texto) {
-      setVacio(true);
+      setError(t("categorias.formulario.nombreObligatorio"));
+      return;
+    }
+    const repetida = categoria.subcategorias.some(
+      (s) => s.nombre.localeCompare(texto, "es", { sensitivity: "base" }) === 0,
+    );
+    if (repetida) {
+      setError(t("categorias.formulario.subRepetida"));
       return;
     }
     agregar.mutate(
@@ -75,10 +82,10 @@ export function DialogoSubcategoria({ abierta, alCambiar, categoria }: Props) {
           etiqueta={t("categorias.formulario.nombre")}
           autoComplete="off"
           value={nombre}
-          error={vacio ? t("categorias.formulario.nombreObligatorio") : null}
+          error={error}
           onChange={(e) => {
             setNombre(e.target.value);
-            setVacio(false);
+            setError(null);
           }}
         />
         {yaTiene && (

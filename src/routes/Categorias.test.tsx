@@ -182,6 +182,32 @@ describe("Categorías", () => {
     ]);
   });
 
+  it("agregar subcategoría desde el menú no repite nombres y hereda el tipo", async () => {
+    abrir();
+    await screen.findByText("Alimentación");
+    fireEvent.pointerDown(screen.getByRole("button", { name: "Acciones de «Alimentación»" }), {
+      button: 0,
+      ctrlKey: false,
+    });
+    fireEvent.click(await screen.findByRole("menuitem", { name: "Agregar subcategoría" }));
+    const dialogo = await screen.findByRole("dialog", {
+      name: "Agregar subcategoría a «Alimentación»",
+    });
+    expect(dialogo).toHaveTextContent("Ya tiene: Mercado");
+    const nombre = within(dialogo).getByLabelText("Nombre");
+    fireEvent.change(nombre, { target: { value: "mercado" } });
+    fireEvent.click(within(dialogo).getByRole("button", { name: "Agregar subcategoría" }));
+    expect(
+      await within(dialogo).findByText("Ya tiene una subcategoría con ese nombre."),
+    ).toBeInTheDocument();
+    expect(insert).not.toHaveBeenCalled();
+    fireEvent.change(nombre, { target: { value: "Panadería" } });
+    fireEvent.click(within(dialogo).getByRole("button", { name: "Agregar subcategoría" }));
+    await waitFor(() =>
+      expect(insert).toHaveBeenCalledWith([{ nombre: "Panadería", tipo: "gasto", padre_id: "c1" }]),
+    );
+  });
+
   it("editar precarga los datos y quita una subcategoría al guardar", async () => {
     rpc.mockResolvedValue({ data: "eliminado", error: null });
     abrir();
