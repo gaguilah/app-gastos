@@ -116,5 +116,28 @@
       "mensaje": "Revisa tu conexión e inténtalo de nuevo.",
       "reintentar": "Reintentar"
     }
+  },
+  "errores": {
+    "sinRed": "No hay conexión. Revisa tu internet e inténtalo de nuevo.",
+    "desconocido": "Algo salió mal. Inténtalo de nuevo.",
+    "nombreRepetido": "Ya existe un registro con ese nombre.",
+    "datoInvalido": "Revisa los datos: alguno no es válido.",
+    "numeroTarjeta": "No guardamos números de tarjeta. Usa solo un nombre, por ejemplo «Visa Banco X».",
+    "sinPermiso": "No tienes permiso para hacer esto.",
+    "servidor": {
+      "lugar_nombre_vacio": "Escribe el nombre del lugar.",
+      "lugar_no_existe": "Ese lugar ya no existe.",
+      "persona_nombre_vacio": "Escribe el nombre.",
+      "persona_tipo_invalido": "Elige si es una persona o un banco.",
+      "persona_no_existe": "Esa persona ya no existe.",
+      "forma_pago_no_existe": "Esa forma de pago ya no existe.",
+      "categoria_no_existe": "Esa categoría ya no existe.",
+      "categoria_sistema": "Las categorías del sistema no se pueden eliminar.",
+      "unir_mismo": "Elige un registro distinto para unir.",
+      "unir_tipo_distinto": "Solo se unen registros del mismo tipo.",
+      "unir_clase_distinta": "Solo se unen formas de pago de la misma clase.",
+      "duplicado_entidad_invalida": "Esta lista no tiene duplicados que revisar.",
+      "duplicado_no_existe": "Uno de los dos ya no existe."
+    }
   }
 }

@@ -116,5 +116,28 @@
       "mensaje": "Check your connection and try again.",
       "reintentar": "Try again"
     }
+  },
+  "errores": {
+    "sinRed": "You're offline. Check your connection and try again.",
+    "desconocido": "Something went wrong. Try again.",
+    "nombreRepetido": "There's already one with that name.",
+    "datoInvalido": "Check the details: something isn't valid.",
+    "numeroTarjeta": "We don't store card numbers. Use only a name, like “Visa Bank X”.",
+    "sinPermiso": "You don't have permission to do this.",
+    "servidor": {
+      "lugar_nombre_vacio": "Type the place's name.",
+      "lugar_no_existe": "That place no longer exists.",
+      "persona_nombre_vacio": "Type the name.",
+      "persona_tipo_invalido": "Choose whether it's a person or a bank.",
+      "persona_no_existe": "That person no longer exists.",
+      "forma_pago_no_existe": "That payment method no longer exists.",
+      "categoria_no_existe": "That category no longer exists.",
+      "categoria_sistema": "Built-in categories can't be deleted.",
+      "unir_mismo": "Choose a different one to merge with.",
+      "unir_tipo_distinto": "Only entries of the same type can be merged.",
+      "unir_clase_distinta": "Only payment methods of the same kind can be merged.",
+      "duplicado_entidad_invalida": "This list has no duplicates to review.",
+      "duplicado_no_existe": "One of the two no longer exists."
+    }
   }
 }
