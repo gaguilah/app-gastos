@@ -40,7 +40,7 @@ No discutas si algo es molécula u organismo: si es de un solo módulo, va en su
 
 ## Pantallas y acceso
 
-- Todas las pantallas viven dentro del layout común protegido. La única pantalla pública es **inicio de sesión** (`/login`), sin la navegación de la app.
+- Todas las pantallas viven dentro del layout común protegido. Las únicas pantallas públicas son **inicio de sesión** (`/login`) y la recuperación de contraseña (`/recuperar`, `/nueva-contrasena`), con la misma tarjeta y sin la navegación de la app.
 - **No hay pantalla de registro** ni enlace "Crear cuenta": la app es de un solo usuario. La pantalla de login solo pide correo y contraseña.
 - El layout común muestra navegación inferior en móvil y menú lateral en tablet y computador (ver `references/layouts-3-tamanos.md`).
 - Mientras se verifica la sesión al abrir la app, se muestra una pantalla de carga breve, no un parpadeo del login.

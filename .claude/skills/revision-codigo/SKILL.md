@@ -39,7 +39,7 @@ Lee el código que cambió y el que lo rodea. Para cada punto que no se cumpla, 
 - [ ] La foto del QR no se guarda ni se envía.
 - [ ] Funciones `security definer` con `search_path = ''` y filtro por `auth.uid()`; vistas con `security_invoker`.
 - [ ] Entradas externas validadas en el borde (formularios, QR, parámetros de Edge Functions).
-- [ ] Toda ruta nueva queda dentro del layout protegido; `/login` sigue siendo la única pública y aparece en la prueba de rutas protegidas.
+- [ ] Toda ruta nueva queda dentro del layout protegido; `/login`, `/recuperar` y `/nueva-contrasena` siguen siendo las únicas públicas y aparece en la prueba de rutas protegidas.
 - [ ] No hay registro: ninguna ruta, enlace ni llamada a `signUp`.
 - [ ] El parámetro `siguiente` del login solo acepta rutas internas.
 - [ ] Ningún cambio contra el proyecto Supabase real.

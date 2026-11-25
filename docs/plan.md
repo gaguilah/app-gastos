@@ -8,7 +8,7 @@ App web (PWA) para registrar gastos mensuales que se descuentan de un presupuest
 
 **Incluido en el MVP**
 
-- Autenticación con email y contraseña, sin registro: un solo usuario creado a mano en Supabase y registros desactivados. Todas las pantallas requieren sesión, excepto el inicio de sesión.
+- Autenticación con email y contraseña, sin registro: un solo usuario creado a mano en Supabase y registros desactivados. Todas las pantallas requieren sesión, excepto el inicio de sesión y la recuperación de contraseña por correo (`/recuperar` y `/nueva-contrasena`, decidida en la Etapa 4).
 - Período configurable (día de inicio fijo) con presupuesto propio, independiente de los ingresos.
 - Gastos, ingresos, bolsas y ajustes de saldo.
 - Gastos periódicos con confirmación, pausa y fin indefinido o por número de repeticiones.
@@ -308,7 +308,8 @@ Trece etapas en orden; cada una termina con el cierre de la sección 5 y su prop
 | 1. Diseño de plantillas y pantallas | Definir cómo se ve y se usa la app antes de programarla | Inventario de pantallas y flujos, bocetos en tres tamaños (móvil, tablet, computador) hechos en Claude Design a partir de los ejemplos de Stitch, DESIGN.md (colores, tipografía, espaciado, componentes y estados, íconos, preparado para modo oscuro), elección de la librería de gráficas | El usuario aprueba todas las pantallas y el design.md |
 | 2. Base de datos y seguridad | Crear el modelo de datos | Tablas, relaciones, reglas RLS, categorías y formas de pago iniciales | Pruebas de RLS y de historial al borrar categorías en verde |
 | 3. Lógica del servidor | Reglas que no dependen de pantallas | Cálculo de períodos, generación de periódicos y cuotas, alertas, saldos de bolsas, resumen de cierre, tarea programada diaria | Todas las pruebas de reglas de cálculo en verde |
-| 4. Base del frontend | Estructura común de la app | Login (sin registro), rutas protegidas con layout común, diseño adaptable a tres tamaños (navegación inferior en móvil, menú lateral en tablet y computador), español e inglés, PWA instalable, componentes del design.md | La app se instala en móvil y computador, y el login funciona en los tres tamaños; sin sesión, toda ruta redirige al login |
+| 4. Base del frontend | 25-nov-2026 | #9 · PR #26 | Rutas públicas: `/login`, `/recuperar` y `/nueva-contrasena` (recuperación por correo, decisión de Giovanni); sesión con `flowType: "implicit"` y retorno con `?siguiente=` solo a rutas internas. Layout en tres tamaños (barra inferior, menú lateral de 72 px con tooltips y de 256 px), «Más», Ajustes (idioma guardado en el dispositivo, cuenta, versión desde `package.json`, cerrar sesión con confirmación y `scope: "local"`, que funciona sin red), En construcción y No encontrada. Franja sin conexión sin cola de cambios; aviso de versión nueva con `clientsClaim`. PWA instalable con íconos propios. Átomos de shadcn copiados a mano (el CLI no llega desde la nube); sin `DropdownMenu` (entra en la Etapa 5). Registrar abre `/gastos/nuevo`. E2E con Supabase local y Mailpit; tipos generados revisados en el CI; tablet en Playwright con iPad Pro 11 a 820×1180. Variables de Supabase en Netlify y URLs de redirección y mínimo de 8 caracteres en Supabase Auth. La plantilla del correo en español (`supabase/templates/recuperar.html`) solo se aplica en local: el proyecto real pide SMTP propio, que queda para la etapa que lo especifique. `ponerse_al_dia()`, react-query, react-hook-form y zod pasan a las Etapas 5 y 6. |
+| 4. Base del frontend | Estructura común de la app | Login (sin registro) y recuperación de contraseña por correo, rutas protegidas con layout común, diseño adaptable a tres tamaños (navegación inferior en móvil, menú lateral en tablet y computador), español e inglés, PWA instalable, componentes del design.md | La app se instala en móvil y computador, y el login funciona en los tres tamaños; sin sesión, toda ruta redirige al login |
 | 5. Gestión de datos (CRUD) | Datos de referencia | Categorías con subcategorías y tipos, formas de pago, bolsas, lugares, personas o entidades | Sin duplicados en lugares y personas; categorías filtradas por tipo |
 | 6. Presupuesto, ingresos y bolsas | Controlar el dinero disponible | Configuración del período, presupuesto, ingresos con destino, recargas y ajuste de saldo, metas de ahorro con aportes y retiros (3.15) | Saldos de presupuesto y bolsas correctos en los recorridos E2E |
 | 7. Gastos y filtros | Registrar y consultar gastos | Formulario de gasto, lista agrupada por día, todos los filtros y búsqueda | Un gasto descuenta del presupuesto y de su bolsa; los filtros devuelven lo esperado |
@@ -350,5 +351,6 @@ El riesgo principal es la variedad de facturas y QR; el resto se controla con el
 
 - Lectura de recibos con IA para facturas sin QR.
 - Notificaciones por correo.
+- SMTP propio para los correos de Auth, con la plantilla en español de `supabase/templates/recuperar.html` (en el correo incluido de Supabase llega en inglés). Pedido por Giovanni el 25-nov-2026 para la etapa que lo especifique.
 - Modo oscuro.
 - Presupuesto por categoría, si se necesita más adelante.

@@ -32,7 +32,7 @@ supabase/
 - `dominio/` recibe la fecha de hoy y los datos como parámetros; así se prueba con un reloj fijo.
 - Los componentes no calculan saldos ni totales: los piden a `dominio/` o a la base de datos.
 - Un módulo de `features/` no importa componentes de otro módulo; lo compartido sube a `components/shared/`.
-- **Todas las rutas protegidas** salvo `/login`, y **sin registro de usuarios** (ver `references/react-ts.md`, "Rutas").
+- **Todas las rutas protegidas** salvo `/login`, `/recuperar` y `/nueva-contrasena`, y **sin registro de usuarios** (ver `references/react-ts.md`, "Rutas").
 
 ## Referencias
 

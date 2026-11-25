@@ -90,7 +90,7 @@ Un componente sube a `shared/` solo cuando lo usan dos módulos o más. Detalle 
 - **React Router 8 en modo librería** (`createBrowserRouter` + `RouterProvider`), sin el modo framework.
 - Un **layout común anidado** (menú lateral o navegación inferior y encabezado) envuelve todas las pantallas.
 - **Carga diferida** por pantalla (`lazy` en cada ruta).
-- **Todas las rutas están protegidas.** La única pública es `/login`. Sin sesión, cualquier ruta redirige a `/login` y, al iniciar sesión, vuelve a la ruta pedida.
+- **Todas las rutas están protegidas.** Las únicas públicas son `/login`, `/recuperar` y `/nueva-contrasena` (recuperación de contraseña por correo, decidida en la Etapa 4). Sin sesión, cualquier ruta redirige a `/login` y, al iniciar sesión, vuelve a la ruta pedida.
 - **Un solo usuario: no hay registro.** No existe pantalla, ruta, enlace ni llamada a `signUp`. El usuario se crea a mano en Supabase. Los registros (*signups*) se desactivan en Supabase Auth (pasos en `buenas-practicas/references/supabase-rls-migraciones.md`); ese cambio lo hace el usuario o se aplica con su aprobación.
 - Las pruebas E2E verifican que cada ruta protegida redirige a `/login` sin sesión (skill `pruebas`).
 
@@ -122,7 +122,7 @@ Detalle y ejemplos en las skills; aquí solo la lista.
 - **Ningún texto visible** escrito en un componente: todo va en `src/i18n/es.json` y `en.json`.
 - **Ningún color, tamaño o radio fijo**: solo tokens.
 - **Nunca desactivar ni editar una prueba** para obtener verde.
-- **Solo `/login` es pública**; no hay registro de usuarios.
+- **Solo `/login`, `/recuperar` y `/nueva-contrasena` son públicas**; no hay registro de usuarios.
 
 ## Lo que Claude no hace sin aprobación explícita del usuario
 
