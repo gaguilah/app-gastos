@@ -45,8 +45,7 @@ export const crearRutas = (): RouteObject[] => [
               })),
               {
                 path: "/ajustes",
-                handle: { titulo: "nav.ajustes" } satisfies DatosRuta,
-                lazy: enConstruccion(),
+                lazy: { Component: async () => (await import("./Ajustes")).Ajustes },
               },
               { path: "/mas", lazy: { Component: async () => (await import("./Mas")).Mas } },
               {

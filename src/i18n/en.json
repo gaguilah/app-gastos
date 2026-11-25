@@ -76,5 +76,27 @@
     "periodicos": "Recurring",
     "prestamos": "Loans",
     "listas": "Lists"
+  },
+  "comun": {
+    "cancelar": "Cancel",
+    "guardar": "Save",
+    "cerrar": "Close"
+  },
+  "ajustes": {
+    "idioma": "Language",
+    "cambiarIdioma": "Change language",
+    "nombreIdioma": {
+      "es": "Español",
+      "en": "English"
+    },
+    "notaMontos": "Amounts stay in Colombian pesos: $35.000.",
+    "cuenta": "Account",
+    "cerrarSesion": "Sign out",
+    "cerrarSesionPregunta": "Sign out?",
+    "cerrarSesionMensaje": "To get back in on this device you'll need your email and password.",
+    "cerrarSesionError": "We couldn't sign you out. Please try again.",
+    "aplicacion": "App",
+    "version": "Version",
+    "regionEspanol": "Colombia"
   }
 }
