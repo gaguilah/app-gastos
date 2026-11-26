@@ -9,7 +9,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Ventana } from "@/components/shared/Ventana";
 import { useMarcarDistintos, useUnir, type Elemento, type Lista } from "@/datos/listas";
 import { nombreVisible } from "../textos";
-import { AvisoError } from "./AvisoError";
+import { AvisoError } from "@/components/shared/AvisoError";
 
 type Props = {
   abierta: boolean;

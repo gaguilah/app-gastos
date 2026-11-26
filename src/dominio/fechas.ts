@@ -29,3 +29,29 @@ export function fechaCorta(
     .replace(/ de /g, " ");
   return { texto };
 }
+
+const partes = (dia: string, idioma: string) => {
+  const fecha = comoUtc(dia);
+  const mes = new Intl.DateTimeFormat(idioma === "en" ? "en-US" : "es-CO", {
+    month: "short",
+    timeZone: "UTC",
+  })
+    .format(fecha)
+    .replace(/\./g, "")
+    .slice(0, 3);
+  return { dia: fecha.getUTCDate(), mes, anio: fecha.getUTCFullYear() };
+};
+
+/** Rango de un período: «1 – 30 nov 2026», «Nov 1 – 30, 2026», «15 dic 2026 – 14 ene 2027». */
+export function rangoPeriodo(inicio: string, fin: string, idioma: string) {
+  const a = partes(inicio, idioma);
+  const b = partes(fin, idioma);
+  const mismoAnio = a.anio === b.anio;
+  const mismoMes = mismoAnio && a.mes === b.mes;
+  if (idioma === "en") {
+    const desde = `${a.mes} ${a.dia}${mismoAnio ? "" : `, ${a.anio}`}`;
+    return `${desde} – ${mismoMes ? "" : `${b.mes} `}${b.dia}, ${b.anio}`;
+  }
+  const desde = mismoMes ? `${a.dia}` : `${a.dia} ${a.mes}${mismoAnio ? "" : ` ${a.anio}`}`;
+  return `${desde} – ${b.dia} ${b.mes} ${b.anio}`;
+}
