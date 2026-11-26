@@ -353,7 +353,8 @@
     },
     "vacio": {
       "titulo": "Esta lista está vacía",
-      "mensaje": "Se llena sola al registrar gastos y préstamos. También puedes agregar aquí."
+      "mensaje": "Se llena sola al registrar gastos y préstamos. También puedes agregar aquí.",
+      "agregar": "Agregar el primero"
     },
     "error": {
       "mensaje": "No pudimos cargar tus listas. El servidor no respondió; nada se perdió, vuelve a intentarlo en un momento."

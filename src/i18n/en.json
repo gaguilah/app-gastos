@@ -353,7 +353,8 @@
     },
     "vacio": {
       "titulo": "This list is empty",
-      "mensaje": "It fills itself as you log expenses and loans. You can also add here."
+      "mensaje": "It fills itself as you log expenses and loans. You can also add here.",
+      "agregar": "Add the first one"
     },
     "error": {
       "mensaje": "We couldn’t load your lists. The server didn’t respond; nothing was lost, try again in a moment."

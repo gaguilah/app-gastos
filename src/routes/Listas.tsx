@@ -97,7 +97,7 @@ export function Listas() {
             >
               <Button onClick={agregar}>
                 <Plus aria-hidden="true" />
-                {t("listas.agregar")}
+                {t("listas.vacio.agregar")}
               </Button>
             </Estado>
           ) : (
