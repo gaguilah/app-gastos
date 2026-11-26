@@ -9,7 +9,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Campo } from "@/components/shared/Campo";
 import { Ventana } from "@/components/shared/Ventana";
 import { useAgregar, type Elemento, type Lista } from "@/datos/listas";
-import { AvisoError } from "./AvisoError";
+import { AvisoError } from "@/components/shared/AvisoError";
 
 // Las tarjetas se crean desde Deudas (Etapa 9) y las bolsas desde Bolsas (Etapa 6).
 const subtipos: Record<Lista, string[]> = {

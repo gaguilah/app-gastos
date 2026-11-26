@@ -7,7 +7,7 @@ import { Ventana } from "@/components/shared/Ventana";
 import { useRenombrar, type Elemento, type Lista } from "@/datos/listas";
 import { esNombreRepetido } from "@/datos/errores";
 import { nombreVisible } from "../textos";
-import { AvisoError } from "./AvisoError";
+import { AvisoError } from "@/components/shared/AvisoError";
 
 type Props = {
   abierta: boolean;

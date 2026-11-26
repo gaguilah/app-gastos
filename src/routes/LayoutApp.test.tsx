@@ -20,8 +20,8 @@ const menus = () => screen.getAllByRole("navigation", { name: "Principal" });
 
 describe("layout común", () => {
   it("el menú lateral tiene los 13 destinos del lienzo y marca el activo", async () => {
-    abrir("/bolsas");
-    await screen.findByRole("heading", { level: 1, name: "Bolsas" });
+    abrir("/periodicos");
+    await screen.findByRole("heading", { level: 1, name: "Gastos periódicos" });
     const lateral = within(menus()[0]!);
     expect(lateral.getAllByRole("link").map((l) => l.textContent)).toEqual([
       "Inicio",
@@ -38,7 +38,10 @@ describe("layout común", () => {
       "Listas",
       "Ajustes",
     ]);
-    expect(lateral.getByRole("link", { name: "Bolsas" })).toHaveAttribute("aria-current", "page");
+    expect(lateral.getByRole("link", { name: "Periódicos" })).toHaveAttribute(
+      "aria-current",
+      "page",
+    );
     expect(screen.getByRole("link", { name: "Registrar gasto" })).toHaveAttribute(
       "href",
       "/gastos/nuevo",
@@ -60,8 +63,8 @@ describe("layout común", () => {
   });
 
   it("en la barra inferior, «Más» queda activo en los destinos de su lista", async () => {
-    abrir("/bolsas");
-    await screen.findByRole("heading", { level: 1, name: "Bolsas" });
+    abrir("/periodicos");
+    await screen.findByRole("heading", { level: 1, name: "Gastos periódicos" });
     expect(within(menus()[1]!).getByRole("link", { name: "Más" })).toHaveAttribute(
       "aria-current",
       "page",

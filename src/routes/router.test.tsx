@@ -38,8 +38,11 @@ describe("rutas protegidas", () => {
   });
 
   it("con sesión, cada módulo muestra su pantalla", async () => {
-    abrir("/bolsas", { sesion: sesionFalsa });
-    expect(await screen.findByRole("heading", { level: 1, name: "Bolsas" })).toBeInTheDocument();
+    // Un módulo de una etapa futura (Etapa 8).
+    abrir("/periodicos", { sesion: sesionFalsa });
+    expect(
+      await screen.findByRole("heading", { level: 1, name: "Gastos periódicos" }),
+    ).toBeInTheDocument();
     expect(screen.getByText("En construcción")).toBeInTheDocument();
   });
 

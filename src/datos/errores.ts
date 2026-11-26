@@ -1,5 +1,5 @@
 // Errores de la base de datos traducidos a claves de i18n. Nunca se muestra el texto crudo.
-// Las funciones de la Etapa 3 y 5 lanzan P0001 (regla) o P0002 (no existe) con una clave.
+// Las funciones de las Etapas 3, 5 y 6 lanzan P0001 (regla) o P0002 (no existe) con una clave.
 
 /** Claves que lanzan las funciones SQL y que tienen texto en errores.servidor. */
 const clavesServidor = [
@@ -16,6 +16,25 @@ const clavesServidor = [
   "unir.clase_distinta",
   "duplicado.entidad_invalida",
   "duplicado.no_existe",
+  "bolsa.no_existe",
+  "bolsa.nombre_repetido",
+  "bolsa.en_uso_por_reglas",
+  "movimiento.valor_invalido",
+  "traslado.misma_bolsa",
+  "periodo.dia_invalido",
+  "periodo.no_existe",
+  "periodo.cerrado",
+  "presupuesto.valor_invalido",
+  "ajuste.saldo_invalido",
+  "meta.no_existe",
+  "meta.monto_invalido",
+  "meta.fecha_invalida",
+  "meta.saldo_insuficiente",
+  "meta.destino_requerido",
+  "aporte.origen_invalido",
+  "aporte.afecta_desde_bolsa",
+  "aporte.no_existe",
+  "pendiente.ya_confirmado",
 ] as const;
 
 type ErrorPostgrest = { code?: unknown; message?: unknown };

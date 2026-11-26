@@ -2,7 +2,12 @@ import * as React from "react";
 import { Drawer as DrawerPrimitive } from "vaul";
 import { cn } from "@/lib/utils";
 
-const Drawer = DrawerPrimitive.Root;
+// Con el teclado abierto, vaul subía la hoja la altura del teclado y el navegador además
+// desplazaba la vista: los formularios cortos quedaban fuera de la pantalla. El viewport
+// (interactive-widget=resizes-content en index.html) ya deja la hoja encima del teclado.
+function Drawer(props: React.ComponentProps<typeof DrawerPrimitive.Root>) {
+  return <DrawerPrimitive.Root repositionInputs={false} {...props} />;
+}
 const DrawerTrigger = DrawerPrimitive.Trigger;
 const DrawerClose = DrawerPrimitive.Close;
 

@@ -31,6 +31,10 @@ for (const locale of ["es-CO", "en-US"]) {
         "/categorias",
         "/listas",
         "/listas?lista=lugares",
+        "/presupuesto",
+        "/bolsas",
+        "/ingresos",
+        "/ahorros",
         "/ruta-que-no-existe",
         ...(esMovil(info.project.name) ? ["/mas"] : []),
       ];
@@ -71,6 +75,23 @@ for (const locale of ["es-CO", "en-US"]) {
       await page.getByRole("button", { name: /^(Agregar|Add)$/ }).click();
       await expect(page.getByRole("dialog")).toBeVisible();
       await sinViolaciones(page);
+    });
+
+    test("los formularios de Presupuesto, Bolsas, Ingresos y Ahorros no tienen violaciones", async ({
+      page,
+    }) => {
+      await iniciarSesion(page);
+      for (const [ruta, boton] of [
+        ["/presupuesto", /^(Ajustar este período|Adjust this period)$/],
+        ["/bolsas", /^(Nueva bolsa|New wallet)$/],
+        ["/ingresos", /^(Registrar ingreso|Log income)$/],
+        ["/ahorros", /^(Nueva meta|New goal)$/],
+      ] as const) {
+        await page.goto(ruta);
+        await page.getByRole("button", { name: boton }).first().click();
+        await expect(page.getByRole("dialog")).toBeVisible();
+        await sinViolaciones(page);
+      }
     });
 
     test("la franja sin conexión no tiene violaciones", async ({ page, context }) => {

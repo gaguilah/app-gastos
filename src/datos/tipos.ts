@@ -328,6 +328,13 @@ export type Database = {
             referencedColumns: ["bolsa_id", "user_id"];
           },
           {
+            foreignKeyName: "deudas_bolsa_id_user_id_fkey";
+            columns: ["bolsa_id", "user_id"];
+            isOneToOne: false;
+            referencedRelation: "uso_bolsas";
+            referencedColumns: ["bolsa_id", "user_id"];
+          },
+          {
             foreignKeyName: "deudas_canal_id_user_id_fkey";
             columns: ["canal_id", "user_id"];
             isOneToOne: false;
@@ -512,6 +519,13 @@ export type Database = {
             referencedColumns: ["bolsa_id", "user_id"];
           },
           {
+            foreignKeyName: "gastos_bolsa_id_user_id_fkey";
+            columns: ["bolsa_id", "user_id"];
+            isOneToOne: false;
+            referencedRelation: "uso_bolsas";
+            referencedColumns: ["bolsa_id", "user_id"];
+          },
+          {
             foreignKeyName: "gastos_canal_id_user_id_fkey";
             columns: ["canal_id", "user_id"];
             isOneToOne: false;
@@ -686,6 +700,13 @@ export type Database = {
             referencedColumns: ["bolsa_id", "user_id"];
           },
           {
+            foreignKeyName: "ingresos_bolsa_id_user_id_fkey";
+            columns: ["bolsa_id", "user_id"];
+            isOneToOne: false;
+            referencedRelation: "uso_bolsas";
+            referencedColumns: ["bolsa_id", "user_id"];
+          },
+          {
             foreignKeyName: "ingresos_categoria_id_user_id_fkey";
             columns: ["categoria_id", "user_id"];
             isOneToOne: false;
@@ -777,6 +798,7 @@ export type Database = {
           created_at: string;
           eliminada_at: string | null;
           fecha_final: string;
+          icono: string;
           id: string;
           monto_meta: number;
           nombre: string;
@@ -789,6 +811,7 @@ export type Database = {
           created_at?: string;
           eliminada_at?: string | null;
           fecha_final: string;
+          icono?: string;
           id?: string;
           monto_meta: number;
           nombre: string;
@@ -800,6 +823,7 @@ export type Database = {
           created_at?: string;
           eliminada_at?: string | null;
           fecha_final?: string;
+          icono?: string;
           id?: string;
           monto_meta?: number;
           nombre?: string;
@@ -819,6 +843,13 @@ export type Database = {
             columns: ["bolsa_id", "user_id"];
             isOneToOne: false;
             referencedRelation: "saldos_bolsa";
+            referencedColumns: ["bolsa_id", "user_id"];
+          },
+          {
+            foreignKeyName: "metas_ahorro_bolsa_id_user_id_fkey";
+            columns: ["bolsa_id", "user_id"];
+            isOneToOne: false;
+            referencedRelation: "uso_bolsas";
             referencedColumns: ["bolsa_id", "user_id"];
           },
         ];
@@ -895,6 +926,13 @@ export type Database = {
             columns: ["bolsa_id", "user_id"];
             isOneToOne: false;
             referencedRelation: "saldos_bolsa";
+            referencedColumns: ["bolsa_id", "user_id"];
+          },
+          {
+            foreignKeyName: "movimientos_bolsa_bolsa_id_user_id_fkey";
+            columns: ["bolsa_id", "user_id"];
+            isOneToOne: false;
+            referencedRelation: "uso_bolsas";
             referencedColumns: ["bolsa_id", "user_id"];
           },
           {
@@ -1000,6 +1038,7 @@ export type Database = {
           fecha_fin: string;
           fecha_inicio: string;
           id: string;
+          nota_presupuesto: string | null;
           presupuesto: number;
           resumen: Json | null;
           user_id: string;
@@ -1011,6 +1050,7 @@ export type Database = {
           fecha_fin: string;
           fecha_inicio: string;
           id?: string;
+          nota_presupuesto?: string | null;
           presupuesto: number;
           resumen?: Json | null;
           user_id?: string;
@@ -1021,6 +1061,7 @@ export type Database = {
           fecha_fin?: string;
           fecha_inicio?: string;
           id?: string;
+          nota_presupuesto?: string | null;
           presupuesto?: number;
           resumen?: Json | null;
           user_id?: string;
@@ -1170,6 +1211,13 @@ export type Database = {
             referencedColumns: ["bolsa_id", "user_id"];
           },
           {
+            foreignKeyName: "reglas_aporte_bolsa_id_user_id_fkey";
+            columns: ["bolsa_id", "user_id"];
+            isOneToOne: false;
+            referencedRelation: "uso_bolsas";
+            referencedColumns: ["bolsa_id", "user_id"];
+          },
+          {
             foreignKeyName: "reglas_aporte_medio_id_user_id_fkey";
             columns: ["medio_id", "user_id"];
             isOneToOne: false;
@@ -1273,6 +1321,13 @@ export type Database = {
             columns: ["bolsa_id", "user_id"];
             isOneToOne: false;
             referencedRelation: "saldos_bolsa";
+            referencedColumns: ["bolsa_id", "user_id"];
+          },
+          {
+            foreignKeyName: "reglas_periodicas_bolsa_id_user_id_fkey";
+            columns: ["bolsa_id", "user_id"];
+            isOneToOne: false;
+            referencedRelation: "uso_bolsas";
             referencedColumns: ["bolsa_id", "user_id"];
           },
           {
@@ -1456,6 +1511,22 @@ export type Database = {
           },
         ];
       };
+      movimientos_de_bolsa: {
+        Row: {
+          bolsa_id: string | null;
+          contraparte: string | null;
+          created_at: string | null;
+          fecha: string | null;
+          id: string | null;
+          meta_id: string | null;
+          tipo: string | null;
+          titulo: string | null;
+          user_id: string | null;
+          valor: number | null;
+        };
+        ComputedFields: never;
+        Relationships: [];
+      };
       saldos_bolsa: {
         Row: {
           bolsa_id: string;
@@ -1473,6 +1544,19 @@ export type Database = {
           saldo?: never;
           user_id?: string | null;
         };
+        Relationships: [];
+      };
+      uso_bolsas: {
+        Row: {
+          bolsa_id: string;
+          en_uso_por_reglas: boolean | null;
+          ultimo: string | null;
+          ultimo_tipo: string | null;
+          ultimo_titulo: string | null;
+          user_id: string;
+          usos: number | null;
+        };
+        ComputedFields: never;
         Relationships: [];
       };
       uso_categorias: {
@@ -1517,8 +1601,40 @@ export type Database = {
       };
     };
     Functions: {
+      ajustar_presupuesto_periodo: {
+        Args: { p_ajuste: number; p_nota?: string; p_periodo_id: string };
+        Returns: {
+          cerrado_at: string | null;
+          created_at: string;
+          fecha_fin: string;
+          fecha_inicio: string;
+          id: string;
+          nota_presupuesto: string | null;
+          presupuesto: number;
+          resumen: Json | null;
+          user_id: string;
+        };
+        SetofOptions: {
+          from: "*";
+          to: "periodos";
+          isOneToOne: true;
+          isSetofReturn: false;
+        };
+      };
       ajustar_saldo: {
         Args: { p_bolsa_id: string; p_fecha?: string; p_nota?: string; p_saldo_real: number };
+        Returns: string;
+      };
+      aportar_meta: {
+        Args: {
+          p_afecta_presupuesto?: boolean;
+          p_bolsa_id?: string;
+          p_fecha?: string;
+          p_medio_id?: string;
+          p_meta_id: string;
+          p_nota?: string;
+          p_valor: number;
+        };
         Returns: string;
       };
       aporte_pendiente: {
@@ -1557,6 +1673,7 @@ export type Database = {
           fecha_fin: string;
           fecha_inicio: string;
           id: string;
+          nota_presupuesto: string | null;
           presupuesto: number;
           resumen: Json | null;
           user_id: string;
@@ -1576,6 +1693,7 @@ export type Database = {
           fecha_fin: string;
           fecha_inicio: string;
           id: string;
+          nota_presupuesto: string | null;
           presupuesto: number;
           resumen: Json | null;
           user_id: string;
@@ -1587,12 +1705,34 @@ export type Database = {
           isSetofReturn: false;
         };
       };
+      bolsa_activa: {
+        Args: { p_bolsa_id: string };
+        Returns: {
+          archivada: boolean;
+          created_at: string;
+          forma_pago_id: string | null;
+          id: string;
+          nombre: string;
+          user_id: string;
+        };
+        SetofOptions: {
+          from: "*";
+          to: "bolsas";
+          isOneToOne: true;
+          isSetofReturn: false;
+        };
+      };
+      bolsa_en_uso_por_reglas: { Args: { p_bolsa_id: string }; Returns: boolean };
       calcular_periodo: {
         Args: { p_dia: number; p_hoy: string };
         Returns: {
           fecha_fin: string;
           fecha_inicio: string;
         }[];
+      };
+      cambiar_presupuesto_defecto: {
+        Args: { p_actual?: boolean; p_hoy?: string; p_valor: number };
+        Returns: undefined;
       };
       cerrar_periodo: {
         Args: { p_periodo_id: string };
@@ -1602,6 +1742,7 @@ export type Database = {
           fecha_fin: string;
           fecha_inicio: string;
           id: string;
+          nota_presupuesto: string | null;
           presupuesto: number;
           resumen: Json | null;
           user_id: string;
@@ -1678,12 +1819,33 @@ export type Database = {
           isSetofReturn: false;
         };
       };
+      crear_bolsa: {
+        Args: { p_fecha?: string; p_nombre: string; p_saldo_inicial?: number };
+        Returns: string;
+      };
       crear_lugar: {
         Args: { p_nombre: string };
         Returns: {
           estado: string;
           id: string;
         }[];
+      };
+      crear_meta: {
+        Args: {
+          p_afecta_presupuesto?: boolean;
+          p_bolsa_id?: string;
+          p_dia?: number;
+          p_fecha_final: string;
+          p_frecuencia?: string;
+          p_hoy?: string;
+          p_icono: string;
+          p_medio_id?: string;
+          p_monto: number;
+          p_nombre: string;
+          p_saldo_inicial?: number;
+          p_valor?: number;
+        };
+        Returns: string;
       };
       crear_persona: {
         Args: { p_nombre: string; p_tipo?: string };
@@ -1693,9 +1855,34 @@ export type Database = {
         }[];
       };
       dia_en_mes: { Args: { p_dia: number; p_mes: string }; Returns: string };
+      editar_meta: {
+        Args: {
+          p_afecta_presupuesto?: boolean;
+          p_bolsa_id?: string;
+          p_dia?: number;
+          p_fecha_final: string;
+          p_frecuencia?: string;
+          p_hoy?: string;
+          p_icono: string;
+          p_medio_id?: string;
+          p_meta_id: string;
+          p_monto: number;
+          p_nombre: string;
+          p_valor?: number;
+        };
+        Returns: undefined;
+      };
+      eliminar_bolsa: {
+        Args: { p_bolsa_id: string; p_destino?: string; p_fecha?: string };
+        Returns: string;
+      };
       eliminar_categoria: { Args: { p_id: string }; Returns: string };
       eliminar_forma_pago: { Args: { p_id: string }; Returns: string };
       eliminar_lugar: { Args: { p_id: string }; Returns: string };
+      eliminar_meta: {
+        Args: { p_bolsa_id?: string; p_fecha?: string; p_meta_id: string };
+        Returns: undefined;
+      };
       eliminar_persona: { Args: { p_id: string }; Returns: string };
       estado_metas: {
         Args: { p_hoy?: string };
@@ -1717,10 +1904,23 @@ export type Database = {
         Args: { p_clase: string; p_forma_pago_id: string; p_user_id: string };
         Returns: undefined;
       };
+      exigir_datos_meta: {
+        Args: { p_fecha_final: string; p_hoy: string; p_monto: number };
+        Returns: undefined;
+      };
+      exigir_nombre_bolsa_libre: {
+        Args: { p_excepto?: string; p_nombre: string };
+        Returns: undefined;
+      };
+      exigir_origen_aporte: {
+        Args: { p_afecta: boolean; p_bolsa_id: string; p_medio_id: string };
+        Returns: undefined;
+      };
       exigir_tipo_categoria: {
         Args: { p_categoria_id: string; p_tipo: string; p_user_id: string };
         Returns: undefined;
       };
+      exigir_valor: { Args: { p_cero?: boolean; p_valor: number }; Returns: undefined };
       fecha_serie: {
         Args: {
           p_dia: number;
@@ -1731,6 +1931,7 @@ export type Database = {
         };
         Returns: string;
       };
+      fin_periodo_desde: { Args: { p_dia: number; p_inicio: string }; Returns: string };
       generar_aportes_de: { Args: { p_hoy: string; p_user_id: string }; Returns: number };
       generar_cuotas_de: { Args: { p_hoy: string; p_user_id: string }; Returns: number };
       generar_periodicos_de: { Args: { p_hoy: string; p_user_id: string }; Returns: number };
@@ -1740,6 +1941,27 @@ export type Database = {
       marcar_distintos: {
         Args: { p_a: string; p_b: string; p_entidad: string };
         Returns: undefined;
+      };
+      meta_vigente: {
+        Args: { p_meta_id: string };
+        Returns: {
+          bolsa_id: string;
+          created_at: string;
+          eliminada_at: string | null;
+          fecha_final: string;
+          icono: string;
+          id: string;
+          monto_meta: number;
+          nombre: string;
+          pausada: boolean;
+          user_id: string;
+        };
+        SetofOptions: {
+          from: "*";
+          to: "metas_ahorro";
+          isOneToOne: true;
+          isSetofReturn: false;
+        };
       };
       normalizar_nombre: { Args: { texto: string }; Returns: string };
       omitir_aporte: {
@@ -1770,6 +1992,7 @@ export type Database = {
           isSetofReturn: false;
         };
       };
+      pausar_meta: { Args: { p_meta_id: string }; Returns: undefined };
       ponerse_al_dia: { Args: Record<PropertyKey, never>; Returns: Json };
       posibles_duplicados: {
         Args: { p_entidad: string };
@@ -1790,6 +2013,7 @@ export type Database = {
         };
         Returns: string;
       };
+      reanudar_meta: { Args: { p_hoy?: string; p_meta_id: string }; Returns: undefined };
       reanudar_regla: {
         Args: { p_hoy?: string; p_regla_id: string };
         Returns: {
@@ -1822,9 +2046,39 @@ export type Database = {
         };
       };
       recalcular_resumen_en: { Args: { p_fecha: string; p_user_id: string }; Returns: undefined };
+      recargar_bolsa: {
+        Args: { p_bolsa_id: string; p_fecha?: string; p_nota?: string; p_valor: number };
+        Returns: string;
+      };
       registrar_alertas: { Args: { p_periodo_id: string }; Returns: number };
       registrar_alertas_en: { Args: { p_fecha: string; p_user_id: string }; Returns: number };
+      renombrar_bolsa: { Args: { p_bolsa_id: string; p_nombre: string }; Returns: undefined };
       resumen_dinero: { Args: { p_periodo_id: string }; Returns: Json };
+      retirar_meta: {
+        Args: {
+          p_bolsa_id: string;
+          p_fecha?: string;
+          p_meta_id: string;
+          p_motivo?: string;
+          p_valor: number;
+        };
+        Returns: string;
+      };
+      sugerir_aporte: {
+        Args: {
+          p_dia: number;
+          p_fecha_final: string;
+          p_frecuencia: string;
+          p_hoy?: string;
+          p_monto: number;
+          p_saldo_inicial: number;
+        };
+        Returns: {
+          aporte: number;
+          aportes: number;
+          ultima_fecha: string;
+        }[];
+      };
       sugerir_lugares: {
         Args: { p_limite?: number; p_texto: string };
         Returns: {
@@ -1834,9 +2088,27 @@ export type Database = {
       };
       tarea_diaria: { Args: { p_hoy?: string }; Returns: Json };
       tarea_diaria_de: { Args: { p_hoy: string; p_user_id: string }; Returns: Json };
+      trasladar: {
+        Args: {
+          p_destino: string;
+          p_fecha?: string;
+          p_nota?: string;
+          p_origen: string;
+          p_valor: number;
+        };
+        Returns: string;
+      };
       unir_formas_pago: { Args: { p_destino: string; p_origen: string }; Returns: undefined };
       unir_lugares: { Args: { p_destino: string; p_origen: string }; Returns: undefined };
       unir_personas: { Args: { p_destino: string; p_origen: string }; Returns: undefined };
+      vista_previa_periodos: {
+        Args: { p_dia: number; p_hoy?: string };
+        Returns: {
+          fecha_fin: string;
+          fecha_inicio: string;
+          orden: number;
+        }[];
+      };
     };
     Enums: {
       [_ in never]: never;

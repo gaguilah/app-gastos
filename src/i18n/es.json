@@ -139,7 +139,26 @@
       "unir_tipo_distinto": "Solo se unen registros del mismo tipo.",
       "unir_clase_distinta": "Solo se unen formas de pago de la misma clase.",
       "duplicado_entidad_invalida": "Esta lista no tiene duplicados que revisar.",
-      "duplicado_no_existe": "Uno de los dos ya no existe."
+      "duplicado_no_existe": "Uno de los dos ya no existe.",
+      "bolsa_no_existe": "Esa bolsa ya no existe.",
+      "bolsa_nombre_repetido": "Ya tienes una bolsa con ese nombre.",
+      "bolsa_en_uso_por_reglas": "Esta bolsa paga un gasto periódico, una deuda o un aporte activos. Cámbialos de origen o páusalos antes de eliminarla.",
+      "movimiento_valor_invalido": "Escribe un valor mayor que $0.",
+      "traslado_misma_bolsa": "Elige una bolsa distinta.",
+      "periodo_dia_invalido": "Elige un día entre 1 y 31.",
+      "periodo_no_existe": "Ese período ya no existe.",
+      "periodo_cerrado": "Ese período ya cerró y no se puede ajustar.",
+      "presupuesto_valor_invalido": "El presupuesto no puede quedar por debajo de $0.",
+      "ajuste_saldo_invalido": "Escribe un saldo de $0 o más.",
+      "meta_no_existe": "Esa meta ya no existe.",
+      "meta_monto_invalido": "El monto a alcanzar debe ser mayor que $0.",
+      "meta_fecha_invalida": "La fecha final debe ser después de hoy.",
+      "meta_saldo_insuficiente": "No puedes retirar más de lo ahorrado en la meta.",
+      "meta_destino_requerido": "Elige a qué bolsa pasa lo ahorrado.",
+      "aporte_origen_invalido": "Elige de dónde sale el aporte.",
+      "aporte_afecta_desde_bolsa": "Un aporte desde una bolsa no afecta el presupuesto.",
+      "aporte_no_existe": "Ese aporte ya no existe.",
+      "pendiente_ya_confirmado": "Ese aporte ya se confirmó u omitió."
     }
   },
   "selector": {
@@ -281,6 +300,10 @@
       "eliminada": "Categoría borrada",
       "archivada": "Categoría archivada: el historial la conserva",
       "subAgregada": "Subcategoría agregada"
+    },
+    "selector": {
+      "subcategoria": "Subcategoría (opcional)",
+      "ninguna": "Ninguna"
     }
   },
   "listas": {
@@ -330,7 +353,8 @@
     },
     "vacio": {
       "titulo": "Esta lista está vacía",
-      "mensaje": "Se llena sola al registrar gastos y préstamos. También puedes agregar aquí."
+      "mensaje": "Se llena sola al registrar gastos y préstamos. También puedes agregar aquí.",
+      "agregar": "Agregar el primero"
     },
     "error": {
       "mensaje": "No pudimos cargar tus listas. El servidor no respondió; nada se perdió, vuelve a intentarlo en un momento."
@@ -382,5 +406,490 @@
   "fechas": {
     "hoy": "Hoy",
     "ayer": "Ayer"
+  },
+  "bolsas": {
+    "selector": {
+      "quedan": "quedan {{saldo}}",
+      "error": "No pudimos cargar tus bolsas.",
+      "quedaNegativo": "{{nombre}} quedaría en {{saldo}}. Puedes guardar de todas formas."
+    },
+    "titulo": "Bolsas",
+    "descripcion": "El dinero que tienes en efectivo, Nequi o Daviplata.",
+    "saldoTotal": "Saldo total",
+    "nueva": "Nueva bolsa",
+    "errorMensaje": "No pudimos cargar tus bolsas. Nada se perdió; vuelve a intentarlo en un momento.",
+    "vacio": {
+      "titulo": "Aún no tienes bolsas",
+      "mensaje": "Crea una bolsa para llevar el saldo de tu efectivo, Nequi o Daviplata."
+    },
+    "columnas": {
+      "bolsa": "Bolsa",
+      "ultimo": "Último movimiento",
+      "movimientos": "Movimientos",
+      "saldo": "Saldo",
+      "acciones": "Acciones"
+    },
+    "movimientos_one": "{{count}} movimiento",
+    "movimientos_other": "{{count}} movimientos",
+    "sinMovimientos": "Sin movimientos",
+    "ultimo": "{{titulo}} · {{fecha}}",
+    "negativo": "Saldo negativo",
+    "acciones": {
+      "movimientos": "Ver movimientos",
+      "recargar": "Recargar",
+      "trasladar": "Trasladar a otra bolsa",
+      "ajustar": "Ajustar saldo",
+      "renombrar": "Renombrar",
+      "eliminar": "Eliminar",
+      "enUso": "Es origen de un gasto periódico, una deuda o un aporte activo"
+    },
+    "avisos": {
+      "creada": "Bolsa creada.",
+      "recargada": "Recarga guardada.",
+      "trasladado": "Traslado guardado.",
+      "ajustada": "Saldo ajustado.",
+      "renombrada": "Bolsa renombrada.",
+      "eliminada": "Bolsa eliminada.",
+      "archivada": "Bolsa eliminada. Su historial se conserva."
+    },
+    "nuevaDialogo": {
+      "nombre": "Nombre",
+      "saldoInicial": "Saldo inicial",
+      "ayudaSaldo": "El saldo inicial no cuenta como gasto ni como ingreso.",
+      "crear": "Crear bolsa",
+      "repetido": "Ya tienes una bolsa con ese nombre."
+    },
+    "movimiento": {
+      "titulo": "Movimientos de {{nombre}}",
+      "saldo": "Saldo",
+      "vacio": "Esta bolsa aún no tiene movimientos.",
+      "error": "No pudimos cargar los movimientos.",
+      "tipo": {
+        "gasto": "Gasto",
+        "ingreso": "Ingreso",
+        "recarga": "Recarga",
+        "traslado": "Traslado",
+        "ajuste": "Ajuste de saldo",
+        "saldo_inicial": "Saldo inicial",
+        "aporte": "Aporte a ahorro",
+        "retiro": "Retiro de ahorro"
+      },
+      "detalle": {
+        "recarga": "recarga",
+        "ajuste": "ajuste de saldo",
+        "saldo_inicial": "saldo inicial",
+        "desde": "desde {{nombre}}",
+        "hacia": "hacia {{nombre}}",
+        "aporte": "aporte a {{nombre}}",
+        "retiro": "retiro de {{nombre}}"
+      }
+    },
+    "recargar": {
+      "titulo": "Recargar {{nombre}}",
+      "valor": "Valor",
+      "deDonde": "De dónde sale",
+      "deMiCuenta": "De mi cuenta",
+      "deMiCuentaAyuda": "Cajero o recarga desde tu banco.",
+      "deOtraBolsa": "De otra bolsa",
+      "ingresoNuevo": "Ingreso nuevo",
+      "ingresoNuevoAyuda": "Abre el formulario de ingreso con {{nombre}} como destino.",
+      "origen": "Bolsa de origen",
+      "resumen": "{{nombre}} queda en {{saldo}}. El disponible del presupuesto no cambia.",
+      "requerido": "Escribe un valor mayor que $0.",
+      "elegirOrigen": "Elige de qué bolsa sale.",
+      "recargar": "Recargar",
+      "irAIngreso": "Ir a registrar ingreso",
+      "sinOtras": "No tienes otra bolsa."
+    },
+    "trasladar": {
+      "titulo": "Trasladar desde {{nombre}}",
+      "destino": "Bolsa de destino",
+      "resumen": "{{origen}} queda en {{saldoOrigen}} y {{destino}} en {{saldoDestino}}. No es gasto ni ingreso.",
+      "elegirDestino": "Elige a qué bolsa va.",
+      "trasladar": "Trasladar"
+    },
+    "ajustar": {
+      "titulo": "Ajustar saldo de {{nombre}}",
+      "enApp": "Saldo en la app",
+      "real": "Saldo real",
+      "ayudaReal": "Lo que tienes de verdad en {{nombre}}.",
+      "baja": "Diferencia de {{diferencia}}. Se registrará como «Gasto desconocido» con fecha de hoy y el disponible baja {{valor}}.",
+      "sube": "Diferencia de {{diferencia}}. Se registrará como ajuste de entrada; el disponible no cambia.",
+      "igual": "No hay diferencia: el saldo ya coincide.",
+      "requerido": "Escribe el saldo real, de $0 o más.",
+      "ajustar": "Ajustar saldo"
+    },
+    "renombrar": {
+      "titulo": "Renombrar bolsa",
+      "ayuda": "Los movimientos pasados quedan con el nombre nuevo.",
+      "guardar": "Guardar"
+    },
+    "eliminar": {
+      "titulo": "¿Eliminar la bolsa «{{nombre}}»?",
+      "conMovimientos_one": "Su movimiento se conserva en el historial con el nombre «{{nombre}}».",
+      "conMovimientos_other": "Sus {{count}} movimientos se conservan en el historial con el nombre «{{nombre}}».",
+      "sinMovimientos": "No tiene movimientos: se borra del todo.",
+      "queHacer": "Qué hacer con el saldo de {{saldo}}",
+      "pasarA": "Pasar a {{nombre}}",
+      "dejarAjuste": "Dejarlo como ajuste",
+      "ajustePositivo": "Quedará un «Gasto desconocido» de {{saldo}} y el disponible baja {{saldo}}.",
+      "ajusteNegativo": "Quedará un ajuste de entrada para llevarla a $0; el disponible no cambia.",
+      "eliminar": "Eliminar bolsa"
+    }
+  },
+  "presupuesto": {
+    "barra": {
+      "etiqueta": "Gastado {{usado}} de {{base}}",
+      "porcentaje": "{{porcentaje}} %"
+    },
+    "titulo": "Presupuesto y período",
+    "descripcion": "Cómo se abre y se mide cada período.",
+    "configuracion": "Configuración",
+    "diaInicio": "Día de inicio",
+    "diaInicioUno": "Día 1 · del 1 al fin de mes",
+    "diaInicioOtro": "Día {{dia}} · del {{dia}} al {{anterior}} del mes siguiente",
+    "cambiarDia": "Cambiar día de inicio",
+    "defecto": "Presupuesto por defecto",
+    "defectoAyuda": "Con este abre cada período",
+    "cambiarDefecto": "Cambiar presupuesto por defecto",
+    "periodos": "Períodos",
+    "ajustar": "Ajustar este período",
+    "nota": "Ajuste: {{nota}}",
+    "conIngresos": "Presupuesto {{presupuesto}} + ingresos {{ingresos}}",
+    "errorMensaje": "No pudimos cargar tu presupuesto. Nada se perdió; vuelve a intentarlo en un momento.",
+    "guardado": "Listo, quedó guardado.",
+    "columnas": {
+      "periodo": "Período",
+      "presupuesto": "Presupuesto",
+      "gastado": "Gastado",
+      "uso": "Uso",
+      "estado": "Estado",
+      "acciones": "Acciones"
+    },
+    "estado": {
+      "enCurso": "En curso",
+      "dentro": "Dentro del presupuesto",
+      "advertencia": "Advertencia",
+      "superado": "Superado"
+    },
+    "dia": {
+      "titulo": "Día de inicio del período",
+      "empieza": "Empieza el",
+      "uno": "Día 1",
+      "quince": "Día 15",
+      "otro": "Otro día…",
+      "otroCampo": "Día del mes (1 a 31)",
+      "otroError": "Escribe un día entre 1 y 31.",
+      "actual": "Período actual",
+      "siguiente": "Siguiente",
+      "despues": "Después",
+      "explicaUno": "Con el día 1, cada período iría del 1 al fin de mes. El cambio aplica desde el próximo período.",
+      "explicaOtro": "Con el día {{dia}}, cada período iría del {{dia}} al {{anterior}} del mes siguiente. El cambio aplica desde el próximo período.",
+      "mesCorto": "Si un mes no tiene ese día, el período empieza el último día de ese mes.",
+      "previaError": "No pudimos calcular los períodos. Puedes guardar de todas formas."
+    },
+    "defectoDialogo": {
+      "titulo": "Presupuesto por defecto",
+      "valor": "Valor",
+      "ayuda": "Es el presupuesto con el que abre cada período nuevo. El período actual no cambia.",
+      "usarEnActual": "Usar también en el período actual",
+      "requerido": "Escribe un valor de $0 o más."
+    },
+    "ajuste": {
+      "titulo": "Ajustar el período {{rango}}",
+      "valor": "Ajuste",
+      "ayudaValor": "Escribe un valor negativo para bajarlo, por ejemplo −100.000.",
+      "motivo": "Motivo (opcional)",
+      "base": "Presupuesto base",
+      "conAjuste": "Con el ajuste",
+      "gastado": "Gastado",
+      "quedarias": "Quedarías en {{nuevo}} % gastado, en vez de {{actual}} %.",
+      "soloEste": "Solo cambia este período. El presupuesto por defecto queda igual.",
+      "requerido": "Escribe un ajuste distinto de $0.",
+      "negativo": "El presupuesto no puede quedar por debajo de $0.",
+      "aplicar": "Aplicar ajuste"
+    }
+  },
+  "ingresos": {
+    "titulo": "Ingresos",
+    "resumenPeriodo_one": "{{rango}} · {{count}} ingreso",
+    "resumenPeriodo_other": "{{rango}} · {{count}} ingresos",
+    "anterior": "Período anterior",
+    "siguiente": "Período siguiente",
+    "registrar": "Registrar ingreso",
+    "nuevo": "Nuevo",
+    "errorMensaje": "No pudimos cargar tus ingresos. Nada se perdió; vuelve a intentarlo en un momento.",
+    "vacio": {
+      "titulo": "Aún no hay ingresos en este período",
+      "mensaje": "Registra un ingreso y elige si entra al presupuesto o a una bolsa."
+    },
+    "kpi": {
+      "total": "Total del período",
+      "presupuesto": "Al presupuesto",
+      "bolsas": "A bolsas"
+    },
+    "columnas": {
+      "fecha": "Fecha",
+      "ingreso": "Ingreso",
+      "categoria": "Categoría",
+      "destino": "Destino",
+      "valor": "Valor",
+      "acciones": "Acciones"
+    },
+    "destino": {
+      "presupuesto": "Presupuesto",
+      "hacia": "→ {{destino}}"
+    },
+    "origen": {
+      "prestamo": "Préstamo",
+      "deuda": "Deuda",
+      "bloqueado": "Se edita desde su préstamo o deuda"
+    },
+    "acciones": {
+      "detalle": "Ver detalle",
+      "editar": "Editar",
+      "eliminar": "Eliminar"
+    },
+    "avisos": {
+      "guardado": "Ingreso guardado.",
+      "eliminado": "Ingreso eliminado."
+    },
+    "formulario": {
+      "nuevo": "Nuevo ingreso",
+      "editar": "Editar ingreso",
+      "valor": "Valor",
+      "titulo": "Título",
+      "fecha": "Fecha",
+      "categoria": "Categoría de ingreso",
+      "destino": "Destino",
+      "descripcion": "Descripción (opcional)",
+      "presupuesto": "Presupuesto del período",
+      "presupuestoAyuda": "Suma al disponible",
+      "efectoPresupuesto": "Suma al disponible del período. Ninguna bolsa cambia.",
+      "efectoBolsa": "Entra a la bolsa {{nombre}}. El presupuesto del período no cambia.",
+      "guardar": "Guardar ingreso",
+      "guardarCambios": "Guardar cambios",
+      "valorRequerido": "Escribe un valor mayor que $0.",
+      "tituloRequerido": "Escribe un título.",
+      "tituloLargo": "Máximo 120 caracteres.",
+      "fechaRequerida": "Elige una fecha.",
+      "fechaFutura": "La fecha no puede ser futura.",
+      "categoriaRequerida": "Elige una categoría.",
+      "destinoRequerido": "Elige a dónde entra el dinero.",
+      "descripcionLarga": "Máximo 500 caracteres."
+    },
+    "detalle": {
+      "titulo": "Detalle del ingreso",
+      "fecha": "Fecha",
+      "destino": "Destino",
+      "efecto": "Efecto",
+      "efectoPresupuesto": "Sumó {{valor}} al disponible del período",
+      "efectoBolsa": "Sumó {{valor}} a {{nombre}}",
+      "descripcion": "Descripción"
+    },
+    "eliminar": {
+      "titulo": "¿Eliminar «{{titulo}}»?",
+      "bolsaBaja": "{{nombre}} baja de {{antes}} a {{despues}}.",
+      "presupuestoBaja": "El disponible del período baja de {{antes}} a {{despues}}.",
+      "noDeshacer": "Esto no se puede deshacer.",
+      "eliminar": "Eliminar ingreso"
+    }
+  },
+  "ahorros": {
+    "titulo": "Ahorros",
+    "descripcion": "Cada meta tiene su propia bolsa. Los aportes no cuentan como gasto ni bajan el disponible del período.",
+    "nueva": "Nueva meta",
+    "errorMensaje": "No pudimos cargar tus metas. Nada se perdió; vuelve a intentarlo en un momento.",
+    "vacio": {
+      "titulo": "Aún no tienes metas de ahorro",
+      "mensaje": "Ponle nombre, monto y plazo a lo que quieres lograr, y la app te dice cuánto apartar.",
+      "crear": "Crear meta"
+    },
+    "kpi": {
+      "total": "Total ahorrado",
+      "periodo": "Aportes este período",
+      "porConfirmar": "Por confirmar"
+    },
+    "pendientes": {
+      "titulo": "Aportes por confirmar",
+      "aporteA": "Aporte a {{nombre}}",
+      "desde": "{{fecha}} · desde {{origen}}",
+      "pendiente": "Pendiente",
+      "confirmar": "Confirmar",
+      "ajustar": "Ajustar valor y confirmar",
+      "omitir": "Omitir esta vez",
+      "acciones": "Acciones del aporte a «{{nombre}}»"
+    },
+    "metas": "Metas",
+    "columnas": {
+      "meta": "Meta",
+      "avance": "Avance",
+      "aporte": "Aporte",
+      "fechaFinal": "Fecha final",
+      "estado": "Estado",
+      "acciones": "Acciones"
+    },
+    "avance": "{{saldo}} de {{monto}}",
+    "ahorrado": "Ahorrado {{saldo}} de {{monto}}",
+    "hasta": "Hasta el {{fecha}}",
+    "sinAporte": "Sin aporte periódico",
+    "aportePor": {
+      "semanal": "{{valor}} / semana",
+      "quincenal": "{{valor}} / quincena",
+      "mensual": "{{valor}} / mes"
+    },
+    "estado": {
+      "al_dia": "Al día",
+      "atrasada": "Atrasada",
+      "cumplida": "Cumplida",
+      "pausada": "Pausada"
+    },
+    "acciones": {
+      "detalle": "Ver detalle",
+      "aportar": "Registrar aporte",
+      "retirar": "Retirar",
+      "retirarCumplida": "Retirar para usarlo",
+      "editar": "Editar",
+      "pausar": "Pausar",
+      "reanudar": "Reanudar",
+      "eliminar": "Eliminar",
+      "sinSaldo": "La meta no tiene saldo"
+    },
+    "avisos": {
+      "creada": "Meta creada.",
+      "guardada": "Meta guardada.",
+      "aporte": "Aporte guardado.",
+      "retiro": "Retiro guardado.",
+      "pausada": "Meta pausada.",
+      "reanudada": "Meta reanudada.",
+      "eliminada": "Meta eliminada.",
+      "confirmado": "Aporte confirmado.",
+      "omitido": "Aporte omitido."
+    },
+    "formulario": {
+      "nueva": "Nueva meta de ahorro",
+      "editar": "Editar meta",
+      "nombre": "Nombre",
+      "monto": "Monto a alcanzar",
+      "plazo": "Plazo",
+      "cantidad": "Cantidad",
+      "unidad": {
+        "dias": "Días",
+        "semanas": "Semanas",
+        "meses": "Meses"
+      },
+      "fechaFinal": "Fecha final",
+      "saldoInicial": "Saldo inicial (opcional)",
+      "saldoInicialAyuda": "Dinero que ya tienes ahorrado; no sale de ninguna bolsa.",
+      "sugerido": "Aporte sugerido: {{aporte}} por {{periodo}}.",
+      "llegas": "Llegas a la meta el {{fecha}}.",
+      "sinAportes": "No caben aportes antes de la fecha final.",
+      "periodo": {
+        "semanal": "semana",
+        "quincenal": "quincena",
+        "mensual": "mes"
+      },
+      "periodicos": "Aportes periódicos",
+      "periodicosAyuda": "Llegan a «por confirmar» y puedes ajustar el valor antes de confirmar.",
+      "valorAporte": "Valor de cada aporte",
+      "frecuencia": "Frecuencia",
+      "frecuencias": {
+        "semanal": "Semanal",
+        "quincenal": "Quincenal",
+        "mensual": "Mensual"
+      },
+      "dia": "Día del mes (1 a 31)",
+      "diaSemanal": "Cada semana, empezando hoy.",
+      "diaQuincenal": "El día {{dia}} y 15 días después, cada mes.",
+      "diaMensual": "El día {{dia}} de cada mes.",
+      "desde": "Desde",
+      "afecta": "Afecta el presupuesto",
+      "afectaAyuda": "Baja el disponible del período, como si fuera un gasto.",
+      "nota": "La meta tendrá su propia bolsa. Los aportes no cuentan como gasto ni bajan el disponible del período.",
+      "crear": "Crear meta",
+      "guardar": "Guardar cambios",
+      "nombreRequerido": "Escribe un nombre.",
+      "nombreLargo": "Máximo 60 caracteres.",
+      "montoRequerido": "Escribe un monto mayor que $0.",
+      "plazoRequerido": "Escribe un plazo mayor que 0.",
+      "fechaRequerida": "La fecha final debe ser después de hoy.",
+      "valorRequerido": "Escribe un valor mayor que $0.",
+      "diaRequerido": "Escribe un día entre 1 y 31.",
+      "origenRequerido": "Elige de dónde sale el aporte."
+    },
+    "detalle": {
+      "titulo": "Detalle de la meta",
+      "faltan": "de {{monto}} · faltan {{falta}}",
+      "aporte": "Aporte",
+      "aporteTexto": "{{valor}} {{frecuencia}}, desde {{origen}}",
+      "cada": {
+        "semanal": "cada semana",
+        "quincenal": "cada quincena",
+        "mensual": "cada mes, día {{dia}}"
+      },
+      "fechaFinal": "Fecha final",
+      "proyeccion": "Proyección",
+      "proyeccionTexto": "A este ritmo la cumples en {{mes}}",
+      "sinProyeccion": "Aún no hay aportes para proyectar",
+      "ahorrado": "Ahorrado",
+      "ritmoIdeal": "Ritmo ideal",
+      "barra": "Ahorrado {{saldo}}; el ritmo ideal a hoy es {{ideal}}",
+      "movimientos": "Movimientos",
+      "sinMovimientos": "Aún no hay movimientos.",
+      "desde": "desde {{nombre}}",
+      "a": "a {{nombre}}"
+    },
+    "aporte": {
+      "titulo": "Aporte a «{{nombre}}»",
+      "valor": "Valor",
+      "desde": "Desde",
+      "desdeBolsa": "Sale de {{origen}} y entra a la bolsa de la meta. No baja el disponible del período.",
+      "desdeMedio": "Entra a la bolsa de la meta desde {{origen}}.",
+      "bajaDisponible": "Baja el disponible del período.",
+      "noBaja": "No baja el disponible del período.",
+      "quedarias": "Quedarías en {{saldo}} · {{porcentaje}} %.",
+      "guardar": "Registrar aporte"
+    },
+    "retiro": {
+      "titulo": "Retirar de «{{nombre}}»",
+      "valor": "Valor",
+      "motivo": "Motivo (opcional)",
+      "destino": "A dónde va",
+      "bajaA": "La meta baja a {{saldo}} · {{porcentaje}} %.",
+      "guardar": "Retirar",
+      "excede": "No puedes retirar más de lo ahorrado ({{saldo}}).",
+      "elegirDestino": "Elige a qué bolsa va."
+    },
+    "confirmar": {
+      "titulo": "Ajustar aporte y confirmar",
+      "subtitulo": "Aporte {{frecuencia}} · desde {{origen}}",
+      "frecuencia": {
+        "semanal": "semanal",
+        "quincenal": "quincenal",
+        "mensual": "mensual"
+      },
+      "valor": "Aporte de esta vez",
+      "reglaDice": "La regla dice {{valor}}.",
+      "enAdelante": "Usar este valor en adelante",
+      "guardar": "Confirmar aporte"
+    },
+    "omitir": {
+      "titulo": "¿Omitir el aporte del {{fecha}}?",
+      "mensaje": "No se mueve dinero esta vez. La fecha final no cambia, así que el aporte sugerido sube.",
+      "omitir": "Omitir esta vez"
+    },
+    "pausar": {
+      "titulo": "¿Pausar «{{nombre}}»?",
+      "mensaje": "Se detienen los aportes periódicos. Lo ahorrado se queda en la meta y puedes reanudarla cuando quieras.",
+      "pausar": "Pausar"
+    },
+    "eliminar": {
+      "titulo": "¿Eliminar «{{nombre}}»?",
+      "conSaldo": "Los {{saldo}} ahorrados pasan a la bolsa que elijas. Los aportes y retiros se conservan en el historial.",
+      "sinSaldo": "Los aportes y retiros se conservan en el historial.",
+      "destino": "Pasar el dinero a",
+      "eliminar": "Eliminar meta",
+      "elegirDestino": "Elige a qué bolsa pasa el dinero."
+    }
   }
 }

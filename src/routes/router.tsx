@@ -9,9 +9,17 @@ import { modulos } from "./rutas";
 export type DatosRuta = { titulo: string };
 
 // Cada etapa agrega aquí la pantalla de su módulo; el resto muestra "En construcción".
-const pantallas: Partial<Record<string, RouteObject["lazy"]>> = {
-  "/categorias": { Component: async () => (await import("./Categorias")).Categorias },
-  "/listas": { Component: async () => (await import("./Listas")).Listas },
+// Funciones y no objetos: el router completa el objeto `lazy` al cargarlo, y cada router
+// (uno por prueba) necesita el suyo.
+const pantallas: Partial<Record<string, () => RouteObject["lazy"]>> = {
+  "/ahorros": () => ({ Component: async () => (await import("./Ahorros")).Ahorros }),
+  "/bolsas": () => ({ Component: async () => (await import("./Bolsas")).Bolsas }),
+  "/categorias": () => ({ Component: async () => (await import("./Categorias")).Categorias }),
+  "/ingresos": () => ({ Component: async () => (await import("./Ingresos")).Ingresos }),
+  "/listas": () => ({ Component: async () => (await import("./Listas")).Listas }),
+  "/presupuesto": () => ({
+    Component: async () => (await import("./Presupuesto")).Presupuesto,
+  }),
 };
 const enConstruccion = () => ({
   Component: async () => (await import("./EnConstruccion")).EnConstruccion,
@@ -47,7 +55,7 @@ export const crearRutas = (): RouteObject[] => [
               ...modulos.map(({ ruta, titulo }) => ({
                 path: ruta,
                 handle: { titulo } satisfies DatosRuta,
-                lazy: pantallas[ruta] ?? enConstruccion(),
+                lazy: pantallas[ruta]?.() ?? enConstruccion(),
               })),
               {
                 path: "/ajustes",

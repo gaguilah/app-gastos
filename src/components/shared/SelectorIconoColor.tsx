@@ -5,9 +5,10 @@ import { iconoDe, nombresIconos, paletaCategorias } from "./iconos-categoria";
 
 type Props = {
   icono: string;
-  color: string;
+  /** Sin color ni alCambiarColor, solo se elige el ícono (metas de ahorro). */
+  color?: string;
   alCambiarIcono: (icono: string) => void;
-  alCambiarColor: (color: string) => void;
+  alCambiarColor?: (color: string) => void;
 };
 
 const opcion =
@@ -17,9 +18,10 @@ const opcion =
 export function SelectorIconoColor({ icono, color, alCambiarIcono, alCambiarColor }: Props) {
   const { t } = useTranslation();
   // Un color guardado fuera de la paleta (o un ícono fuera de la lista) sigue visible y elegido.
-  const colores = paletaCategorias.some((c) => c.hex.toLowerCase() === color.toLowerCase())
-    ? paletaCategorias
-    : [...paletaCategorias, { clave: "actual", hex: color }];
+  const colores =
+    !color || paletaCategorias.some((c) => c.hex.toLowerCase() === color.toLowerCase())
+      ? paletaCategorias
+      : [...paletaCategorias, { clave: "actual", hex: color }];
   const iconos = nombresIconos.includes(icono as never) ? nombresIconos : [icono, ...nombresIconos];
 
   return (
@@ -51,29 +53,31 @@ export function SelectorIconoColor({ icono, color, alCambiarIcono, alCambiarColo
           })}
         </div>
       </fieldset>
-      <fieldset className="flex flex-col gap-sm">
-        <legend className="mb-sm text-label-tag text-muted-foreground uppercase">
-          {t("selector.color")}
-        </legend>
-        <div className="flex flex-wrap gap-sm">
-          {colores.map(({ clave, hex }) => {
-            const elegido = hex.toLowerCase() === color.toLowerCase();
-            return (
-              <button
-                key={clave}
-                type="button"
-                aria-pressed={elegido}
-                aria-label={t(`colores.${clave}`)}
-                onClick={() => alCambiarColor(hex)}
-                className={cn(opcion, "rounded-full text-primary-foreground")}
-                style={{ backgroundColor: hex }}
-              >
-                {elegido && <Check className="size-icono" aria-hidden="true" />}
-              </button>
-            );
-          })}
-        </div>
-      </fieldset>
+      {color !== undefined && alCambiarColor && (
+        <fieldset className="flex flex-col gap-sm">
+          <legend className="mb-sm text-label-tag text-muted-foreground uppercase">
+            {t("selector.color")}
+          </legend>
+          <div className="flex flex-wrap gap-sm">
+            {colores.map(({ clave, hex }) => {
+              const elegido = hex.toLowerCase() === color.toLowerCase();
+              return (
+                <button
+                  key={clave}
+                  type="button"
+                  aria-pressed={elegido}
+                  aria-label={t(`colores.${clave}`)}
+                  onClick={() => alCambiarColor(hex)}
+                  className={cn(opcion, "rounded-full text-primary-foreground")}
+                  style={{ backgroundColor: hex }}
+                >
+                  {elegido && <Check className="size-icono" aria-hidden="true" />}
+                </button>
+              );
+            })}
+          </div>
+        </fieldset>
+      )}
     </div>
   );
 }

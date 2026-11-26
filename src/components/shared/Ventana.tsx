@@ -69,9 +69,12 @@ export function Ventana({
     <Dialog open={abierta} onOpenChange={alCambiar}>
       <DialogContent
         etiquetaCerrar={rol === "alertdialog" ? undefined : t("comun.cerrar")}
+        // Todo diálogo cabe en la pantalla y su cuerpo se desplaza (una lista larga de bolsas
+        // dejaba los botones fuera de la vista).
         className={cn(
+          "max-h-[calc(100dvh-2*var(--spacing-lg))] grid-rows-[auto_1fr_auto]",
           formulario &&
-            "max-h-[calc(100dvh-2*var(--spacing-lg))] max-w-formulario grid-rows-[auto_1fr_auto] md:max-xl:top-0 md:max-xl:right-0 md:max-xl:left-auto md:max-xl:h-dvh md:max-xl:max-h-dvh md:max-xl:w-full md:max-xl:translate-x-0 md:max-xl:translate-y-0 md:max-xl:rounded-none",
+            "max-w-formulario md:max-xl:top-0 md:max-xl:right-0 md:max-xl:left-auto md:max-xl:h-dvh md:max-xl:max-h-dvh md:max-xl:w-full md:max-xl:translate-x-0 md:max-xl:translate-y-0 md:max-xl:rounded-none",
         )}
         {...atributos}
       >
@@ -79,7 +82,7 @@ export function Ventana({
           <DialogTitle>{titulo}</DialogTitle>
           {descripcion && <DialogDescription>{descripcion}</DialogDescription>}
         </DialogHeader>
-        {formulario ? <div className="-mx-xs overflow-y-auto px-xs">{children}</div> : children}
+        <div className="-mx-xs overflow-y-auto px-xs">{children}</div>
         <DialogFooter>{pie}</DialogFooter>
       </DialogContent>
     </Dialog>
