@@ -281,6 +281,10 @@
       "eliminada": "Categoría borrada",
       "archivada": "Categoría archivada: el historial la conserva",
       "subAgregada": "Subcategoría agregada"
+    },
+    "selector": {
+      "subcategoria": "Subcategoría (opcional)",
+      "ninguna": "Ninguna"
     }
   },
   "listas": {
@@ -382,5 +386,18 @@
   "fechas": {
     "hoy": "Hoy",
     "ayer": "Ayer"
+  },
+  "bolsas": {
+    "selector": {
+      "quedan": "quedan {{saldo}}",
+      "error": "No pudimos cargar tus bolsas.",
+      "quedaNegativo": "{{nombre}} quedaría en {{saldo}}. Puedes guardar de todas formas."
+    }
+  },
+  "presupuesto": {
+    "barra": {
+      "etiqueta": "Gastado {{usado}} de {{base}}",
+      "porcentaje": "{{porcentaje}} %"
+    }
   }
 }

@@ -5,6 +5,7 @@ import { RouterProvider } from "react-router";
 import "./i18n";
 import "./index.css";
 import { crearClienteConsultas, limpiarAlCerrarSesion } from "./datos/consultas";
+import { PonerseAlDia } from "./features/auth/PonerseAlDia";
 import { SesionProvider } from "./features/auth/SesionProvider";
 import { crearRouter } from "./routes/router";
 
@@ -19,6 +20,7 @@ createRoot(raiz).render(
   <StrictMode>
     <QueryClientProvider client={clienteConsultas}>
       <SesionProvider>
+        <PonerseAlDia />
         <RouterProvider router={router} />
       </SesionProvider>
     </QueryClientProvider>

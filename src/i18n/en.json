@@ -281,6 +281,10 @@
       "eliminada": "Category deleted",
       "archivada": "Category archived: history keeps it",
       "subAgregada": "Subcategory added"
+    },
+    "selector": {
+      "subcategoria": "Subcategory (optional)",
+      "ninguna": "None"
     }
   },
   "listas": {
@@ -382,5 +386,18 @@
   "fechas": {
     "hoy": "Today",
     "ayer": "Yesterday"
+  },
+  "bolsas": {
+    "selector": {
+      "quedan": "balance {{saldo}}",
+      "error": "We couldn’t load your wallets.",
+      "quedaNegativo": "{{nombre}} would end at {{saldo}}. You can still save."
+    }
+  },
+  "presupuesto": {
+    "barra": {
+      "etiqueta": "Spent {{usado}} of {{base}}",
+      "porcentaje": "{{porcentaje}} %"
+    }
   }
 }
