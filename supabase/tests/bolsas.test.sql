@@ -2,7 +2,7 @@
 -- eliminar (borrar o archivar, con traslado o ajuste del saldo) y movimientos de la bolsa.
 -- Etapa 6, issue #11 (supuestos 1 a 7). Fechas fijas; las bolsas iniciales vienen de inicializar_usuario.
 begin;
-select plan(37);
+select plan(39);
 
 insert into auth.users (id, email) values
   ('00000000-0000-0000-0000-0000000000a1', 'a@prueba.local'),
@@ -170,6 +170,11 @@ insert into public.reglas_aporte (user_id, meta_id, valor, frecuencia, dia, bols
 set local role authenticated;
 select throws_ok($$ select public.eliminar_bolsa((select id from ids where nombre = 'Efectivo')) $$,
   'P0001', 'bolsa.en_uso_por_reglas', 'una bolsa origen de una regla activa no se elimina');
+select is((select en_uso_por_reglas from public.uso_bolsas where bolsa_id = (select id from ids where nombre = 'Efectivo')),
+  true, 'uso_bolsas marca la bolsa origen de una regla activa, para explicarlo en el menú');
+select is((select count(*)::int from public.uso_bolsas where en_uso_por_reglas
+            and bolsa_id <> (select id from ids where nombre = 'Efectivo')),
+  0, 'las demás bolsas no quedan marcadas');
 select throws_ok($$ select public.eliminar_bolsa('00000000-0000-0000-0003-000000000099') $$,
   'P0002', 'bolsa.no_existe', 'la bolsa de una meta no se elimina desde Bolsas');
 

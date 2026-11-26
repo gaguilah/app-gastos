@@ -57,11 +57,27 @@ select g.id, g.user_id, g.bolsa_id, 'gasto', g.fecha, g.created_at, g.titulo, -g
   from public.gastos g
  where g.bolsa_id is not null and g.estado = 'confirmado';
 
+-- Bolsa que es origen de un gasto periódico, una deuda o un aporte periódico activos: no se
+-- elimina (supuesto 5). La usan eliminar_bolsa y uso_bolsas, para que el menú diga por qué.
+create function public.bolsa_en_uso_por_reglas(p_bolsa_id uuid)
+returns boolean
+language sql
+stable
+set search_path = ''
+as $$
+  select exists (select 1 from public.reglas_periodicas where bolsa_id = p_bolsa_id and not pausada)
+      or exists (select 1 from public.estado_deudas e join public.deudas d on d.id = e.deuda_id
+                  where d.bolsa_id = p_bolsa_id and e.estado = 'activa')
+      or exists (select 1 from public.reglas_aporte r join public.metas_ahorro m on m.id = r.meta_id
+                  where r.bolsa_id = p_bolsa_id and not r.pausada and m.eliminada_at is null);
+$$;
+
 -- "14 movimientos · último: Almuerzo, hoy". Incluye las bolsas sin movimientos (0, null).
 create view public.uso_bolsas with (security_invoker = true) as
 select b.id as bolsa_id, b.user_id,
        (select count(*)::int from public.movimientos_de_bolsa m where m.bolsa_id = b.id) as usos,
-       u.fecha as ultimo, u.titulo as ultimo_titulo, u.tipo as ultimo_tipo
+       u.fecha as ultimo, u.titulo as ultimo_titulo, u.tipo as ultimo_tipo,
+       public.bolsa_en_uso_por_reglas(b.id) as en_uso_por_reglas
   from public.bolsas b
   left join lateral (
     select m.fecha, m.titulo, m.tipo from public.movimientos_de_bolsa m
@@ -234,11 +250,7 @@ declare
   v public.bolsas := public.bolsa_activa(p_bolsa_id);
   v_saldo bigint;
 begin
-  if exists (select 1 from public.reglas_periodicas where bolsa_id = v.id and not pausada)
-     or exists (select 1 from public.estado_deudas e join public.deudas d on d.id = e.deuda_id
-                 where d.bolsa_id = v.id and e.estado = 'activa')
-     or exists (select 1 from public.reglas_aporte r join public.metas_ahorro m on m.id = r.meta_id
-                 where r.bolsa_id = v.id and not r.pausada and m.eliminada_at is null) then
+  if public.bolsa_en_uso_por_reglas(v.id) then
     raise exception 'bolsa.en_uso_por_reglas' using errcode = 'P0001';
   end if;
 
@@ -768,7 +780,7 @@ revoke all on public.movimientos_de_bolsa, public.uso_bolsas from public, anon, 
 grant select on public.movimientos_de_bolsa, public.uso_bolsas to authenticated;
 
 revoke all on function
-  public.bolsa_activa(uuid), public.exigir_nombre_bolsa_libre(text, uuid), public.exigir_valor(bigint, boolean),
+  public.bolsa_activa(uuid), public.bolsa_en_uso_por_reglas(uuid), public.exigir_nombre_bolsa_libre(text, uuid), public.exigir_valor(bigint, boolean),
   public.crear_bolsa(text, bigint, date), public.renombrar_bolsa(uuid, text),
   public.recargar_bolsa(uuid, bigint, date, text), public.trasladar(uuid, uuid, bigint, date, text),
   public.eliminar_bolsa(uuid, uuid, date), public.fin_periodo_desde(date, integer),
@@ -783,7 +795,7 @@ revoke all on function
   public.reanudar_meta(uuid, date), public.eliminar_meta(uuid, uuid, date)
   from public, anon;
 grant execute on function
-  public.bolsa_activa(uuid), public.exigir_nombre_bolsa_libre(text, uuid), public.exigir_valor(bigint, boolean),
+  public.bolsa_activa(uuid), public.bolsa_en_uso_por_reglas(uuid), public.exigir_nombre_bolsa_libre(text, uuid), public.exigir_valor(bigint, boolean),
   public.crear_bolsa(text, bigint, date), public.renombrar_bolsa(uuid, text),
   public.recargar_bolsa(uuid, bigint, date, text), public.trasladar(uuid, uuid, bigint, date, text),
   public.eliminar_bolsa(uuid, uuid, date), public.fin_periodo_desde(date, integer),

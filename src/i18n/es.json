@@ -411,6 +411,129 @@
       "quedan": "quedan {{saldo}}",
       "error": "No pudimos cargar tus bolsas.",
       "quedaNegativo": "{{nombre}} quedaría en {{saldo}}. Puedes guardar de todas formas."
+    },
+    "titulo": "Bolsas",
+    "descripcion": "El dinero que tienes en efectivo, Nequi o Daviplata.",
+    "saldoTotal": "Saldo total",
+    "nueva": "Nueva bolsa",
+    "errorMensaje": "No pudimos cargar tus bolsas. Nada se perdió; vuelve a intentarlo en un momento.",
+    "vacio": {
+      "titulo": "Aún no tienes bolsas",
+      "mensaje": "Crea una bolsa para llevar el saldo de tu efectivo, Nequi o Daviplata."
+    },
+    "columnas": {
+      "bolsa": "Bolsa",
+      "ultimo": "Último movimiento",
+      "movimientos": "Movimientos",
+      "saldo": "Saldo",
+      "acciones": "Acciones"
+    },
+    "movimientos_one": "{{count}} movimiento",
+    "movimientos_other": "{{count}} movimientos",
+    "sinMovimientos": "Sin movimientos",
+    "ultimo": "{{titulo}} · {{fecha}}",
+    "negativo": "Saldo negativo",
+    "acciones": {
+      "movimientos": "Ver movimientos",
+      "recargar": "Recargar",
+      "trasladar": "Trasladar a otra bolsa",
+      "ajustar": "Ajustar saldo",
+      "renombrar": "Renombrar",
+      "eliminar": "Eliminar",
+      "enUso": "Es origen de un gasto periódico, una deuda o un aporte activo"
+    },
+    "avisos": {
+      "creada": "Bolsa creada.",
+      "recargada": "Recarga guardada.",
+      "trasladado": "Traslado guardado.",
+      "ajustada": "Saldo ajustado.",
+      "renombrada": "Bolsa renombrada.",
+      "eliminada": "Bolsa eliminada.",
+      "archivada": "Bolsa eliminada. Su historial se conserva."
+    },
+    "nuevaDialogo": {
+      "nombre": "Nombre",
+      "saldoInicial": "Saldo inicial",
+      "ayudaSaldo": "El saldo inicial no cuenta como gasto ni como ingreso.",
+      "crear": "Crear bolsa",
+      "repetido": "Ya tienes una bolsa con ese nombre."
+    },
+    "movimiento": {
+      "titulo": "Movimientos de {{nombre}}",
+      "saldo": "Saldo",
+      "vacio": "Esta bolsa aún no tiene movimientos.",
+      "error": "No pudimos cargar los movimientos.",
+      "tipo": {
+        "gasto": "Gasto",
+        "ingreso": "Ingreso",
+        "recarga": "Recarga",
+        "traslado": "Traslado",
+        "ajuste": "Ajuste de saldo",
+        "saldo_inicial": "Saldo inicial",
+        "aporte": "Aporte a ahorro",
+        "retiro": "Retiro de ahorro"
+      },
+      "detalle": {
+        "recarga": "recarga",
+        "ajuste": "ajuste de saldo",
+        "saldo_inicial": "saldo inicial",
+        "desde": "desde {{nombre}}",
+        "hacia": "hacia {{nombre}}",
+        "aporte": "aporte a {{nombre}}",
+        "retiro": "retiro de {{nombre}}"
+      }
+    },
+    "recargar": {
+      "titulo": "Recargar {{nombre}}",
+      "valor": "Valor",
+      "deDonde": "De dónde sale",
+      "deMiCuenta": "De mi cuenta",
+      "deMiCuentaAyuda": "Cajero o recarga desde tu banco.",
+      "deOtraBolsa": "De otra bolsa",
+      "ingresoNuevo": "Ingreso nuevo",
+      "ingresoNuevoAyuda": "Abre el formulario de ingreso con {{nombre}} como destino.",
+      "origen": "Bolsa de origen",
+      "resumen": "{{nombre}} queda en {{saldo}}. El disponible del presupuesto no cambia.",
+      "requerido": "Escribe un valor mayor que $0.",
+      "elegirOrigen": "Elige de qué bolsa sale.",
+      "recargar": "Recargar",
+      "irAIngreso": "Ir a registrar ingreso",
+      "sinOtras": "No tienes otra bolsa."
+    },
+    "trasladar": {
+      "titulo": "Trasladar desde {{nombre}}",
+      "destino": "Bolsa de destino",
+      "resumen": "{{origen}} queda en {{saldoOrigen}} y {{destino}} en {{saldoDestino}}. No es gasto ni ingreso.",
+      "elegirDestino": "Elige a qué bolsa va.",
+      "trasladar": "Trasladar"
+    },
+    "ajustar": {
+      "titulo": "Ajustar saldo de {{nombre}}",
+      "enApp": "Saldo en la app",
+      "real": "Saldo real",
+      "ayudaReal": "Lo que tienes de verdad en {{nombre}}.",
+      "baja": "Diferencia de {{diferencia}}. Se registrará como «Gasto desconocido» con fecha de hoy y el disponible baja {{valor}}.",
+      "sube": "Diferencia de {{diferencia}}. Se registrará como ajuste de entrada; el disponible no cambia.",
+      "igual": "No hay diferencia: el saldo ya coincide.",
+      "requerido": "Escribe el saldo real, de $0 o más.",
+      "ajustar": "Ajustar saldo"
+    },
+    "renombrar": {
+      "titulo": "Renombrar bolsa",
+      "ayuda": "Los movimientos pasados quedan con el nombre nuevo.",
+      "guardar": "Guardar"
+    },
+    "eliminar": {
+      "titulo": "¿Eliminar la bolsa «{{nombre}}»?",
+      "conMovimientos_one": "Su movimiento se conserva en el historial con el nombre «{{nombre}}».",
+      "conMovimientos_other": "Sus {{count}} movimientos se conservan en el historial con el nombre «{{nombre}}».",
+      "sinMovimientos": "No tiene movimientos: se borra del todo.",
+      "queHacer": "Qué hacer con el saldo de {{saldo}}",
+      "pasarA": "Pasar a {{nombre}}",
+      "dejarAjuste": "Dejarlo como ajuste",
+      "ajustePositivo": "Quedará un «Gasto desconocido» de {{saldo}} y el disponible baja {{saldo}}.",
+      "ajusteNegativo": "Quedará un ajuste de entrada para llevarla a $0; el disponible no cambia.",
+      "eliminar": "Eliminar bolsa"
     }
   },
   "presupuesto": {

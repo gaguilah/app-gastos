@@ -1549,6 +1549,7 @@ export type Database = {
       uso_bolsas: {
         Row: {
           bolsa_id: string;
+          en_uso_por_reglas: boolean | null;
           ultimo: string | null;
           ultimo_tipo: string | null;
           ultimo_titulo: string | null;
@@ -1721,6 +1722,7 @@ export type Database = {
           isSetofReturn: false;
         };
       };
+      bolsa_en_uso_por_reglas: { Args: { p_bolsa_id: string }; Returns: boolean };
       calcular_periodo: {
         Args: { p_dia: number; p_hoy: string };
         Returns: {

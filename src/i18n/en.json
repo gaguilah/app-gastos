@@ -411,6 +411,129 @@
       "quedan": "balance {{saldo}}",
       "error": "We couldn’t load your wallets.",
       "quedaNegativo": "{{nombre}} would end at {{saldo}}. You can still save."
+    },
+    "titulo": "Wallets",
+    "descripcion": "The money you keep in cash, Nequi or Daviplata.",
+    "saldoTotal": "Total balance",
+    "nueva": "New wallet",
+    "errorMensaje": "We couldn’t load your wallets. Nothing was lost; try again in a moment.",
+    "vacio": {
+      "titulo": "No wallets yet",
+      "mensaje": "Create a wallet to track the balance of your cash, Nequi or Daviplata."
+    },
+    "columnas": {
+      "bolsa": "Wallet",
+      "ultimo": "Latest transaction",
+      "movimientos": "Transactions",
+      "saldo": "Balance",
+      "acciones": "Actions"
+    },
+    "movimientos_one": "{{count}} transaction",
+    "movimientos_other": "{{count}} transactions",
+    "sinMovimientos": "No transactions",
+    "ultimo": "{{titulo}} · {{fecha}}",
+    "negativo": "Negative balance",
+    "acciones": {
+      "movimientos": "View transactions",
+      "recargar": "Top up",
+      "trasladar": "Transfer to another wallet",
+      "ajustar": "Adjust balance",
+      "renombrar": "Rename",
+      "eliminar": "Delete",
+      "enUso": "It funds an active recurring expense, debt or contribution"
+    },
+    "avisos": {
+      "creada": "Wallet created.",
+      "recargada": "Top-up saved.",
+      "trasladado": "Transfer saved.",
+      "ajustada": "Balance adjusted.",
+      "renombrada": "Wallet renamed.",
+      "eliminada": "Wallet deleted.",
+      "archivada": "Wallet deleted. Its history is kept."
+    },
+    "nuevaDialogo": {
+      "nombre": "Name",
+      "saldoInicial": "Opening balance",
+      "ayudaSaldo": "The opening balance doesn’t count as expense or income.",
+      "crear": "Create wallet",
+      "repetido": "You already have a wallet with that name."
+    },
+    "movimiento": {
+      "titulo": "{{nombre}} transactions",
+      "saldo": "Balance",
+      "vacio": "This wallet has no transactions yet.",
+      "error": "We couldn’t load the transactions.",
+      "tipo": {
+        "gasto": "Expense",
+        "ingreso": "Income",
+        "recarga": "Top-up",
+        "traslado": "Transfer",
+        "ajuste": "Balance adjustment",
+        "saldo_inicial": "Opening balance",
+        "aporte": "Savings contribution",
+        "retiro": "Savings withdrawal"
+      },
+      "detalle": {
+        "recarga": "top-up",
+        "ajuste": "balance adjustment",
+        "saldo_inicial": "opening balance",
+        "desde": "from {{nombre}}",
+        "hacia": "to {{nombre}}",
+        "aporte": "contribution to {{nombre}}",
+        "retiro": "withdrawal from {{nombre}}"
+      }
+    },
+    "recargar": {
+      "titulo": "Top up {{nombre}}",
+      "valor": "Amount",
+      "deDonde": "Where it comes from",
+      "deMiCuenta": "From my account",
+      "deMiCuentaAyuda": "ATM or a top-up from your bank.",
+      "deOtraBolsa": "From another wallet",
+      "ingresoNuevo": "New income",
+      "ingresoNuevoAyuda": "Opens the income form with {{nombre}} as the destination.",
+      "origen": "Source wallet",
+      "resumen": "{{nombre}} ends at {{saldo}}. Your available budget doesn’t change.",
+      "requerido": "Enter an amount above $0.",
+      "elegirOrigen": "Choose the wallet it comes from.",
+      "recargar": "Top up",
+      "irAIngreso": "Go to log income",
+      "sinOtras": "You don’t have another wallet."
+    },
+    "trasladar": {
+      "titulo": "Transfer from {{nombre}}",
+      "destino": "Destination wallet",
+      "resumen": "{{origen}} ends at {{saldoOrigen}} and {{destino}} at {{saldoDestino}}. It’s neither expense nor income.",
+      "elegirDestino": "Choose the wallet it goes to.",
+      "trasladar": "Transfer"
+    },
+    "ajustar": {
+      "titulo": "Adjust {{nombre}} balance",
+      "enApp": "Balance in app",
+      "real": "Actual balance",
+      "ayudaReal": "What you really have in {{nombre}}.",
+      "baja": "Difference of {{diferencia}}. It will be logged as “Unknown expense” dated today, and your available budget drops by {{valor}}.",
+      "sube": "Difference of {{diferencia}}. It will be logged as an incoming adjustment; your available budget doesn’t change.",
+      "igual": "No difference: the balance already matches.",
+      "requerido": "Enter the actual balance, $0 or more.",
+      "ajustar": "Adjust balance"
+    },
+    "renombrar": {
+      "titulo": "Rename wallet",
+      "ayuda": "Past transactions take the new name.",
+      "guardar": "Save"
+    },
+    "eliminar": {
+      "titulo": "Delete the “{{nombre}}” wallet?",
+      "conMovimientos_one": "Its transaction is kept in history under the name “{{nombre}}”.",
+      "conMovimientos_other": "Its {{count}} transactions are kept in history under the name “{{nombre}}”.",
+      "sinMovimientos": "It has no transactions: it’s deleted completely.",
+      "queHacer": "What to do with the {{saldo}} balance",
+      "pasarA": "Move to {{nombre}}",
+      "dejarAjuste": "Leave as adjustment",
+      "ajustePositivo": "An “Unknown expense” of {{saldo}} is logged and your available budget drops by {{saldo}}.",
+      "ajusteNegativo": "An incoming adjustment brings it to $0; your available budget doesn’t change.",
+      "eliminar": "Delete wallet"
     }
   },
   "presupuesto": {
