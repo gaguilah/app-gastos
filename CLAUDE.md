@@ -57,8 +57,8 @@ Versiones estables verificadas en npm el **15-nov-2026**. Al iniciar la Etapa 0 
 | --- | --- | --- |
 | Build y servidor de desarrollo | `vite` + `@vitejs/plugin-react` | 8.3.8 · 6.3.0 |
 | PWA | `vite-plugin-pwa` | 2.0.0 |
-| Datos del servidor | `@tanstack/react-query` | 5.107.1 |
-| Formularios y validación | `react-hook-form` + `zod` | 7.92.0 · 4.6.7 |
+| Datos del servidor | `@tanstack/react-query` | 5.108.4 (Etapa 5) |
+| Formularios y validación | `react-hook-form` + `zod` + `@hookform/resolvers` | 7.92.0 · 4.6.7 · 7.0.7 |
 | Idiomas | `i18next` + `react-i18next` | 27.1.2 · 18.0.1 |
 | Pruebas unitarias y de componentes | `vitest` + `@testing-library/react` | 5.1.0 · 16.3.3 |
 | E2E y accesibilidad | `@playwright/test` + `@axe-core/playwright` | 1.65.1 · 4.14.0 |
