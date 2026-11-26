@@ -114,7 +114,7 @@ En móvil los campos usan al menos 16 px para que iOS no haga zoom.
 | Componente | Base | Reglas |
 | --- | --- | --- |
 | Botón | shadcn `Button` | Variantes `primary` (una por pantalla), `secondary`, `ghost` y `destructive` (solo en confirmaciones). 44 px de alto. Cargando: ícono girando, deshabilitado y con texto. Deshabilitado: `muted`, sin opacidad |
-| Campo | shadcn `Input` + `Label` | 48 px de alto, borde `input`, etiqueta visible. Error: borde de 2 px `destructive`, mensaje con ícono y `aria-invalid` |
+| Campo | shadcn `Input` + `Label` (molécula `shared/Campo`) | 48 px de alto, borde `input`, etiqueta visible. Error: borde de 2 px `destructive`, mensaje con ícono y `aria-invalid` |
 | Campo de monto COP | molécula `shared/` | Mono grande, `inputMode="numeric"`, primer campo del formulario. La ayuda muestra el saldo de la bolsa |
 | Selector de bolsa | molécula `shared/` | Opciones con saldo ("Efectivo · quedan $35.000"). Si la bolsa queda en negativo, aviso `warning` antes de guardar |
 | Selector de categoría | molécula `shared/` | Solo categorías del tipo que toca, con ícono y color |
@@ -125,11 +125,11 @@ En móvil los campos usan al menos 16 px para que iOS no haga zoom.
 | Fila de movimiento | organismo de cada módulo | Ícono de categoría, título, "lugar · origen · canal", monto a la derecha. Ingreso con `+` y `success`. Pendiente con insignia |
 | Aviso | shadcn `Alert` | `warning`, `error`, `success` y barra oscura de sin conexión. Ícono y texto |
 | Estados | molécula `shared/` | Vacío (ícono, título, qué hacer, acción), error (qué pasó, Reintentar) y carga (`Skeleton` con la forma real) |
-| Menú ⋮ | shadcn `DropdownMenu` / `Drawer` | Ítems de 44 px; el de borrar en `destructive` y separado |
-| Diálogo y hoja | shadcn `Dialog` / `Drawer` | Encabezado con cerrar, cuerpo y pie con acciones. En móvil, hoja inferior con el pie fijo |
+| Menú ⋮ | molécula `shared/MenuAcciones` sobre `DropdownMenu` / `Drawer` | Hoja inferior en móvil y menú flotante (no modal) en tablet y computador. Ítems de 44 px; el de borrar en `destructive`, al final y separado. Una acción que no se puede muestra el motivo debajo, deshabilitada |
+| Diálogo y hoja | molécula `shared/Ventana` sobre `Dialog` / `Drawer` | Encabezado con cerrar, cuerpo y pie con acciones. En móvil, hoja inferior con el pie fijo. Modo `formulario`: panel derecho en tablet y diálogo ancho (`max-w-formulario`) en computador, con el cuerpo desplazable |
 | Pestañas | shadcn `Tabs` | Activa en `primary` con subrayado de 2 px. Se desplazan en móvil |
 | Interruptor, radio, casilla | shadcn `Switch`, `RadioGroup`, `Checkbox` | Encendido en `primary` |
-| Selector de ícono y color | organismo de Categorías | Rejilla de íconos Lucide y muestras de 44 px. Vista previa en vivo |
+| Selector de ícono y color | molécula `shared/SelectorIconoColor` + `shared/IconoCategoria` | 47 íconos Lucide curados (`iconos-categoria.ts`) y los 8 colores de §2.1 (`paleta-categorias.json`) en muestras de 44 px. Vista previa en vivo. El ícono de categoría usa su color sobre un fondo del 12 % |
 | Tabla | shadcn `Table` | Encabezado `label-tag` sobre `muted`, montos alineados a la derecha, columnas ordenables, desplazamiento horizontal propio |
 | Gráficas | charts de shadcn (Recharts) | Colores solo de `chart-*` y de la categoría. Ejes con `$2,8 M` y tooltip con `$2.845.000` |
 

@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import { supabase } from "@/datos/supabase";
 import { Button } from "@/components/ui/button";
-import { Ventana } from "./Ventana";
+import { Ventana } from "@/components/shared/Ventana";
 
 type Props = { abierta: boolean; alCambiar: (abierta: boolean) => void };
 

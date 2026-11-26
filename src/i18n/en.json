@@ -80,7 +80,9 @@
   "comun": {
     "cancelar": "Cancel",
     "guardar": "Save",
-    "cerrar": "Close"
+    "cerrar": "Close",
+    "acciones": "Actions for “{{nombre}}”",
+    "guardando": "Saving…"
   },
   "ajustes": {
     "idioma": "Language",
@@ -116,5 +118,269 @@
       "mensaje": "Check your connection and try again.",
       "reintentar": "Try again"
     }
+  },
+  "errores": {
+    "sinRed": "You're offline. Check your connection and try again.",
+    "desconocido": "Something went wrong. Try again.",
+    "nombreRepetido": "There's already one with that name.",
+    "datoInvalido": "Check the details: something isn't valid.",
+    "numeroTarjeta": "We don't store card numbers. Use only a name, like “Visa Bank X”.",
+    "sinPermiso": "You don't have permission to do this.",
+    "servidor": {
+      "lugar_nombre_vacio": "Type the place's name.",
+      "lugar_no_existe": "That place no longer exists.",
+      "persona_nombre_vacio": "Type the name.",
+      "persona_tipo_invalido": "Choose whether it's a person or a bank.",
+      "persona_no_existe": "That person no longer exists.",
+      "forma_pago_no_existe": "That payment method no longer exists.",
+      "categoria_no_existe": "That category no longer exists.",
+      "categoria_sistema": "Built-in categories can't be deleted.",
+      "unir_mismo": "Choose a different one to merge with.",
+      "unir_tipo_distinto": "Only entries of the same type can be merged.",
+      "unir_clase_distinta": "Only payment methods of the same kind can be merged.",
+      "duplicado_entidad_invalida": "This list has no duplicates to review.",
+      "duplicado_no_existe": "One of the two no longer exists."
+    }
+  },
+  "selector": {
+    "icono": "Icon",
+    "color": "Color"
+  },
+  "iconos": {
+    "utensils": "Food",
+    "car": "Car",
+    "house": "House",
+    "zap": "Power",
+    "heart-pulse": "Health",
+    "graduation-cap": "Education",
+    "clapperboard": "Movies",
+    "shirt": "Clothes",
+    "repeat": "Subscription",
+    "paw-print": "Pet",
+    "coffee": "Coffee",
+    "shopping-cart": "Groceries",
+    "shopping-bag": "Shopping",
+    "pizza": "Pizza",
+    "beer": "Drinks",
+    "bus": "Bus",
+    "train-front": "Train",
+    "bike": "Bike",
+    "fuel": "Fuel",
+    "plane": "Travel",
+    "pill": "Medicine",
+    "stethoscope": "Doctor",
+    "dumbbell": "Gym",
+    "baby": "Baby",
+    "book-open": "Books",
+    "music": "Music",
+    "gamepad-2": "Games",
+    "tv": "TV",
+    "wifi": "Internet",
+    "smartphone": "Phone",
+    "wrench": "Repairs",
+    "scissors": "Haircut",
+    "gift": "Gifts",
+    "building-2": "Building",
+    "receipt": "Bill",
+    "briefcase": "Work",
+    "sparkles": "Extra",
+    "tag": "Tag",
+    "wallet": "Wallet",
+    "piggy-bank": "Savings",
+    "credit-card": "Card",
+    "hand-coins": "Loan",
+    "landmark": "Bank",
+    "banknote": "Cash",
+    "circle-x": "Not recovered",
+    "circle-help": "Unknown",
+    "ellipsis": "Other"
+  },
+  "colores": {
+    "ambar": "Amber",
+    "indigo": "Indigo",
+    "verde": "Green",
+    "cian": "Cyan",
+    "rosa": "Pink",
+    "violeta": "Violet",
+    "cafe": "Brown",
+    "gris": "Gray",
+    "actual": "Current color"
+  },
+  "categorias": {
+    "titulo": "Categories",
+    "descripcion": "Each with its icon, color and subcategories.",
+    "nueva": "New category",
+    "pestanas": "Category types",
+    "pestana": "{{tipo}} · {{total}}",
+    "tipos": {
+      "gasto": "Expense",
+      "ingreso": "Income",
+      "prestamo": "Loan",
+      "deuda": "Debt"
+    },
+    "columnas": {
+      "categoria": "Category",
+      "subcategorias": "Subcategories",
+      "movimientos": "Entries",
+      "tipo": "Type",
+      "acciones": "Actions"
+    },
+    "sinSubcategorias": "No subcategories",
+    "movimientos_one": "{{count}} entry",
+    "movimientos_other": "{{count}} entries",
+    "delSistema": "Built in",
+    "propia": "Custom",
+    "avisoSistema": "Built-in categories can be edited, but not deleted.",
+    "acciones": {
+      "editar": "Edit",
+      "agregarSub": "Add subcategory",
+      "eliminar": "Delete",
+      "noSeElimina": "Built in: can’t be deleted"
+    },
+    "vacio": {
+      "titulo": "No categories of this type yet",
+      "mensaje": "Create the first one with its own icon and color.",
+      "accion": "Create category"
+    },
+    "error": {
+      "mensaje": "The server didn’t respond. Nothing was lost; try again in a moment."
+    },
+    "formulario": {
+      "vistaPrevia": "Preview",
+      "asiSeVera": "How it will look in your entries",
+      "sinNombre": "Category name",
+      "nombre": "Name",
+      "subcategorias": "Subcategories",
+      "nuevaSub": "New subcategory",
+      "agregar": "Add",
+      "quitarSub": "Remove “{{nombre}}”",
+      "guardar": "Save category",
+      "guardarCambios": "Save changes",
+      "editarTitulo": "Edit “{{nombre}}”",
+      "sistema": "Built-in category: you can change its name, icon, color and subcategories, but not delete it.",
+      "quitarAviso": "When you save, removed subcategories with entries are archived and history keeps them.",
+      "nombreObligatorio": "Type a name.",
+      "nombreLargo": "Use 60 characters at most.",
+      "subRepetida": "It already has a subcategory with that name."
+    },
+    "subcategoria": {
+      "titulo": "Add subcategory to “{{nombre}}”",
+      "yaTiene": "Already has: {{lista}}",
+      "hereda": "It uses the icon and color of “{{nombre}}”.",
+      "guardar": "Add subcategory"
+    },
+    "eliminar": {
+      "titulo": "Delete “{{nombre}}”?",
+      "mensaje": "Anything that already uses it keeps its name, icon and color in history and reports. It just stops showing up when you log new entries.",
+      "conSub": "Its subcategories are deleted too.",
+      "confirmar": "Delete category"
+    },
+    "avisos": {
+      "creada": "Category created",
+      "guardada": "Changes saved",
+      "eliminada": "Category deleted",
+      "archivada": "Category archived: history keeps it",
+      "subAgregada": "Subcategory added"
+    }
+  },
+  "listas": {
+    "titulo": "Payment methods, places and people",
+    "descripcion": "Rename, merge duplicates or delete.",
+    "agregar": "Add",
+    "pestanas": "List type",
+    "pestana": {
+      "formas": "Payment methods · {{total}}",
+      "lugares": "Places · {{total}}",
+      "personas": "People · {{total}}"
+    },
+    "columnas": {
+      "formas": "Payment method",
+      "lugares": "Place",
+      "personas": "Person",
+      "usosFormas": "Expenses",
+      "usosLugares": "Expenses",
+      "usosPersonas": "Loans and debts",
+      "ultimo": "Last used",
+      "acciones": "Actions"
+    },
+    "usos": {
+      "formas_one": "{{count}} expense",
+      "formas_other": "{{count}} expenses",
+      "lugares_one": "{{count}} expense",
+      "lugares_other": "{{count}} expenses",
+      "personas_one": "{{count}} loan or debt",
+      "personas_other": "{{count}} loans or debts"
+    },
+    "ultimo": "last: {{fecha}}",
+    "sinUso": "Not used",
+    "subtipos": {
+      "medio": "Payment method",
+      "canal": "Channel",
+      "persona": "Person",
+      "banco": "Bank",
+      "tarjeta": "Card"
+    },
+    "canal": "{{nombre}} (channel)",
+    "avisoBolsas": "Wallets (Cash, Nequi, Daviplata) are managed in Wallets.",
+    "acciones": {
+      "renombrar": "Rename",
+      "unir": "Merge with…",
+      "eliminar": "Delete",
+      "sinOtro": "There’s no other of the same type to merge with"
+    },
+    "vacio": {
+      "titulo": "This list is empty",
+      "mensaje": "It fills itself as you log expenses and loans. You can also add here."
+    },
+    "error": {
+      "mensaje": "We couldn’t load your lists. The server didn’t respond; nothing was lost, try again in a moment."
+    },
+    "nuevo": {
+      "titulo": "Add to the list",
+      "tipo": "Type",
+      "nombre": "Name",
+      "ayuda": "They’re also created as you log expenses and loans.",
+      "guardar": "Add",
+      "existe": "“{{nombre}}” is already on the list. Use that one instead of creating another.",
+      "usarExistente": "Use the existing one"
+    },
+    "renombrar": {
+      "titulo": "Rename “{{nombre}}”",
+      "ayuda": "Everything logged under this name takes the new one.",
+      "guardar": "Save",
+      "yaExiste": "There’s already one with that name. You can merge them instead of renaming.",
+      "unirlos": "Merge with the existing one"
+    },
+    "unir": {
+      "titulo": "Merge “{{nombre}}” with…",
+      "conserva": "Name to keep",
+      "aviso": "Everything logged under “{{origen}}” will be under “{{destino}}”. This can’t be undone.",
+      "elige": "Choose the name to keep.",
+      "confirmar": "Merge",
+      "noSonElMismo": "Not the same"
+    },
+    "eliminar": {
+      "titulo": "Delete “{{nombre}}”?",
+      "mensaje": "Everything logged under this name keeps it in history and reports. It just stops being suggested when you log.",
+      "confirmar": "Delete"
+    },
+    "duplicado": {
+      "aviso": "Possible duplicate.",
+      "mensaje": "“{{a}}” and “{{b}}” have similar names.",
+      "revisar": "Review"
+    },
+    "avisos": {
+      "creado": "Added to the list",
+      "reactivado": "Restored: it was archived",
+      "renombrado": "Name changed",
+      "unidos": "Merged into “{{nombre}}”",
+      "eliminado": "Deleted",
+      "archivado": "Archived: history keeps it",
+      "distintos": "Done, we won’t suggest them again"
+    }
+  },
+  "fechas": {
+    "hoy": "Today",
+    "ayer": "Yesterday"
   }
 }

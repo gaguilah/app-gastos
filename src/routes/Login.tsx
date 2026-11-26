@@ -5,7 +5,7 @@ import { Link } from "react-router";
 import { supabase } from "@/datos/supabase";
 import { Alert } from "@/components/ui/alert";
 import { TarjetaAuth } from "@/features/auth/components/TarjetaAuth";
-import { Campo } from "@/features/auth/components/Campo";
+import { Campo } from "@/components/shared/Campo";
 import { BotonEnviar } from "@/features/auth/components/BotonEnviar";
 import { claveErrorLogin } from "@/features/auth/errores";
 

@@ -146,6 +146,13 @@ export type Database = {
             referencedRelation: "formas_pago";
             referencedColumns: ["id", "user_id"];
           },
+          {
+            foreignKeyName: "bolsas_forma_pago_id_user_id_fkey";
+            columns: ["forma_pago_id", "user_id"];
+            isOneToOne: false;
+            referencedRelation: "uso_formas_pago";
+            referencedColumns: ["forma_pago_id", "user_id"];
+          },
         ];
       };
       categorias: {
@@ -193,6 +200,13 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: "categorias";
             referencedColumns: ["id", "user_id"];
+          },
+          {
+            foreignKeyName: "categorias_padre_id_user_id_fkey";
+            columns: ["padre_id", "user_id"];
+            isOneToOne: false;
+            referencedRelation: "uso_categorias";
+            referencedColumns: ["categoria_id", "user_id"];
           },
         ];
       };
@@ -321,11 +335,25 @@ export type Database = {
             referencedColumns: ["id", "user_id"];
           },
           {
+            foreignKeyName: "deudas_canal_id_user_id_fkey";
+            columns: ["canal_id", "user_id"];
+            isOneToOne: false;
+            referencedRelation: "uso_formas_pago";
+            referencedColumns: ["forma_pago_id", "user_id"];
+          },
+          {
             foreignKeyName: "deudas_categoria_id_user_id_fkey";
             columns: ["categoria_id", "user_id"];
             isOneToOne: false;
             referencedRelation: "categorias";
             referencedColumns: ["id", "user_id"];
+          },
+          {
+            foreignKeyName: "deudas_categoria_id_user_id_fkey";
+            columns: ["categoria_id", "user_id"];
+            isOneToOne: false;
+            referencedRelation: "uso_categorias";
+            referencedColumns: ["categoria_id", "user_id"];
           },
           {
             foreignKeyName: "deudas_medio_id_user_id_fkey";
@@ -335,11 +363,25 @@ export type Database = {
             referencedColumns: ["id", "user_id"];
           },
           {
+            foreignKeyName: "deudas_medio_id_user_id_fkey";
+            columns: ["medio_id", "user_id"];
+            isOneToOne: false;
+            referencedRelation: "uso_formas_pago";
+            referencedColumns: ["forma_pago_id", "user_id"];
+          },
+          {
             foreignKeyName: "deudas_persona_id_user_id_fkey";
             columns: ["persona_id", "user_id"];
             isOneToOne: false;
             referencedRelation: "personas";
             referencedColumns: ["id", "user_id"];
+          },
+          {
+            foreignKeyName: "deudas_persona_id_user_id_fkey";
+            columns: ["persona_id", "user_id"];
+            isOneToOne: false;
+            referencedRelation: "uso_personas";
+            referencedColumns: ["persona_id", "user_id"];
           },
         ];
       };
@@ -477,11 +519,25 @@ export type Database = {
             referencedColumns: ["id", "user_id"];
           },
           {
+            foreignKeyName: "gastos_canal_id_user_id_fkey";
+            columns: ["canal_id", "user_id"];
+            isOneToOne: false;
+            referencedRelation: "uso_formas_pago";
+            referencedColumns: ["forma_pago_id", "user_id"];
+          },
+          {
             foreignKeyName: "gastos_categoria_id_user_id_fkey";
             columns: ["categoria_id", "user_id"];
             isOneToOne: false;
             referencedRelation: "categorias";
             referencedColumns: ["id", "user_id"];
+          },
+          {
+            foreignKeyName: "gastos_categoria_id_user_id_fkey";
+            columns: ["categoria_id", "user_id"];
+            isOneToOne: false;
+            referencedRelation: "uso_categorias";
+            referencedColumns: ["categoria_id", "user_id"];
           },
           {
             foreignKeyName: "gastos_cuota_id_user_id_fkey";
@@ -498,11 +554,25 @@ export type Database = {
             referencedColumns: ["id", "user_id"];
           },
           {
+            foreignKeyName: "gastos_lugar_id_user_id_fkey";
+            columns: ["lugar_id", "user_id"];
+            isOneToOne: false;
+            referencedRelation: "uso_lugares";
+            referencedColumns: ["lugar_id", "user_id"];
+          },
+          {
             foreignKeyName: "gastos_medio_id_user_id_fkey";
             columns: ["medio_id", "user_id"];
             isOneToOne: false;
             referencedRelation: "formas_pago";
             referencedColumns: ["id", "user_id"];
+          },
+          {
+            foreignKeyName: "gastos_medio_id_user_id_fkey";
+            columns: ["medio_id", "user_id"];
+            isOneToOne: false;
+            referencedRelation: "uso_formas_pago";
+            referencedColumns: ["forma_pago_id", "user_id"];
           },
           {
             foreignKeyName: "gastos_prestamo_id_user_id_fkey";
@@ -531,6 +601,13 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: "categorias";
             referencedColumns: ["id", "user_id"];
+          },
+          {
+            foreignKeyName: "gastos_subcategoria_id_user_id_fkey";
+            columns: ["subcategoria_id", "user_id"];
+            isOneToOne: false;
+            referencedRelation: "uso_categorias";
+            referencedColumns: ["categoria_id", "user_id"];
           },
         ];
       };
@@ -616,6 +693,13 @@ export type Database = {
             referencedColumns: ["id", "user_id"];
           },
           {
+            foreignKeyName: "ingresos_categoria_id_user_id_fkey";
+            columns: ["categoria_id", "user_id"];
+            isOneToOne: false;
+            referencedRelation: "uso_categorias";
+            referencedColumns: ["categoria_id", "user_id"];
+          },
+          {
             foreignKeyName: "ingresos_deuda_id_user_id_fkey";
             columns: ["deuda_id", "user_id"];
             isOneToOne: false;
@@ -649,6 +733,13 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: "categorias";
             referencedColumns: ["id", "user_id"];
+          },
+          {
+            foreignKeyName: "ingresos_subcategoria_id_user_id_fkey";
+            columns: ["subcategoria_id", "user_id"];
+            isOneToOne: false;
+            referencedRelation: "uso_categorias";
+            referencedColumns: ["categoria_id", "user_id"];
           },
         ];
       };
@@ -821,6 +912,13 @@ export type Database = {
             referencedColumns: ["id", "user_id"];
           },
           {
+            foreignKeyName: "movimientos_bolsa_medio_id_user_id_fkey";
+            columns: ["medio_id", "user_id"];
+            isOneToOne: false;
+            referencedRelation: "uso_formas_pago";
+            referencedColumns: ["forma_pago_id", "user_id"];
+          },
+          {
             foreignKeyName: "movimientos_bolsa_meta_id_user_id_fkey";
             columns: ["meta_id", "user_id"];
             isOneToOne: false;
@@ -835,6 +933,34 @@ export type Database = {
             referencedColumns: ["id", "user_id"];
           },
         ];
+      };
+      pares_distintos: {
+        Row: {
+          a_id: string;
+          b_id: string;
+          created_at: string;
+          entidad: string;
+          id: string;
+          user_id: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          a_id: string;
+          b_id: string;
+          created_at?: string;
+          entidad: string;
+          id?: string;
+          user_id?: string;
+        };
+        Update: {
+          a_id?: string;
+          b_id?: string;
+          created_at?: string;
+          entidad?: string;
+          id?: string;
+          user_id?: string;
+        };
+        Relationships: [];
       };
       perfiles: {
         Row: {
@@ -975,6 +1101,13 @@ export type Database = {
             referencedRelation: "personas";
             referencedColumns: ["id", "user_id"];
           },
+          {
+            foreignKeyName: "prestamos_persona_id_user_id_fkey";
+            columns: ["persona_id", "user_id"];
+            isOneToOne: false;
+            referencedRelation: "uso_personas";
+            referencedColumns: ["persona_id", "user_id"];
+          },
         ];
       };
       reglas_aporte: {
@@ -1042,6 +1175,13 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: "formas_pago";
             referencedColumns: ["id", "user_id"];
+          },
+          {
+            foreignKeyName: "reglas_aporte_medio_id_user_id_fkey";
+            columns: ["medio_id", "user_id"];
+            isOneToOne: false;
+            referencedRelation: "uso_formas_pago";
+            referencedColumns: ["forma_pago_id", "user_id"];
           },
           {
             foreignKeyName: "reglas_aporte_meta_id_user_id_fkey";
@@ -1143,11 +1283,25 @@ export type Database = {
             referencedColumns: ["id", "user_id"];
           },
           {
+            foreignKeyName: "reglas_periodicas_canal_id_user_id_fkey";
+            columns: ["canal_id", "user_id"];
+            isOneToOne: false;
+            referencedRelation: "uso_formas_pago";
+            referencedColumns: ["forma_pago_id", "user_id"];
+          },
+          {
             foreignKeyName: "reglas_periodicas_categoria_id_user_id_fkey";
             columns: ["categoria_id", "user_id"];
             isOneToOne: false;
             referencedRelation: "categorias";
             referencedColumns: ["id", "user_id"];
+          },
+          {
+            foreignKeyName: "reglas_periodicas_categoria_id_user_id_fkey";
+            columns: ["categoria_id", "user_id"];
+            isOneToOne: false;
+            referencedRelation: "uso_categorias";
+            referencedColumns: ["categoria_id", "user_id"];
           },
           {
             foreignKeyName: "reglas_periodicas_lugar_id_user_id_fkey";
@@ -1157,6 +1311,13 @@ export type Database = {
             referencedColumns: ["id", "user_id"];
           },
           {
+            foreignKeyName: "reglas_periodicas_lugar_id_user_id_fkey";
+            columns: ["lugar_id", "user_id"];
+            isOneToOne: false;
+            referencedRelation: "uso_lugares";
+            referencedColumns: ["lugar_id", "user_id"];
+          },
+          {
             foreignKeyName: "reglas_periodicas_medio_id_user_id_fkey";
             columns: ["medio_id", "user_id"];
             isOneToOne: false;
@@ -1164,11 +1325,25 @@ export type Database = {
             referencedColumns: ["id", "user_id"];
           },
           {
+            foreignKeyName: "reglas_periodicas_medio_id_user_id_fkey";
+            columns: ["medio_id", "user_id"];
+            isOneToOne: false;
+            referencedRelation: "uso_formas_pago";
+            referencedColumns: ["forma_pago_id", "user_id"];
+          },
+          {
             foreignKeyName: "reglas_periodicas_subcategoria_id_user_id_fkey";
             columns: ["subcategoria_id", "user_id"];
             isOneToOne: false;
             referencedRelation: "categorias";
             referencedColumns: ["id", "user_id"];
+          },
+          {
+            foreignKeyName: "reglas_periodicas_subcategoria_id_user_id_fkey";
+            columns: ["subcategoria_id", "user_id"];
+            isOneToOne: false;
+            referencedRelation: "uso_categorias";
+            referencedColumns: ["categoria_id", "user_id"];
           },
         ];
       };
@@ -1241,6 +1416,13 @@ export type Database = {
             referencedRelation: "personas";
             referencedColumns: ["id", "user_id"];
           },
+          {
+            foreignKeyName: "deudas_persona_id_user_id_fkey";
+            columns: ["persona_id", "user_id"];
+            isOneToOne: false;
+            referencedRelation: "uso_personas";
+            referencedColumns: ["persona_id", "user_id"];
+          },
         ];
       };
       estado_prestamos: {
@@ -1265,6 +1447,13 @@ export type Database = {
             referencedRelation: "personas";
             referencedColumns: ["id", "user_id"];
           },
+          {
+            foreignKeyName: "prestamos_persona_id_user_id_fkey";
+            columns: ["persona_id", "user_id"];
+            isOneToOne: false;
+            referencedRelation: "uso_personas";
+            referencedColumns: ["persona_id", "user_id"];
+          },
         ];
       };
       saldos_bolsa: {
@@ -1284,6 +1473,46 @@ export type Database = {
           saldo?: never;
           user_id?: string | null;
         };
+        Relationships: [];
+      };
+      uso_categorias: {
+        Row: {
+          categoria_id: string;
+          ultimo: string | null;
+          user_id: string;
+          usos: number | null;
+        };
+        ComputedFields: never;
+        Relationships: [];
+      };
+      uso_formas_pago: {
+        Row: {
+          forma_pago_id: string;
+          ultimo: string | null;
+          user_id: string;
+          usos: number | null;
+        };
+        ComputedFields: never;
+        Relationships: [];
+      };
+      uso_lugares: {
+        Row: {
+          lugar_id: string;
+          ultimo: string | null;
+          user_id: string;
+          usos: number | null;
+        };
+        ComputedFields: never;
+        Relationships: [];
+      };
+      uso_personas: {
+        Row: {
+          persona_id: string;
+          ultimo: string | null;
+          user_id: string;
+          usos: number | null;
+        };
+        ComputedFields: never;
         Relationships: [];
       };
     };
@@ -1449,7 +1678,25 @@ export type Database = {
           isSetofReturn: false;
         };
       };
+      crear_lugar: {
+        Args: { p_nombre: string };
+        Returns: {
+          estado: string;
+          id: string;
+        }[];
+      };
+      crear_persona: {
+        Args: { p_nombre: string; p_tipo?: string };
+        Returns: {
+          estado: string;
+          id: string;
+        }[];
+      };
       dia_en_mes: { Args: { p_dia: number; p_mes: string }; Returns: string };
+      eliminar_categoria: { Args: { p_id: string }; Returns: string };
+      eliminar_forma_pago: { Args: { p_id: string }; Returns: string };
+      eliminar_lugar: { Args: { p_id: string }; Returns: string };
+      eliminar_persona: { Args: { p_id: string }; Returns: string };
       estado_metas: {
         Args: { p_hoy?: string };
         Returns: {
@@ -1490,6 +1737,10 @@ export type Database = {
       generar_plan_cuotas: { Args: { p_deuda_id: string }; Returns: number };
       hoy_bogota: { Args: Record<PropertyKey, never>; Returns: string };
       inicializar_usuario: { Args: { p_user_id: string }; Returns: undefined };
+      marcar_distintos: {
+        Args: { p_a: string; p_b: string; p_entidad: string };
+        Returns: undefined;
+      };
       normalizar_nombre: { Args: { texto: string }; Returns: string };
       omitir_aporte: {
         Args: { p_movimiento_id: string };
@@ -1520,6 +1771,15 @@ export type Database = {
         };
       };
       ponerse_al_dia: { Args: Record<PropertyKey, never>; Returns: Json };
+      posibles_duplicados: {
+        Args: { p_entidad: string };
+        Returns: {
+          a_id: string;
+          a_nombre: string;
+          b_id: string;
+          b_nombre: string;
+        }[];
+      };
       primera_fecha_serie_desde: {
         Args: {
           p_desde: string;
@@ -1565,8 +1825,18 @@ export type Database = {
       registrar_alertas: { Args: { p_periodo_id: string }; Returns: number };
       registrar_alertas_en: { Args: { p_fecha: string; p_user_id: string }; Returns: number };
       resumen_dinero: { Args: { p_periodo_id: string }; Returns: Json };
+      sugerir_lugares: {
+        Args: { p_limite?: number; p_texto: string };
+        Returns: {
+          id: string;
+          nombre: string;
+        }[];
+      };
       tarea_diaria: { Args: { p_hoy?: string }; Returns: Json };
       tarea_diaria_de: { Args: { p_hoy: string; p_user_id: string }; Returns: Json };
+      unir_formas_pago: { Args: { p_destino: string; p_origen: string }; Returns: undefined };
+      unir_lugares: { Args: { p_destino: string; p_origen: string }; Returns: undefined };
+      unir_personas: { Args: { p_destino: string; p_origen: string }; Returns: undefined };
     };
     Enums: {
       [_ in never]: never;

@@ -1,0 +1,10 @@
+[
+  { "clave": "ambar", "hex": "#b45309" },
+  { "clave": "indigo", "hex": "#4343c8" },
+  { "clave": "verde", "hex": "#047857" },
+  { "clave": "cian", "hex": "#0e7490" },
+  { "clave": "rosa", "hex": "#be185d" },
+  { "clave": "violeta", "hex": "#7c3aed" },
+  { "clave": "cafe", "hex": "#92400e" },
+  { "clave": "gris", "hex": "#3c4a42" }
+]

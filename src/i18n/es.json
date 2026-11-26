@@ -80,7 +80,9 @@
   "comun": {
     "cancelar": "Cancelar",
     "guardar": "Guardar",
-    "cerrar": "Cerrar"
+    "cerrar": "Cerrar",
+    "acciones": "Acciones de «{{nombre}}»",
+    "guardando": "Guardando…"
   },
   "ajustes": {
     "idioma": "Idioma",
@@ -116,5 +118,269 @@
       "mensaje": "Revisa tu conexión e inténtalo de nuevo.",
       "reintentar": "Reintentar"
     }
+  },
+  "errores": {
+    "sinRed": "No hay conexión. Revisa tu internet e inténtalo de nuevo.",
+    "desconocido": "Algo salió mal. Inténtalo de nuevo.",
+    "nombreRepetido": "Ya existe un registro con ese nombre.",
+    "datoInvalido": "Revisa los datos: alguno no es válido.",
+    "numeroTarjeta": "No guardamos números de tarjeta. Usa solo un nombre, por ejemplo «Visa Banco X».",
+    "sinPermiso": "No tienes permiso para hacer esto.",
+    "servidor": {
+      "lugar_nombre_vacio": "Escribe el nombre del lugar.",
+      "lugar_no_existe": "Ese lugar ya no existe.",
+      "persona_nombre_vacio": "Escribe el nombre.",
+      "persona_tipo_invalido": "Elige si es una persona o un banco.",
+      "persona_no_existe": "Esa persona ya no existe.",
+      "forma_pago_no_existe": "Esa forma de pago ya no existe.",
+      "categoria_no_existe": "Esa categoría ya no existe.",
+      "categoria_sistema": "Las categorías del sistema no se pueden eliminar.",
+      "unir_mismo": "Elige un registro distinto para unir.",
+      "unir_tipo_distinto": "Solo se unen registros del mismo tipo.",
+      "unir_clase_distinta": "Solo se unen formas de pago de la misma clase.",
+      "duplicado_entidad_invalida": "Esta lista no tiene duplicados que revisar.",
+      "duplicado_no_existe": "Uno de los dos ya no existe."
+    }
+  },
+  "selector": {
+    "icono": "Ícono",
+    "color": "Color"
+  },
+  "iconos": {
+    "utensils": "Comida",
+    "car": "Carro",
+    "house": "Casa",
+    "zap": "Energía",
+    "heart-pulse": "Salud",
+    "graduation-cap": "Educación",
+    "clapperboard": "Cine",
+    "shirt": "Ropa",
+    "repeat": "Suscripción",
+    "paw-print": "Mascota",
+    "coffee": "Café",
+    "shopping-cart": "Mercado",
+    "shopping-bag": "Compras",
+    "pizza": "Pizza",
+    "beer": "Bebidas",
+    "bus": "Bus",
+    "train-front": "Tren",
+    "bike": "Bicicleta",
+    "fuel": "Gasolina",
+    "plane": "Viajes",
+    "pill": "Medicina",
+    "stethoscope": "Médico",
+    "dumbbell": "Gimnasio",
+    "baby": "Bebé",
+    "book-open": "Libros",
+    "music": "Música",
+    "gamepad-2": "Juegos",
+    "tv": "Televisión",
+    "wifi": "Internet",
+    "smartphone": "Celular",
+    "wrench": "Arreglos",
+    "scissors": "Peluquería",
+    "gift": "Regalos",
+    "building-2": "Edificio",
+    "receipt": "Factura",
+    "briefcase": "Trabajo",
+    "sparkles": "Extra",
+    "tag": "Etiqueta",
+    "wallet": "Billetera",
+    "piggy-bank": "Ahorro",
+    "credit-card": "Tarjeta",
+    "hand-coins": "Préstamo",
+    "landmark": "Banco",
+    "banknote": "Billete",
+    "circle-x": "No recuperado",
+    "circle-help": "Desconocido",
+    "ellipsis": "Otros"
+  },
+  "colores": {
+    "ambar": "Ámbar",
+    "indigo": "Índigo",
+    "verde": "Verde",
+    "cian": "Cian",
+    "rosa": "Rosa",
+    "violeta": "Violeta",
+    "cafe": "Café",
+    "gris": "Gris",
+    "actual": "Color actual"
+  },
+  "categorias": {
+    "titulo": "Categorías",
+    "descripcion": "Con su ícono, su color y sus subcategorías.",
+    "nueva": "Nueva categoría",
+    "pestanas": "Tipos de categoría",
+    "pestana": "{{tipo}} · {{total}}",
+    "tipos": {
+      "gasto": "Gasto",
+      "ingreso": "Ingreso",
+      "prestamo": "Préstamo",
+      "deuda": "Deuda"
+    },
+    "columnas": {
+      "categoria": "Categoría",
+      "subcategorias": "Subcategorías",
+      "movimientos": "Movimientos",
+      "tipo": "Tipo",
+      "acciones": "Acciones"
+    },
+    "sinSubcategorias": "Sin subcategorías",
+    "movimientos_one": "{{count}} movimiento",
+    "movimientos_other": "{{count}} movimientos",
+    "delSistema": "Del sistema",
+    "propia": "Propia",
+    "avisoSistema": "Las categorías del sistema se pueden editar, pero no borrar.",
+    "acciones": {
+      "editar": "Editar",
+      "agregarSub": "Agregar subcategoría",
+      "eliminar": "Eliminar",
+      "noSeElimina": "Del sistema: no se puede eliminar"
+    },
+    "vacio": {
+      "titulo": "Aún no tienes categorías de este tipo",
+      "mensaje": "Crea la primera con su ícono y su color.",
+      "accion": "Crear categoría"
+    },
+    "error": {
+      "mensaje": "El servidor no respondió. Nada se perdió; vuelve a intentarlo en un momento."
+    },
+    "formulario": {
+      "vistaPrevia": "Vista previa",
+      "asiSeVera": "Así se verá en tus registros",
+      "sinNombre": "Nombre de la categoría",
+      "nombre": "Nombre",
+      "subcategorias": "Subcategorías",
+      "nuevaSub": "Nueva subcategoría",
+      "agregar": "Agregar",
+      "quitarSub": "Quitar «{{nombre}}»",
+      "guardar": "Guardar categoría",
+      "guardarCambios": "Guardar cambios",
+      "editarTitulo": "Editar «{{nombre}}»",
+      "sistema": "Categoría del sistema: puedes cambiar nombre, ícono, color y subcategorías, pero no borrarla.",
+      "quitarAviso": "Al guardar, las subcategorías quitadas que tengan movimientos se archivan y el historial las conserva.",
+      "nombreObligatorio": "Escribe un nombre.",
+      "nombreLargo": "Usa máximo 60 caracteres.",
+      "subRepetida": "Ya tiene una subcategoría con ese nombre."
+    },
+    "subcategoria": {
+      "titulo": "Agregar subcategoría a «{{nombre}}»",
+      "yaTiene": "Ya tiene: {{lista}}",
+      "hereda": "Usa el ícono y el color de «{{nombre}}».",
+      "guardar": "Agregar subcategoría"
+    },
+    "eliminar": {
+      "titulo": "¿Borrar «{{nombre}}»?",
+      "mensaje": "Lo que ya la usa conserva su nombre, su ícono y su color en el historial y en los reportes. Solo dejará de aparecer al registrar movimientos nuevos.",
+      "conSub": "Sus subcategorías también se borran.",
+      "confirmar": "Borrar categoría"
+    },
+    "avisos": {
+      "creada": "Categoría creada",
+      "guardada": "Cambios guardados",
+      "eliminada": "Categoría borrada",
+      "archivada": "Categoría archivada: el historial la conserva",
+      "subAgregada": "Subcategoría agregada"
+    }
+  },
+  "listas": {
+    "titulo": "Formas de pago, lugares y personas",
+    "descripcion": "Renombra, une duplicados o elimina.",
+    "agregar": "Agregar",
+    "pestanas": "Tipo de lista",
+    "pestana": {
+      "formas": "Formas de pago · {{total}}",
+      "lugares": "Lugares · {{total}}",
+      "personas": "Personas · {{total}}"
+    },
+    "columnas": {
+      "formas": "Forma de pago",
+      "lugares": "Lugar",
+      "personas": "Persona",
+      "usosFormas": "Gastos",
+      "usosLugares": "Gastos",
+      "usosPersonas": "Préstamos y deudas",
+      "ultimo": "Último uso",
+      "acciones": "Acciones"
+    },
+    "usos": {
+      "formas_one": "{{count}} gasto",
+      "formas_other": "{{count}} gastos",
+      "lugares_one": "{{count}} gasto",
+      "lugares_other": "{{count}} gastos",
+      "personas_one": "{{count}} préstamo o deuda",
+      "personas_other": "{{count}} préstamos o deudas"
+    },
+    "ultimo": "último: {{fecha}}",
+    "sinUso": "Sin uso",
+    "subtipos": {
+      "medio": "Medio de pago",
+      "canal": "Canal",
+      "persona": "Persona",
+      "banco": "Banco",
+      "tarjeta": "Tarjeta"
+    },
+    "canal": "{{nombre}} (canal)",
+    "avisoBolsas": "Las bolsas (Efectivo, Nequi, Daviplata) se manejan en Bolsas.",
+    "acciones": {
+      "renombrar": "Renombrar",
+      "unir": "Unir con…",
+      "eliminar": "Eliminar",
+      "sinOtro": "No hay otro del mismo tipo para unir"
+    },
+    "vacio": {
+      "titulo": "Esta lista está vacía",
+      "mensaje": "Se llena sola al registrar gastos y préstamos. También puedes agregar aquí."
+    },
+    "error": {
+      "mensaje": "No pudimos cargar tus listas. El servidor no respondió; nada se perdió, vuelve a intentarlo en un momento."
+    },
+    "nuevo": {
+      "titulo": "Agregar a la lista",
+      "tipo": "Tipo",
+      "nombre": "Nombre",
+      "ayuda": "También se crean solos al registrar gastos y préstamos.",
+      "guardar": "Agregar",
+      "existe": "«{{nombre}}» ya está en la lista. Usa ese en lugar de crear otro.",
+      "usarExistente": "Usar el existente"
+    },
+    "renombrar": {
+      "titulo": "Renombrar «{{nombre}}»",
+      "ayuda": "Todo lo registrado con este nombre toma el nombre nuevo.",
+      "guardar": "Guardar",
+      "yaExiste": "Ya hay uno con ese nombre. Puedes unirlos en lugar de renombrar.",
+      "unirlos": "Unir con el existente"
+    },
+    "unir": {
+      "titulo": "Unir «{{nombre}}» con…",
+      "conserva": "Nombre que se conserva",
+      "aviso": "Todo lo registrado con «{{origen}}» quedará en «{{destino}}». Esto no se puede deshacer.",
+      "elige": "Elige el nombre que se conserva.",
+      "confirmar": "Unir",
+      "noSonElMismo": "No son el mismo"
+    },
+    "eliminar": {
+      "titulo": "¿Eliminar «{{nombre}}»?",
+      "mensaje": "Lo registrado con este nombre lo conserva en el historial y en los reportes. Solo dejará de sugerirse al registrar.",
+      "confirmar": "Eliminar"
+    },
+    "duplicado": {
+      "aviso": "Posible duplicado.",
+      "mensaje": "«{{a}}» y «{{b}}» tienen nombres parecidos.",
+      "revisar": "Revisar"
+    },
+    "avisos": {
+      "creado": "Agregado a la lista",
+      "reactivado": "Lo recuperamos: estaba archivado",
+      "renombrado": "Nombre cambiado",
+      "unidos": "Unidos en «{{nombre}}»",
+      "eliminado": "Eliminado",
+      "archivado": "Archivado: el historial lo conserva",
+      "distintos": "Listo, no volveremos a sugerirlos"
+    }
+  },
+  "fechas": {
+    "hoy": "Hoy",
+    "ayer": "Ayer"
   }
 }

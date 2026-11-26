@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import { useEsMovil } from "@/lib/useEsMovil";
+import { cn } from "@/lib/utils";
 import {
   Dialog,
   DialogContent,
@@ -27,10 +28,21 @@ type Props = {
   rol?: "dialog" | "alertdialog";
   children?: ReactNode;
   pie: ReactNode;
+  /** Formulario: más ancho en computador y panel derecho en tablet (DESIGN.md §3). */
+  formulario?: boolean;
 };
 
 /** Hoja inferior en el móvil y diálogo centrado en tablet y computador (DESIGN.md §4). */
-export function Ventana({ abierta, alCambiar, titulo, descripcion, rol, children, pie }: Props) {
+export function Ventana({
+  abierta,
+  alCambiar,
+  titulo,
+  descripcion,
+  rol,
+  children,
+  pie,
+  formulario = false,
+}: Props) {
   const { t } = useTranslation();
   // Sin descripción, Radix pide declararlo explícitamente para no avisar en consola.
   // El rol solo se pasa si cambia: un `role={undefined}` borraría el "dialog" de Radix.
@@ -57,13 +69,17 @@ export function Ventana({ abierta, alCambiar, titulo, descripcion, rol, children
     <Dialog open={abierta} onOpenChange={alCambiar}>
       <DialogContent
         etiquetaCerrar={rol === "alertdialog" ? undefined : t("comun.cerrar")}
+        className={cn(
+          formulario &&
+            "max-h-[calc(100dvh-2*var(--spacing-lg))] max-w-formulario grid-rows-[auto_1fr_auto] md:max-xl:top-0 md:max-xl:right-0 md:max-xl:left-auto md:max-xl:h-dvh md:max-xl:max-h-dvh md:max-xl:w-full md:max-xl:translate-x-0 md:max-xl:translate-y-0 md:max-xl:rounded-none",
+        )}
         {...atributos}
       >
         <DialogHeader>
           <DialogTitle>{titulo}</DialogTitle>
           {descripcion && <DialogDescription>{descripcion}</DialogDescription>}
         </DialogHeader>
-        {children}
+        {formulario ? <div className="-mx-xs overflow-y-auto px-xs">{children}</div> : children}
         <DialogFooter>{pie}</DialogFooter>
       </DialogContent>
     </Dialog>
