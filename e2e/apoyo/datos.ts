@@ -48,3 +48,28 @@ export async function elegirAccion(page: Page, registro: string, accion: string 
   await expect(opcion).toBeVisible();
   return opcion;
 }
+
+/** Hoy en Bogotá, como lo calcula la base de datos. */
+export const hoyBogota = () =>
+  new Date().toLocaleDateString("en-CA", { timeZone: "America/Bogota" });
+
+/** Bolsa propia de una prueba: así los saldos no chocan con las demás corridas en paralelo. */
+export async function bolsaDePrueba(nombre: string, saldoInicial = 0): Promise<string> {
+  const db = await clienteUsuario();
+  const { data, error } = await db.rpc("crear_bolsa", {
+    p_nombre: nombre,
+    p_saldo_inicial: saldoInicial,
+  });
+  if (error) throw error;
+  return data as string;
+}
+
+/** Fila (computador) o tarjeta (móvil y tablet) de un registro por su nombre exacto. */
+export const registro = (page: Page, nombre: string) =>
+  page.locator("tr, li").filter({ has: page.getByText(nombre, { exact: true }) });
+
+/** Saldo de una bolsa en la pantalla Bolsas. */
+export async function esperarSaldo(page: Page, bolsa: string, saldo: string) {
+  if (!page.url().endsWith("/bolsas")) await page.goto("/bolsas");
+  await expect(registro(page, bolsa)).toContainText(saldo);
+}
