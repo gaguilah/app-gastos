@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -179,7 +180,7 @@ export function FormularioMeta({ abierta, alCambiar, hoy, meta }: Props) {
             <Label asChild>
               <legend className="mb-xs">{t("ahorros.formulario.plazo")}</legend>
             </Label>
-            <div className="grid grid-cols-[1fr_2fr] gap-sm">
+            <div className="flex flex-col gap-sm">
               <Campo
                 etiqueta={t("ahorros.formulario.cantidad")}
                 inputMode="numeric"
@@ -193,10 +194,10 @@ export function FormularioMeta({ abierta, alCambiar, hoy, meta }: Props) {
                 value={unidad}
                 onValueChange={(v) => setUnidad(v as UnidadPlazo)}
                 aria-label={t("ahorros.formulario.plazo")}
-                className="grid-cols-3 self-end"
+                className="grid-cols-3 gap-xs"
               >
                 {unidades.map((u) => (
-                  <label key={u} className={fila}>
+                  <label key={u} className={cn(fila, "px-sm")}>
                     <RadioGroupItem value={u} />
                     {t(`ahorros.formulario.unidad.${u}`)}
                   </label>
