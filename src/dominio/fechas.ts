@@ -67,3 +67,28 @@ export function fechaLarga(dia: string, idioma: string) {
   }).format(comoUtc(dia));
   return texto.charAt(0).toUpperCase() + texto.slice(1);
 }
+
+export type UnidadPlazo = "dias" | "semanas" | "meses";
+
+/** Fecha final de una meta a partir de su plazo (supuesto 19); en meses, sin pasar del fin de mes. */
+export function fechaPorPlazo(hoy: string, cantidad: number, unidad: UnidadPlazo) {
+  const fecha = comoUtc(hoy);
+  if (unidad === "meses") {
+    const dia = fecha.getUTCDate();
+    fecha.setUTCDate(1);
+    fecha.setUTCMonth(fecha.getUTCMonth() + cantidad);
+    const ultimo = new Date(
+      Date.UTC(fecha.getUTCFullYear(), fecha.getUTCMonth() + 1, 0),
+    ).getUTCDate();
+    fecha.setUTCDate(Math.min(dia, ultimo));
+  } else {
+    fecha.setUTCDate(fecha.getUTCDate() + cantidad * (unidad === "semanas" ? 7 : 1));
+  }
+  return fecha.toISOString().slice(0, 10);
+}
+
+/** «jun 2027» o «Jun 2027» (proyección de una meta). */
+export function mesAnio(dia: string, idioma: string) {
+  const { mes, anio } = partes(dia, idioma);
+  return `${mes} ${anio}`;
+}

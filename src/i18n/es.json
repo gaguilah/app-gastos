@@ -693,5 +693,202 @@
       "noDeshacer": "Esto no se puede deshacer.",
       "eliminar": "Eliminar ingreso"
     }
+  },
+  "ahorros": {
+    "titulo": "Ahorros",
+    "descripcion": "Cada meta tiene su propia bolsa. Los aportes no cuentan como gasto ni bajan el disponible del período.",
+    "nueva": "Nueva meta",
+    "errorMensaje": "No pudimos cargar tus metas. Nada se perdió; vuelve a intentarlo en un momento.",
+    "vacio": {
+      "titulo": "Aún no tienes metas de ahorro",
+      "mensaje": "Ponle nombre, monto y plazo a lo que quieres lograr, y la app te dice cuánto apartar.",
+      "crear": "Crear meta"
+    },
+    "kpi": {
+      "total": "Total ahorrado",
+      "periodo": "Aportes este período",
+      "porConfirmar": "Por confirmar"
+    },
+    "pendientes": {
+      "titulo": "Aportes por confirmar",
+      "aporteA": "Aporte a {{nombre}}",
+      "desde": "{{fecha}} · desde {{origen}}",
+      "pendiente": "Pendiente",
+      "confirmar": "Confirmar",
+      "ajustar": "Ajustar valor y confirmar",
+      "omitir": "Omitir esta vez",
+      "acciones": "Acciones del aporte a «{{nombre}}»"
+    },
+    "metas": "Metas",
+    "columnas": {
+      "meta": "Meta",
+      "avance": "Avance",
+      "aporte": "Aporte",
+      "fechaFinal": "Fecha final",
+      "estado": "Estado",
+      "acciones": "Acciones"
+    },
+    "avance": "{{saldo}} de {{monto}}",
+    "ahorrado": "Ahorrado {{saldo}} de {{monto}}",
+    "hasta": "Hasta el {{fecha}}",
+    "sinAporte": "Sin aporte periódico",
+    "aportePor": {
+      "semanal": "{{valor}} / semana",
+      "quincenal": "{{valor}} / quincena",
+      "mensual": "{{valor}} / mes"
+    },
+    "estado": {
+      "al_dia": "Al día",
+      "atrasada": "Atrasada",
+      "cumplida": "Cumplida",
+      "pausada": "Pausada"
+    },
+    "acciones": {
+      "detalle": "Ver detalle",
+      "aportar": "Registrar aporte",
+      "retirar": "Retirar",
+      "retirarCumplida": "Retirar para usarlo",
+      "editar": "Editar",
+      "pausar": "Pausar",
+      "reanudar": "Reanudar",
+      "eliminar": "Eliminar",
+      "sinSaldo": "La meta no tiene saldo"
+    },
+    "avisos": {
+      "creada": "Meta creada.",
+      "guardada": "Meta guardada.",
+      "aporte": "Aporte guardado.",
+      "retiro": "Retiro guardado.",
+      "pausada": "Meta pausada.",
+      "reanudada": "Meta reanudada.",
+      "eliminada": "Meta eliminada.",
+      "confirmado": "Aporte confirmado.",
+      "omitido": "Aporte omitido."
+    },
+    "formulario": {
+      "nueva": "Nueva meta de ahorro",
+      "editar": "Editar meta",
+      "nombre": "Nombre",
+      "monto": "Monto a alcanzar",
+      "plazo": "Plazo",
+      "cantidad": "Cantidad",
+      "unidad": {
+        "dias": "Días",
+        "semanas": "Semanas",
+        "meses": "Meses"
+      },
+      "fechaFinal": "Fecha final",
+      "saldoInicial": "Saldo inicial (opcional)",
+      "saldoInicialAyuda": "Dinero que ya tienes ahorrado; no sale de ninguna bolsa.",
+      "sugerido": "Aporte sugerido: {{aporte}} por {{periodo}}.",
+      "llegas": "Llegas a la meta el {{fecha}}.",
+      "sinAportes": "No caben aportes antes de la fecha final.",
+      "periodo": {
+        "semanal": "semana",
+        "quincenal": "quincena",
+        "mensual": "mes"
+      },
+      "periodicos": "Aportes periódicos",
+      "periodicosAyuda": "Llegan a «por confirmar» y puedes ajustar el valor antes de confirmar.",
+      "valorAporte": "Valor de cada aporte",
+      "frecuencia": "Frecuencia",
+      "frecuencias": {
+        "semanal": "Semanal",
+        "quincenal": "Quincenal",
+        "mensual": "Mensual"
+      },
+      "dia": "Día del mes (1 a 31)",
+      "diaSemanal": "Cada semana, empezando hoy.",
+      "diaQuincenal": "El día {{dia}} y 15 días después, cada mes.",
+      "diaMensual": "El día {{dia}} de cada mes.",
+      "desde": "Desde",
+      "afecta": "Afecta el presupuesto",
+      "afectaAyuda": "Baja el disponible del período, como si fuera un gasto.",
+      "nota": "La meta tendrá su propia bolsa. Los aportes no cuentan como gasto ni bajan el disponible del período.",
+      "crear": "Crear meta",
+      "guardar": "Guardar cambios",
+      "nombreRequerido": "Escribe un nombre.",
+      "nombreLargo": "Máximo 60 caracteres.",
+      "montoRequerido": "Escribe un monto mayor que $0.",
+      "plazoRequerido": "Escribe un plazo mayor que 0.",
+      "fechaRequerida": "La fecha final debe ser después de hoy.",
+      "valorRequerido": "Escribe un valor mayor que $0.",
+      "diaRequerido": "Escribe un día entre 1 y 31.",
+      "origenRequerido": "Elige de dónde sale el aporte."
+    },
+    "detalle": {
+      "titulo": "Detalle de la meta",
+      "faltan": "de {{monto}} · faltan {{falta}}",
+      "aporte": "Aporte",
+      "aporteTexto": "{{valor}} {{frecuencia}}, desde {{origen}}",
+      "cada": {
+        "semanal": "cada semana",
+        "quincenal": "cada quincena",
+        "mensual": "cada mes, día {{dia}}"
+      },
+      "fechaFinal": "Fecha final",
+      "proyeccion": "Proyección",
+      "proyeccionTexto": "A este ritmo la cumples en {{mes}}",
+      "sinProyeccion": "Aún no hay aportes para proyectar",
+      "ahorrado": "Ahorrado",
+      "ritmoIdeal": "Ritmo ideal",
+      "barra": "Ahorrado {{saldo}}; el ritmo ideal a hoy es {{ideal}}",
+      "movimientos": "Movimientos",
+      "sinMovimientos": "Aún no hay movimientos.",
+      "desde": "desde {{nombre}}",
+      "a": "a {{nombre}}"
+    },
+    "aporte": {
+      "titulo": "Aporte a «{{nombre}}»",
+      "valor": "Valor",
+      "desde": "Desde",
+      "desdeBolsa": "Sale de {{origen}} y entra a la bolsa de la meta. No baja el disponible del período.",
+      "desdeMedio": "Entra a la bolsa de la meta desde {{origen}}.",
+      "bajaDisponible": "Baja el disponible del período.",
+      "noBaja": "No baja el disponible del período.",
+      "quedarias": "Quedarías en {{saldo}} · {{porcentaje}} %.",
+      "guardar": "Registrar aporte"
+    },
+    "retiro": {
+      "titulo": "Retirar de «{{nombre}}»",
+      "valor": "Valor",
+      "motivo": "Motivo (opcional)",
+      "destino": "A dónde va",
+      "bajaA": "La meta baja a {{saldo}} · {{porcentaje}} %.",
+      "guardar": "Retirar",
+      "excede": "No puedes retirar más de lo ahorrado ({{saldo}}).",
+      "elegirDestino": "Elige a qué bolsa va."
+    },
+    "confirmar": {
+      "titulo": "Ajustar aporte y confirmar",
+      "subtitulo": "Aporte {{frecuencia}} · desde {{origen}}",
+      "frecuencia": {
+        "semanal": "semanal",
+        "quincenal": "quincenal",
+        "mensual": "mensual"
+      },
+      "valor": "Aporte de esta vez",
+      "reglaDice": "La regla dice {{valor}}.",
+      "enAdelante": "Usar este valor en adelante",
+      "guardar": "Confirmar aporte"
+    },
+    "omitir": {
+      "titulo": "¿Omitir el aporte del {{fecha}}?",
+      "mensaje": "No se mueve dinero esta vez. La fecha final no cambia, así que el aporte sugerido sube.",
+      "omitir": "Omitir esta vez"
+    },
+    "pausar": {
+      "titulo": "¿Pausar «{{nombre}}»?",
+      "mensaje": "Se detienen los aportes periódicos. Lo ahorrado se queda en la meta y puedes reanudarla cuando quieras.",
+      "pausar": "Pausar"
+    },
+    "eliminar": {
+      "titulo": "¿Eliminar «{{nombre}}»?",
+      "conSaldo": "Los {{saldo}} ahorrados pasan a la bolsa que elijas. Los aportes y retiros se conservan en el historial.",
+      "sinSaldo": "Los aportes y retiros se conservan en el historial.",
+      "destino": "Pasar el dinero a",
+      "eliminar": "Eliminar meta",
+      "elegirDestino": "Elige a qué bolsa pasa el dinero."
+    }
   }
 }

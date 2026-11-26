@@ -12,6 +12,7 @@ export type DatosRuta = { titulo: string };
 // Funciones y no objetos: el router completa el objeto `lazy` al cargarlo, y cada router
 // (uno por prueba) necesita el suyo.
 const pantallas: Partial<Record<string, () => RouteObject["lazy"]>> = {
+  "/ahorros": () => ({ Component: async () => (await import("./Ahorros")).Ahorros }),
   "/bolsas": () => ({ Component: async () => (await import("./Bolsas")).Bolsas }),
   "/categorias": () => ({ Component: async () => (await import("./Categorias")).Categorias }),
   "/ingresos": () => ({ Component: async () => (await import("./Ingresos")).Ingresos }),

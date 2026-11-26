@@ -693,5 +693,202 @@
       "noDeshacer": "This can’t be undone.",
       "eliminar": "Delete income"
     }
+  },
+  "ahorros": {
+    "titulo": "Savings",
+    "descripcion": "Each goal has its own wallet. Contributions don’t count as spending and don’t lower what’s available in the period.",
+    "nueva": "New goal",
+    "errorMensaje": "We couldn’t load your goals. Nothing was lost; try again in a moment.",
+    "vacio": {
+      "titulo": "No savings goals yet",
+      "mensaje": "Give what you want to reach a name, an amount and a timeframe, and the app tells you how much to set aside.",
+      "crear": "Create goal"
+    },
+    "kpi": {
+      "total": "Total saved",
+      "periodo": "Contributed this period",
+      "porConfirmar": "To confirm"
+    },
+    "pendientes": {
+      "titulo": "Contributions to confirm",
+      "aporteA": "Contribution to {{nombre}}",
+      "desde": "{{fecha}} · from {{origen}}",
+      "pendiente": "Pending",
+      "confirmar": "Confirm",
+      "ajustar": "Adjust amount and confirm",
+      "omitir": "Skip this time",
+      "acciones": "Actions for the contribution to “{{nombre}}”"
+    },
+    "metas": "Goals",
+    "columnas": {
+      "meta": "Goal",
+      "avance": "Progress",
+      "aporte": "Contribution",
+      "fechaFinal": "Target date",
+      "estado": "Status",
+      "acciones": "Actions"
+    },
+    "avance": "{{saldo}} of {{monto}}",
+    "ahorrado": "Saved {{saldo}} of {{monto}}",
+    "hasta": "Until {{fecha}}",
+    "sinAporte": "No recurring contribution",
+    "aportePor": {
+      "semanal": "{{valor}} / week",
+      "quincenal": "{{valor}} / fortnight",
+      "mensual": "{{valor}} / month"
+    },
+    "estado": {
+      "al_dia": "On track",
+      "atrasada": "Behind",
+      "cumplida": "Reached",
+      "pausada": "Paused"
+    },
+    "acciones": {
+      "detalle": "View details",
+      "aportar": "Add contribution",
+      "retirar": "Withdraw",
+      "retirarCumplida": "Withdraw to use it",
+      "editar": "Edit",
+      "pausar": "Pause",
+      "reanudar": "Resume",
+      "eliminar": "Delete",
+      "sinSaldo": "The goal has no balance"
+    },
+    "avisos": {
+      "creada": "Goal created.",
+      "guardada": "Goal saved.",
+      "aporte": "Contribution saved.",
+      "retiro": "Withdrawal saved.",
+      "pausada": "Goal paused.",
+      "reanudada": "Goal resumed.",
+      "eliminada": "Goal deleted.",
+      "confirmado": "Contribution confirmed.",
+      "omitido": "Contribution skipped."
+    },
+    "formulario": {
+      "nueva": "New savings goal",
+      "editar": "Edit goal",
+      "nombre": "Name",
+      "monto": "Target amount",
+      "plazo": "Timeframe",
+      "cantidad": "Amount of time",
+      "unidad": {
+        "dias": "Days",
+        "semanas": "Weeks",
+        "meses": "Months"
+      },
+      "fechaFinal": "Target date",
+      "saldoInicial": "Starting balance (optional)",
+      "saldoInicialAyuda": "Money you’ve already saved; it doesn’t come from any wallet.",
+      "sugerido": "Suggested contribution: {{aporte}} per {{periodo}}.",
+      "llegas": "You reach the goal on {{fecha}}.",
+      "sinAportes": "No contributions fit before the target date.",
+      "periodo": {
+        "semanal": "week",
+        "quincenal": "fortnight",
+        "mensual": "month"
+      },
+      "periodicos": "Recurring contributions",
+      "periodicosAyuda": "They show up as “to confirm” and you can adjust the amount before confirming.",
+      "valorAporte": "Amount of each contribution",
+      "frecuencia": "Frequency",
+      "frecuencias": {
+        "semanal": "Weekly",
+        "quincenal": "Biweekly",
+        "mensual": "Monthly"
+      },
+      "dia": "Day of the month (1 to 31)",
+      "diaSemanal": "Every week, starting today.",
+      "diaQuincenal": "On day {{dia}} and 15 days later, every month.",
+      "diaMensual": "On day {{dia}} of each month.",
+      "desde": "From",
+      "afecta": "Affects the budget",
+      "afectaAyuda": "Lowers what’s available this period, like an expense.",
+      "nota": "The goal gets its own wallet. Contributions don’t count as spending and don’t lower what’s available in the period.",
+      "crear": "Create goal",
+      "guardar": "Save changes",
+      "nombreRequerido": "Enter a name.",
+      "nombreLargo": "60 characters max.",
+      "montoRequerido": "Enter an amount above $0.",
+      "plazoRequerido": "Enter a timeframe above 0.",
+      "fechaRequerida": "The target date must be after today.",
+      "valorRequerido": "Enter an amount above $0.",
+      "diaRequerido": "Enter a day from 1 to 31.",
+      "origenRequerido": "Choose where the contribution comes from."
+    },
+    "detalle": {
+      "titulo": "Goal details",
+      "faltan": "of {{monto}} · {{falta}} to go",
+      "aporte": "Contribution",
+      "aporteTexto": "{{valor}} {{frecuencia}}, from {{origen}}",
+      "cada": {
+        "semanal": "every week",
+        "quincenal": "every fortnight",
+        "mensual": "every month, on day {{dia}}"
+      },
+      "fechaFinal": "Target date",
+      "proyeccion": "Projection",
+      "proyeccionTexto": "At this pace you reach it in {{mes}}",
+      "sinProyeccion": "No contributions yet to project",
+      "ahorrado": "Saved",
+      "ritmoIdeal": "Ideal pace",
+      "barra": "Saved {{saldo}}; the ideal pace for today is {{ideal}}",
+      "movimientos": "Activity",
+      "sinMovimientos": "No activity yet.",
+      "desde": "from {{nombre}}",
+      "a": "to {{nombre}}"
+    },
+    "aporte": {
+      "titulo": "Contribution to “{{nombre}}”",
+      "valor": "Amount",
+      "desde": "From",
+      "desdeBolsa": "It leaves {{origen}} and goes into the goal’s wallet. It doesn’t lower what’s available.",
+      "desdeMedio": "It goes into the goal’s wallet from {{origen}}.",
+      "bajaDisponible": "It lowers what’s available this period.",
+      "noBaja": "It doesn’t lower what’s available this period.",
+      "quedarias": "You’d be at {{saldo}} · {{porcentaje}} %.",
+      "guardar": "Add contribution"
+    },
+    "retiro": {
+      "titulo": "Withdraw from “{{nombre}}”",
+      "valor": "Amount",
+      "motivo": "Reason (optional)",
+      "destino": "Goes to",
+      "bajaA": "The goal drops to {{saldo}} · {{porcentaje}} %.",
+      "guardar": "Withdraw",
+      "excede": "You can’t withdraw more than you’ve saved ({{saldo}}).",
+      "elegirDestino": "Choose the wallet it goes to."
+    },
+    "confirmar": {
+      "titulo": "Adjust contribution and confirm",
+      "subtitulo": "{{frecuencia}} contribution · from {{origen}}",
+      "frecuencia": {
+        "semanal": "Weekly",
+        "quincenal": "Biweekly",
+        "mensual": "Monthly"
+      },
+      "valor": "This contribution",
+      "reglaDice": "The rule says {{valor}}.",
+      "enAdelante": "Use this amount from now on",
+      "guardar": "Confirm contribution"
+    },
+    "omitir": {
+      "titulo": "Skip the {{fecha}} contribution?",
+      "mensaje": "No money moves this time. The target date stays, so the suggested contribution rises.",
+      "omitir": "Skip this time"
+    },
+    "pausar": {
+      "titulo": "Pause “{{nombre}}”?",
+      "mensaje": "Recurring contributions stop. What you’ve saved stays in the goal and you can resume it anytime.",
+      "pausar": "Pause"
+    },
+    "eliminar": {
+      "titulo": "Delete “{{nombre}}”?",
+      "conSaldo": "The {{saldo}} saved moves to the wallet you choose. Contributions and withdrawals stay in history.",
+      "sinSaldo": "Contributions and withdrawals stay in history.",
+      "destino": "Move the money to",
+      "eliminar": "Delete goal",
+      "elegirDestino": "Choose the wallet the money goes to."
+    }
   }
 }

@@ -1,4 +1,4 @@
-import { diaBogota, fechaCorta, fechaLarga, rangoPeriodo } from "./fechas";
+import { diaBogota, fechaCorta, fechaLarga, fechaPorPlazo, mesAnio, rangoPeriodo } from "./fechas";
 
 describe("diaBogota", () => {
   it("usa el día de Bogotá, no el de UTC", () => {
@@ -52,5 +52,25 @@ describe("fechaLarga", () => {
   it("día de la semana con mayúscula inicial y la fecha completa", () => {
     expect(fechaLarga("2026-11-09", "es")).toBe("Lunes, 9 de noviembre de 2026");
     expect(fechaLarga("2026-11-09", "en")).toBe("Monday, November 9, 2026");
+  });
+});
+
+describe("fechaPorPlazo", () => {
+  it("suma días, semanas o meses a hoy", () => {
+    expect(fechaPorPlazo("2026-11-26", 30, "dias")).toBe("2026-12-26");
+    expect(fechaPorPlazo("2026-11-26", 4, "semanas")).toBe("2026-12-24");
+    expect(fechaPorPlazo("2026-11-26", 12, "meses")).toBe("2027-11-26");
+  });
+
+  it("un mes sin ese día queda en su último día", () => {
+    expect(fechaPorPlazo("2026-01-31", 1, "meses")).toBe("2026-02-28");
+    expect(fechaPorPlazo("2027-12-31", 2, "meses")).toBe("2028-02-29");
+  });
+});
+
+describe("mesAnio", () => {
+  it("mes corto y año", () => {
+    expect(mesAnio("2027-06-30", "es")).toBe("jun 2027");
+    expect(mesAnio("2027-06-30", "en")).toBe("Jun 2027");
   });
 });
