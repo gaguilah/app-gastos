@@ -608,5 +608,90 @@
       "negativo": "The budget can’t go below $0.",
       "aplicar": "Apply adjustment"
     }
+  },
+  "ingresos": {
+    "titulo": "Income",
+    "resumenPeriodo_one": "{{rango}} · {{count}} income entry",
+    "resumenPeriodo_other": "{{rango}} · {{count}} income entries",
+    "anterior": "Previous period",
+    "siguiente": "Next period",
+    "registrar": "Log income",
+    "nuevo": "New",
+    "errorMensaje": "We couldn’t load your income. Nothing was lost; try again in a moment.",
+    "vacio": {
+      "titulo": "No income in this period yet",
+      "mensaje": "Log income and choose whether it goes to the budget or to a wallet."
+    },
+    "kpi": {
+      "total": "Total this period",
+      "presupuesto": "To the budget",
+      "bolsas": "To wallets"
+    },
+    "columnas": {
+      "fecha": "Date",
+      "ingreso": "Income",
+      "categoria": "Category",
+      "destino": "Destination",
+      "valor": "Amount",
+      "acciones": "Actions"
+    },
+    "destino": {
+      "presupuesto": "Budget",
+      "hacia": "→ {{destino}}"
+    },
+    "origen": {
+      "prestamo": "Loan",
+      "deuda": "Debt",
+      "bloqueado": "Edit it from its loan or debt"
+    },
+    "acciones": {
+      "detalle": "View details",
+      "editar": "Edit",
+      "eliminar": "Delete"
+    },
+    "avisos": {
+      "guardado": "Income saved.",
+      "eliminado": "Income deleted."
+    },
+    "formulario": {
+      "nuevo": "New income",
+      "editar": "Edit income",
+      "valor": "Amount",
+      "titulo": "Title",
+      "fecha": "Date",
+      "categoria": "Income category",
+      "destino": "Destination",
+      "descripcion": "Description (optional)",
+      "presupuesto": "Period budget",
+      "presupuestoAyuda": "Adds to what’s available",
+      "efectoPresupuesto": "Adds to what’s available this period. No wallet changes.",
+      "efectoBolsa": "Goes into the {{nombre}} wallet. The period budget doesn’t change.",
+      "guardar": "Save income",
+      "guardarCambios": "Save changes",
+      "valorRequerido": "Enter an amount above $0.",
+      "tituloRequerido": "Enter a title.",
+      "tituloLargo": "120 characters max.",
+      "fechaRequerida": "Choose a date.",
+      "fechaFutura": "The date can’t be in the future.",
+      "categoriaRequerida": "Choose a category.",
+      "destinoRequerido": "Choose where the money goes.",
+      "descripcionLarga": "500 characters max."
+    },
+    "detalle": {
+      "titulo": "Income details",
+      "fecha": "Date",
+      "destino": "Destination",
+      "efecto": "Effect",
+      "efectoPresupuesto": "Added {{valor}} to what’s available this period",
+      "efectoBolsa": "Added {{valor}} to {{nombre}}",
+      "descripcion": "Description"
+    },
+    "eliminar": {
+      "titulo": "Delete “{{titulo}}”?",
+      "bolsaBaja": "{{nombre}} drops from {{antes}} to {{despues}}.",
+      "presupuestoBaja": "What’s available this period drops from {{antes}} to {{despues}}.",
+      "noDeshacer": "This can’t be undone.",
+      "eliminar": "Delete income"
+    }
   }
 }

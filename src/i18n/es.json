@@ -608,5 +608,90 @@
       "negativo": "El presupuesto no puede quedar por debajo de $0.",
       "aplicar": "Aplicar ajuste"
     }
+  },
+  "ingresos": {
+    "titulo": "Ingresos",
+    "resumenPeriodo_one": "{{rango}} · {{count}} ingreso",
+    "resumenPeriodo_other": "{{rango}} · {{count}} ingresos",
+    "anterior": "Período anterior",
+    "siguiente": "Período siguiente",
+    "registrar": "Registrar ingreso",
+    "nuevo": "Nuevo",
+    "errorMensaje": "No pudimos cargar tus ingresos. Nada se perdió; vuelve a intentarlo en un momento.",
+    "vacio": {
+      "titulo": "Aún no hay ingresos en este período",
+      "mensaje": "Registra un ingreso y elige si entra al presupuesto o a una bolsa."
+    },
+    "kpi": {
+      "total": "Total del período",
+      "presupuesto": "Al presupuesto",
+      "bolsas": "A bolsas"
+    },
+    "columnas": {
+      "fecha": "Fecha",
+      "ingreso": "Ingreso",
+      "categoria": "Categoría",
+      "destino": "Destino",
+      "valor": "Valor",
+      "acciones": "Acciones"
+    },
+    "destino": {
+      "presupuesto": "Presupuesto",
+      "hacia": "→ {{destino}}"
+    },
+    "origen": {
+      "prestamo": "Préstamo",
+      "deuda": "Deuda",
+      "bloqueado": "Se edita desde su préstamo o deuda"
+    },
+    "acciones": {
+      "detalle": "Ver detalle",
+      "editar": "Editar",
+      "eliminar": "Eliminar"
+    },
+    "avisos": {
+      "guardado": "Ingreso guardado.",
+      "eliminado": "Ingreso eliminado."
+    },
+    "formulario": {
+      "nuevo": "Nuevo ingreso",
+      "editar": "Editar ingreso",
+      "valor": "Valor",
+      "titulo": "Título",
+      "fecha": "Fecha",
+      "categoria": "Categoría de ingreso",
+      "destino": "Destino",
+      "descripcion": "Descripción (opcional)",
+      "presupuesto": "Presupuesto del período",
+      "presupuestoAyuda": "Suma al disponible",
+      "efectoPresupuesto": "Suma al disponible del período. Ninguna bolsa cambia.",
+      "efectoBolsa": "Entra a la bolsa {{nombre}}. El presupuesto del período no cambia.",
+      "guardar": "Guardar ingreso",
+      "guardarCambios": "Guardar cambios",
+      "valorRequerido": "Escribe un valor mayor que $0.",
+      "tituloRequerido": "Escribe un título.",
+      "tituloLargo": "Máximo 120 caracteres.",
+      "fechaRequerida": "Elige una fecha.",
+      "fechaFutura": "La fecha no puede ser futura.",
+      "categoriaRequerida": "Elige una categoría.",
+      "destinoRequerido": "Elige a dónde entra el dinero.",
+      "descripcionLarga": "Máximo 500 caracteres."
+    },
+    "detalle": {
+      "titulo": "Detalle del ingreso",
+      "fecha": "Fecha",
+      "destino": "Destino",
+      "efecto": "Efecto",
+      "efectoPresupuesto": "Sumó {{valor}} al disponible del período",
+      "efectoBolsa": "Sumó {{valor}} a {{nombre}}",
+      "descripcion": "Descripción"
+    },
+    "eliminar": {
+      "titulo": "¿Eliminar «{{titulo}}»?",
+      "bolsaBaja": "{{nombre}} baja de {{antes}} a {{despues}}.",
+      "presupuestoBaja": "El disponible del período baja de {{antes}} a {{despues}}.",
+      "noDeshacer": "Esto no se puede deshacer.",
+      "eliminar": "Eliminar ingreso"
+    }
   }
 }

@@ -1,4 +1,4 @@
-import { diaBogota, fechaCorta, rangoPeriodo } from "./fechas";
+import { diaBogota, fechaCorta, fechaLarga, rangoPeriodo } from "./fechas";
 
 describe("diaBogota", () => {
   it("usa el día de Bogotá, no el de UTC", () => {
@@ -45,5 +45,12 @@ describe("rangoPeriodo", () => {
 
   it("septiembre queda en tres letras", () => {
     expect(rangoPeriodo("2026-09-01", "2026-09-30", "es")).toBe("1 – 30 sep 2026");
+  });
+});
+
+describe("fechaLarga", () => {
+  it("día de la semana con mayúscula inicial y la fecha completa", () => {
+    expect(fechaLarga("2026-11-09", "es")).toBe("Lunes, 9 de noviembre de 2026");
+    expect(fechaLarga("2026-11-09", "en")).toBe("Monday, November 9, 2026");
   });
 });

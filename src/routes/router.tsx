@@ -14,6 +14,7 @@ export type DatosRuta = { titulo: string };
 const pantallas: Partial<Record<string, () => RouteObject["lazy"]>> = {
   "/bolsas": () => ({ Component: async () => (await import("./Bolsas")).Bolsas }),
   "/categorias": () => ({ Component: async () => (await import("./Categorias")).Categorias }),
+  "/ingresos": () => ({ Component: async () => (await import("./Ingresos")).Ingresos }),
   "/listas": () => ({ Component: async () => (await import("./Listas")).Listas }),
   "/presupuesto": () => ({
     Component: async () => (await import("./Presupuesto")).Presupuesto,

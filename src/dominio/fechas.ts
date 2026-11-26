@@ -55,3 +55,15 @@ export function rangoPeriodo(inicio: string, fin: string, idioma: string) {
   const desde = mismoMes ? `${a.dia}` : `${a.dia} ${a.mes}${mismoAnio ? "" : ` ${a.anio}`}`;
   return `${desde} – ${b.dia} ${b.mes} ${b.anio}`;
 }
+
+/** «Lunes, 9 de noviembre de 2026» o «Monday, November 9, 2026» (detalle de un registro). */
+export function fechaLarga(dia: string, idioma: string) {
+  const texto = new Intl.DateTimeFormat(idioma === "en" ? "en-US" : "es-CO", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(comoUtc(dia));
+  return texto.charAt(0).toUpperCase() + texto.slice(1);
+}
