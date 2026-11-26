@@ -33,4 +33,15 @@ test.describe("Presupuesto y período", () => {
       dialogo.getByRole("checkbox", { name: "Usar también en el período actual" }),
     ).not.toBeChecked();
   });
+
+  test("guardar el presupuesto por defecto funciona con la API real", async ({ page }) => {
+    // Supabase carga safeupdate en la API: un UPDATE sin WHERE falla (error del 26-nov-2026).
+    // Se guarda el mismo valor que ya tiene, para no cambiar los datos de las demás pruebas.
+    await iniciarSesion(page, "/presupuesto");
+    await page.getByRole("button", { name: "Cambiar presupuesto por defecto" }).click();
+    const dialogo = page.getByRole("dialog", { name: "Presupuesto por defecto" });
+    await dialogo.getByRole("button", { name: "Guardar" }).click();
+    await expect(page.getByText("Listo, quedó guardado.")).toBeVisible();
+    await expect(dialogo).toBeHidden();
+  });
 });
