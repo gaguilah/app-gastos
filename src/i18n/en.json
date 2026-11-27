@@ -550,7 +550,7 @@
       "porcentaje": "{{porcentaje}} %"
     },
     "titulo": "Budget and period",
-    "descripcion": "How each period opens and is measured.",
+    "descripcion": "Your budget comes from your salary and the income that adds to it.",
     "configuracion": "Settings",
     "diaInicio": "Start day",
     "diaInicioUno": "Day 1 · from the 1st to month end",
@@ -571,7 +571,8 @@
       "enCurso": "In progress",
       "dentro": "Within budget",
       "advertencia": "Warning",
-      "superado": "Over budget"
+      "superado": "Over budget",
+      "sinPresupuesto": "No budget"
     },
     "dia": {
       "titulo": "Period start day",
@@ -588,6 +589,38 @@
       "explicaOtro": "With day {{dia}}, each period would run from day {{dia}} to day {{anterior}} of the next month. The change applies from the next period.",
       "mesCorto": "If a month doesn’t have that day, the period starts on that month’s last day.",
       "previaError": "We couldn’t work out the periods. You can still save."
+    },
+    "sinPresupuesto": "No budget · spent {{gastado}}",
+    "ultimoDia": "The period closes today, remember to log everything.",
+    "enCurso": {
+      "titulo": "Current period",
+      "salario": "salary {{salario}}",
+      "salarioPresupuesto": "From salary",
+      "ingresos": "Income that adds",
+      "presupuesto": "Budget",
+      "gastado": "Spent",
+      "disponible": "Available"
+    },
+    "sinIngresos": {
+      "titulo": "This period has no budget yet.",
+      "mensaje": "Log your salary or an income to get a budget. Expenses are still logged ({{gastado}} so far), but without % used or alerts.",
+      "accion": "Log income"
+    },
+    "salario": {
+      "titulo": "Base salary",
+      "sinConfigurar": "Not set: periods start without a salary.",
+      "resumen": "{{presupuesto}} to the budget",
+      "configurar": "Set salary",
+      "cambiar": "Change salary",
+      "salario": "Salary for the period",
+      "ayuda": "Each period starts with this salary. If you're paid biweekly or weekly, add up all the period's payments. With $0 none is created.",
+      "salarioRequerido": "Enter the salary, or $0 if you don't want one created.",
+      "montoPresupuesto": "For the budget",
+      "montoPresupuestoAyuda": "The rest stays as salary left over.",
+      "montoInvalido": "Enter an amount from $0 up to the salary.",
+      "categoria": "Salary category",
+      "actual": "Also use it in the current period",
+      "actualAyuda": "Creates or updates the current period's salary. Closed ones don't change."
     }
   },
   "ingresos": {

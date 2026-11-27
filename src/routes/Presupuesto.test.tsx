@@ -1,5 +1,6 @@
 import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { QueryClientProvider } from "@tanstack/react-query";
+import { MemoryRouter } from "react-router";
 import { crearClienteConsultas } from "@/datos/consultas";
 import { supabase } from "@/datos/supabase";
 import { ponerMovil } from "@/test/setup";
@@ -70,7 +71,9 @@ function falsoSupabase() {
 function abrir() {
   render(
     <QueryClientProvider client={crearClienteConsultas()}>
-      <Presupuesto />
+      <MemoryRouter>
+        <Presupuesto />
+      </MemoryRouter>
     </QueryClientProvider>,
   );
 }
@@ -131,6 +134,106 @@ describe("Presupuesto", () => {
     fireEvent.change(campo, { target: { value: "30" } });
     expect(within(dialogo).getByText(/el período empieza el último día/)).toBeInTheDocument();
     expect(update).not.toHaveBeenCalled();
+  });
+
+  it("el período en curso muestra el desglose: salario + ingresos, gastado y disponible", async () => {
+    abrir();
+    const tarjeta = (await screen.findByRole("heading", { name: "Período en curso" })).closest(
+      "section",
+    )!;
+    expect(tarjeta).toHaveTextContent("1 – 30 nov 2026 · salario $4.000.000");
+    for (const [etiqueta, valor] of [
+      ["Del salario", "$3.200.000"],
+      ["Ingresos que suman", "$200.000"],
+      ["Presupuesto", "$3.400.000"],
+      ["Gastado", "$1.984.500"],
+      ["Disponible", "$1.415.500"],
+    ] as const)
+      expect(within(tarjeta).getByText(etiqueta).nextSibling).toHaveTextContent(valor);
+    expect(within(tarjeta).getByText("58 %")).toBeInTheDocument();
+    expect(within(tarjeta).queryByText(/Hoy se cierra/)).not.toBeInTheDocument();
+  });
+
+  it("el último día del período aparece la franja de cierre (S10)", async () => {
+    vi.setSystemTime(new Date("2026-11-30T15:00:00Z"));
+    abrir();
+    expect(
+      await screen.findByText("Hoy se cierra el período, recuerda registrar todo."),
+    ).toBeInTheDocument();
+  });
+
+  it("sin ingresos no hay % ni estado de uso e invita a registrar un ingreso (decisión 4)", async () => {
+    const original = tablas.disponible_periodo;
+    tablas.disponible_periodo = [
+      {
+        periodo_id: "nov",
+        fecha_inicio: "2026-11-01",
+        fecha_fin: "2026-11-30",
+        presupuesto: 0,
+        ingresos_presupuesto: 0,
+        disponible: -50_000,
+        salario: 0,
+        salario_presupuesto: 0,
+      },
+    ];
+    ponerMovil(true);
+    abrir();
+    expect(await screen.findByText("Este período aún no tiene presupuesto.")).toBeInTheDocument();
+    expect(
+      screen.getByText(/Los gastos se registran igual \(\$50\.000 hasta ahora\)/),
+    ).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Registrar ingreso" })).toHaveAttribute(
+      "href",
+      "/ingresos?nuevo=1",
+    );
+    expect(screen.getByText("Sin presupuesto · gastado $50.000")).toBeInTheDocument();
+    expect(screen.queryByText(/ %$/)).not.toBeInTheDocument();
+    tablas.disponible_periodo = original;
+  });
+
+  it("muestra el salario base y lo cambia, también en el período actual", async () => {
+    abrir();
+    const config = (await screen.findByRole("heading", { name: "Configuración" })).closest(
+      "section",
+    )!;
+    expect(config).toHaveTextContent("$4.000.000$3.200.000 al presupuesto");
+    fireEvent.click(within(config).getByRole("button", { name: "Cambiar salario" }));
+    const dialogo = await screen.findByRole("dialog", { name: "Salario base" });
+    expect(within(dialogo).getByLabelText("Salario del período")).toHaveValue("4.000.000");
+    expect(within(dialogo).getByRole("checkbox", { name: /Usar también/ })).not.toBeChecked();
+    fireEvent.change(within(dialogo).getByLabelText("Para el presupuesto"), {
+      target: { value: "4500000" },
+    });
+    fireEvent.click(within(dialogo).getByRole("button", { name: "Guardar" }));
+    expect(
+      await within(dialogo).findByText("Escribe un monto de $0 hasta el salario."),
+    ).toBeInTheDocument();
+    fireEvent.change(within(dialogo).getByLabelText("Salario del período"), {
+      target: { value: "4500000" },
+    });
+    fireEvent.click(within(dialogo).getByRole("checkbox", { name: /Usar también/ }));
+    fireEvent.click(within(dialogo).getByRole("button", { name: "Guardar" }));
+    await waitFor(() =>
+      expect(rpc).toHaveBeenCalledWith("configurar_salario", {
+        p_salario: 4_500_000,
+        p_presupuesto: 4_500_000,
+        p_categoria_id: undefined,
+        p_actual: true,
+      }),
+    );
+  });
+
+  it("sin salario base invita a configurarlo y lo marca para el período actual", async () => {
+    const original = tablas.perfiles;
+    tablas.perfiles = { ...(original as object), salario_base: 0, presupuesto_salario_base: 0 };
+    abrir();
+    expect(
+      await screen.findByText("Sin configurar: los períodos empiezan sin salario."),
+    ).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "Configurar salario" }));
+    const dialogo = await screen.findByRole("dialog", { name: "Salario base" });
+    expect(within(dialogo).getByRole("checkbox", { name: /Usar también/ })).toBeChecked();
+    tablas.perfiles = original;
   });
 
   it("si falla la carga, ofrece reintentar", async () => {

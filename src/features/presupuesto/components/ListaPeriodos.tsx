@@ -30,6 +30,15 @@ export function ListaPeriodos({ periodos, enCursoId }: Props) {
     const estado = estadoPeriodo(p, p.id === enCursoId);
     return <Badge variant={varianteEstado[estado]}>{t(`presupuesto.estado.${estado}`)}</Badge>;
   };
+  // Sin ingresos al presupuesto no hay % de uso (decisión 4).
+  const barra = (p: Periodo, conDetalle: boolean) =>
+    p.presupuesto > 0 ? (
+      <BarraPresupuesto usado={p.usado} base={p.presupuesto} conDetalle={conDetalle} />
+    ) : (
+      <span className="text-body-sm text-muted-foreground">
+        {t("presupuesto.sinPresupuesto", { gastado: formatearPesos(p.usado) })}
+      </span>
+    );
   const detalle = (p: Periodo) => (
     <>
       {p.ingresosPresupuesto > 0 && (
@@ -60,7 +69,9 @@ export function ListaPeriodos({ periodos, enCursoId }: Props) {
             {periodos.map((p) => (
               <TableRow key={p.id}>
                 <TableCell>
-                  <span className="text-title">{rangoPeriodo(p.inicio, p.fin, i18n.language)}</span>
+                  <span className="text-title whitespace-nowrap">
+                    {rangoPeriodo(p.inicio, p.fin, i18n.language)}
+                  </span>
                   {detalle(p)}
                 </TableCell>
                 <TableCell className="text-right font-mono tabular-nums">
@@ -69,9 +80,7 @@ export function ListaPeriodos({ periodos, enCursoId }: Props) {
                 <TableCell className="text-right font-mono tabular-nums">
                   {formatearPesos(p.usado)}
                 </TableCell>
-                <TableCell>
-                  <BarraPresupuesto usado={p.usado} base={p.presupuesto} conDetalle={false} />
-                </TableCell>
+                <TableCell>{barra(p, false)}</TableCell>
                 <TableCell>{insignia(p)}</TableCell>
               </TableRow>
             ))}
@@ -92,7 +101,7 @@ export function ListaPeriodos({ periodos, enCursoId }: Props) {
             </div>
             {insignia(p)}
           </div>
-          <BarraPresupuesto usado={p.usado} base={p.presupuesto} />
+          {barra(p, true)}
         </li>
       ))}
     </ul>

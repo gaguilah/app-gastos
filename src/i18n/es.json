@@ -550,7 +550,7 @@
       "porcentaje": "{{porcentaje}} %"
     },
     "titulo": "Presupuesto y período",
-    "descripcion": "Cómo se abre y se mide cada período.",
+    "descripcion": "Tu presupuesto sale de tu salario y de los ingresos que suman.",
     "configuracion": "Configuración",
     "diaInicio": "Día de inicio",
     "diaInicioUno": "Día 1 · del 1 al fin de mes",
@@ -571,7 +571,8 @@
       "enCurso": "En curso",
       "dentro": "Dentro del presupuesto",
       "advertencia": "Advertencia",
-      "superado": "Superado"
+      "superado": "Superado",
+      "sinPresupuesto": "Sin presupuesto"
     },
     "dia": {
       "titulo": "Día de inicio del período",
@@ -588,6 +589,38 @@
       "explicaOtro": "Con el día {{dia}}, cada período iría del {{dia}} al {{anterior}} del mes siguiente. El cambio aplica desde el próximo período.",
       "mesCorto": "Si un mes no tiene ese día, el período empieza el último día de ese mes.",
       "previaError": "No pudimos calcular los períodos. Puedes guardar de todas formas."
+    },
+    "sinPresupuesto": "Sin presupuesto · gastado {{gastado}}",
+    "ultimoDia": "Hoy se cierra el período, recuerda registrar todo.",
+    "enCurso": {
+      "titulo": "Período en curso",
+      "salario": "salario {{salario}}",
+      "salarioPresupuesto": "Del salario",
+      "ingresos": "Ingresos que suman",
+      "presupuesto": "Presupuesto",
+      "gastado": "Gastado",
+      "disponible": "Disponible"
+    },
+    "sinIngresos": {
+      "titulo": "Este período aún no tiene presupuesto.",
+      "mensaje": "Registra tu salario o un ingreso para tener presupuesto. Los gastos se registran igual ({{gastado}} hasta ahora), pero sin % de uso ni alertas.",
+      "accion": "Registrar ingreso"
+    },
+    "salario": {
+      "titulo": "Salario base",
+      "sinConfigurar": "Sin configurar: los períodos empiezan sin salario.",
+      "resumen": "{{presupuesto}} al presupuesto",
+      "configurar": "Configurar salario",
+      "cambiar": "Cambiar salario",
+      "salario": "Salario del período",
+      "ayuda": "Cada período empieza con este salario. Si te pagan por quincenas o semanas, suma todos los pagos del período. Con $0 no se crea.",
+      "salarioRequerido": "Escribe el salario, o $0 si no quieres que se cree.",
+      "montoPresupuesto": "Para el presupuesto",
+      "montoPresupuestoAyuda": "Lo demás queda como sobrante del salario.",
+      "montoInvalido": "Escribe un monto de $0 hasta el salario.",
+      "categoria": "Categoría del salario",
+      "actual": "Usar también en el período actual",
+      "actualAyuda": "Crea o actualiza el salario del período en curso. Los cerrados no cambian."
     }
   },
   "ingresos": {

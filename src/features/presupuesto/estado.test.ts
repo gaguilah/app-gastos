@@ -27,4 +27,9 @@ describe("estadoPeriodo", () => {
     expect(estadoPeriodo(periodo(900), true)).toBe("enCurso");
     expect(estadoPeriodo(periodo(1010), true)).toBe("superado");
   });
+
+  it("sin presupuesto (sin ingresos) no hay % ni estado de uso, ni en curso (decisión 4)", () => {
+    expect(estadoPeriodo(periodo(500, 0), false)).toBe("sinPresupuesto");
+    expect(estadoPeriodo(periodo(500, 0), true)).toBe("enCurso");
+  });
 });
