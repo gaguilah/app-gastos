@@ -479,7 +479,8 @@
         "ajuste": "Balance adjustment",
         "saldo_inicial": "Opening balance",
         "aporte": "Savings contribution",
-        "retiro": "Savings withdrawal"
+        "retiro": "Savings withdrawal",
+        "sobrante": "Period left over"
       },
       "detalle": {
         "recarga": "top-up",
@@ -489,7 +490,8 @@
         "hacia": "to {{nombre}}",
         "aporte": "contribution to {{nombre}}",
         "retiro": "withdrawal from {{nombre}}"
-      }
+      },
+      "vieneAnterior": "Carried from last period"
     },
     "recargar": {
       "titulo": "Top up {{nombre}}",

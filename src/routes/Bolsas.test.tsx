@@ -84,6 +84,7 @@ function falsoSupabase() {
       eq: () => cadena,
       not: () => cadena,
       order: () => cadena,
+      single: () => ok(filas[0]),
     });
     return cadena;
   };
@@ -190,6 +191,55 @@ describe("Bolsas", () => {
     expect(within(dialogo).getByText("Traslado")).toBeInTheDocument();
     expect(within(dialogo).getByText("10 nov · desde Efectivo")).toBeInTheDocument();
     expect(within(dialogo).getByText("+$350.000")).toBeInTheDocument();
+  });
+
+  it("en el período nuevo, «Viene del período anterior» con el saldo al cierre (S6)", async () => {
+    tablas.perfiles = [
+      {
+        id: "yo",
+        dia_inicio: 1,
+        salario_base: 0,
+        presupuesto_salario_base: 0,
+        categoria_salario_id: null,
+      },
+    ];
+    tablas.disponible_periodo = [
+      { periodo_id: "oct", fecha_inicio: "2026-10-01", fecha_fin: "2026-10-31" },
+      { periodo_id: "nov", fecha_inicio: "2026-11-01", fecha_fin: "2026-11-30" },
+    ];
+    tablas.periodos = [
+      { id: "oct", cerrado_at: "2026-11-01T05:00:00Z", recerrado_at: null },
+      { id: "nov", cerrado_at: null, recerrado_at: null },
+    ];
+    tablas.movimientos_de_bolsa.push({
+      id: "s1",
+      tipo: "sobrante",
+      fecha: "2026-10-30",
+      titulo: null,
+      valor: 100_000,
+      contraparte: null,
+    });
+    rpc.mockImplementation((nombre: string) =>
+      Promise.resolve({
+        data: nombre === "saldos_bolsa_al" ? [{ bolsa_id: "neq", saldo: 40_300 }] : null,
+        error: null,
+      }),
+    );
+    abrir();
+    await abrirMenu("Nequi");
+    await elegir("Ver movimientos");
+    const dialogo = await screen.findByRole("dialog", { name: "Movimientos de Nequi" });
+    const viene = await within(dialogo).findByText("Viene del período anterior");
+    expect(viene.nextSibling).toHaveTextContent("$40.300");
+    expect(rpc).toHaveBeenCalledWith("saldos_bolsa_al", { p_fecha: "2026-10-31" });
+    // Primero lo del período en curso, luego la línea y después lo anterior.
+    const textos = within(dialogo)
+      .getAllByRole("listitem")
+      .map((li) => li.textContent);
+    expect(textos.findIndex((x) => x?.startsWith("Freelance"))).toBeLessThan(
+      textos.findIndex((x) => x?.startsWith("Viene")),
+    );
+    expect(textos.at(-1)).toMatch(/^Sobrante del período.*\+\$100\.000$/);
   });
 
   it("recargar de mi cuenta no toca el presupuesto", async () => {

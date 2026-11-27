@@ -479,7 +479,8 @@
         "ajuste": "Ajuste de saldo",
         "saldo_inicial": "Saldo inicial",
         "aporte": "Aporte a ahorro",
-        "retiro": "Retiro de ahorro"
+        "retiro": "Retiro de ahorro",
+        "sobrante": "Sobrante del período"
       },
       "detalle": {
         "recarga": "recarga",
@@ -489,7 +490,8 @@
         "hacia": "hacia {{nombre}}",
         "aporte": "aporte a {{nombre}}",
         "retiro": "retiro de {{nombre}}"
-      }
+      },
+      "vieneAnterior": "Viene del período anterior"
     },
     "recargar": {
       "titulo": "Recargar {{nombre}}",

@@ -14,6 +14,7 @@ import { DialogoRecargar } from "@/features/bolsas/components/DialogoRecargar";
 import { DialogoRenombrarBolsa } from "@/features/bolsas/components/DialogoRenombrarBolsa";
 import { DialogoTrasladar } from "@/features/bolsas/components/DialogoTrasladar";
 import { ListaBolsas, type AccionBolsa } from "@/features/bolsas/components/ListaBolsas";
+import { periodoEnCurso, usePresupuesto } from "@/datos/presupuesto";
 import { cn } from "@/lib/utils";
 
 type Abierta = { accion: "nueva" } | { accion: AccionBolsa; bolsa: Bolsa } | null;
@@ -28,6 +29,11 @@ export function Bolsas() {
   const total = bolsas.reduce((suma, b) => suma + b.saldo, 0);
   const cerrar = (valor: boolean) => !valor && setAbierta(null);
   const nueva = () => setAbierta({ accion: "nueva" });
+  // «Viene del período anterior» solo si hubo un período antes del que está en curso.
+  const periodos = usePresupuesto().data?.periodos ?? [];
+  const enCurso = periodoEnCurso(periodos, hoy);
+  const inicioPeriodo =
+    enCurso && periodos.some((p) => p.fin < enCurso.inicio) ? enCurso.inicio : undefined;
   const otras = (b: Bolsa) => bolsas.filter((o) => o.id !== b.id);
 
   return (
@@ -84,7 +90,13 @@ export function Bolsas() {
 
       {abierta?.accion === "nueva" && <DialogoNuevaBolsa abierta alCambiar={cerrar} />}
       {abierta?.accion === "movimientos" && (
-        <DialogoMovimientos abierta alCambiar={cerrar} bolsa={abierta.bolsa} hoy={hoy} />
+        <DialogoMovimientos
+          abierta
+          alCambiar={cerrar}
+          bolsa={abierta.bolsa}
+          hoy={hoy}
+          inicioPeriodo={inicioPeriodo}
+        />
       )}
       {abierta?.accion === "recargar" && (
         <DialogoRecargar
