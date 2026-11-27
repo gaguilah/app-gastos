@@ -18,9 +18,15 @@ insert into public.formas_pago (id, user_id, nombre, clase) values
 insert into public.personas (id, user_id, nombre, tipo) values
   ('00000000-0000-0000-0004-000000000001', '00000000-0000-0000-0000-0000000000a1', 'Ana Prueba', 'persona'),
   ('00000000-0000-0000-0004-000000000002', '00000000-0000-0000-0000-0000000000a1', 'Banco Prueba', 'banco');
-insert into public.periodos (id, user_id, fecha_inicio, fecha_fin, presupuesto) values
-  ('00000000-0000-0000-0009-000000000011', '00000000-0000-0000-0000-0000000000a1', '2026-11-01', '2026-11-30', 1000000),
-  ('00000000-0000-0000-0009-000000000012', '00000000-0000-0000-0000-0000000000a1', '2026-12-01', '2026-12-31', 1000000);
+insert into public.periodos (id, user_id, fecha_inicio, fecha_fin) values
+  ('00000000-0000-0000-0009-000000000011', '00000000-0000-0000-0000-0000000000a1', '2026-11-01', '2026-11-30'),
+  ('00000000-0000-0000-0009-000000000012', '00000000-0000-0000-0000-0000000000a1', '2026-12-01', '2026-12-31');
+insert into public.ingresos (user_id, titulo, fecha, valor, categoria_id, es_salario, monto_presupuesto)
+select '00000000-0000-0000-0000-0000000000a1', 'Salario', '2026-11-01', 1000000, c.id, true, 1000000 from public.categorias c
+ where c.user_id = '00000000-0000-0000-0000-0000000000a1' and c.tipo = 'ingreso' and c.padre_id is null order by c.created_at limit 1;
+insert into public.ingresos (user_id, titulo, fecha, valor, categoria_id, es_salario, monto_presupuesto)
+select '00000000-0000-0000-0000-0000000000a1', 'Salario', '2026-12-01', 1000000, c.id, true, 1000000 from public.categorias c
+ where c.user_id = '00000000-0000-0000-0000-0000000000a1' and c.tipo = 'ingreso' and c.padre_id is null order by c.created_at limit 1;
 
 set local role authenticated;
 set local request.jwt.claims = '{"sub":"00000000-0000-0000-0000-0000000000a1","role":"authenticated"}';
@@ -32,14 +38,14 @@ insert into public.gastos (id, titulo, fecha, valor, categoria_id, medio_id, est
   ('00000000-0000-0000-0011-000000000003', 'G', '2026-11-05', 200000, '00000000-0000-0000-0001-000000000002', '00000000-0000-0000-0002-000000000001', 'confirmado', true),
   ('00000000-0000-0000-0011-000000000004', 'G', '2026-11-06', 40000, '00000000-0000-0000-0001-000000000002', '00000000-0000-0000-0002-000000000001', 'confirmado', false),
   ('00000000-0000-0000-0011-000000000005', 'G', '2026-11-07', 50000, '00000000-0000-0000-0001-000000000002', '00000000-0000-0000-0002-000000000001', 'pendiente', true);
-insert into public.ingresos (titulo, fecha, valor, categoria_id, cuenta_estadisticas) values
-  ('Salario', '2026-11-15', 200000, '00000000-0000-0000-0001-000000000003', true),
-  ('Préstamo recibido', '2026-11-16', 100000, '00000000-0000-0000-0001-000000000003', false);
+insert into public.ingresos (titulo, fecha, valor, categoria_id, cuenta_estadisticas, suma_presupuesto) values
+  ('Extra', '2026-11-15', 200000, '00000000-0000-0000-0001-000000000003', true, true),
+  ('Préstamo recibido', '2026-11-16', 100000, '00000000-0000-0000-0001-000000000003', false, true);
 -- Préstamo a Ana con un cobro parcial, y una deuda de 3 cuotas sin pagar.
 insert into public.prestamos (id, persona_id, monto, fecha) values
   ('00000000-0000-0000-0010-000000000001', '00000000-0000-0000-0004-000000000001', 100000, '2026-11-10');
-insert into public.ingresos (titulo, fecha, valor, categoria_id, prestamo_id)
-select 'Cobro', '2026-11-20', 30000, id, '00000000-0000-0000-0010-000000000001'
+insert into public.ingresos (titulo, fecha, valor, categoria_id, prestamo_id, suma_presupuesto)
+select 'Cobro', '2026-11-20', 30000, id, '00000000-0000-0000-0010-000000000001', true
   from public.categorias where clave_sistema = 'cobro_prestamo';
 insert into public.deudas (id, persona_id, categoria_id, fecha, total_pagar, num_cuotas, valor_cuota, dia_pago, medio_id) values
   ('00000000-0000-0000-0006-000000000001', '00000000-0000-0000-0004-000000000002', '00000000-0000-0000-0001-000000000004',
@@ -61,8 +67,8 @@ select results_eq(
   $$ select (resumen->>'presupuesto')::bigint, (resumen->>'ingresos_presupuesto')::bigint,
             (resumen->>'ingresos_estadisticas')::bigint, (resumen->>'gastado')::bigint, (resumen->>'saldo')::bigint
        from public.periodos where id = '00000000-0000-0000-0009-000000000011' $$,
-  $$ values (1000000::bigint, 330000::bigint, 230000::bigint, 600000::bigint, 730000::bigint) $$,
-  'el resumen guarda presupuesto, ingresos (el cobro de 30.000 va al presupuesto), gastado y saldo (los pendientes no cuentan)');
+  $$ values (1330000::bigint, 330000::bigint, 1230000::bigint, 600000::bigint, 730000::bigint) $$,
+  'el resumen guarda presupuesto (salario + ingresos que suman), ingresos (el cobro de 30.000 suma), gastado y saldo (los pendientes no cuentan)');
 select is(
   (select resumen->'por_categoria' from public.periodos where id = '00000000-0000-0000-0009-000000000011'),
   '[{"nombre": "Mercado prueba", "icono": "shopping-cart", "color": "#b45309", "total": 400000},
@@ -88,8 +94,8 @@ select results_eq(
   'un gasto tardío con fecha del período cerrado actualiza su resumen');
 
 -- Un cobro en diciembre no cambia lo pendiente guardado al cierre de noviembre.
-insert into public.ingresos (titulo, fecha, valor, categoria_id, prestamo_id)
-select 'Cobro', '2026-12-05', 70000, id, '00000000-0000-0000-0010-000000000001'
+insert into public.ingresos (titulo, fecha, valor, categoria_id, prestamo_id, suma_presupuesto)
+select 'Cobro', '2026-12-05', 70000, id, '00000000-0000-0000-0010-000000000001', true
   from public.categorias where clave_sistema = 'cobro_prestamo';
 select is(
   (select resumen->'prestamos_por_cobrar' from public.periodos where id = '00000000-0000-0000-0009-000000000011'),

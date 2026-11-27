@@ -57,8 +57,8 @@ select lives_ok($$
     ('00000000-0000-0000-0010-000000000001', '00000000-0000-0000-0000-0000000000a1', 'Lugar de A');
   insert into public.personas (id, user_id, nombre, tipo) values
     ('00000000-0000-0000-0004-000000000001', '00000000-0000-0000-0000-0000000000a1', 'Persona de A', 'persona');
-  insert into public.periodos (id, user_id, fecha_inicio, fecha_fin, presupuesto) values
-    ('00000000-0000-0000-0009-000000000001', '00000000-0000-0000-0000-0000000000a1', '2026-03-01', '2026-03-31', 2000000);
+  insert into public.periodos (id, user_id, fecha_inicio, fecha_fin) values
+    ('00000000-0000-0000-0009-000000000001', '00000000-0000-0000-0000-0000000000a1', '2026-03-01', '2026-03-31');
   insert into public.alertas_enviadas (user_id, periodo_id, umbral) values
     ('00000000-0000-0000-0000-0000000000a1', '00000000-0000-0000-0009-000000000001', 70);
   insert into public.bolsas (id, user_id, nombre) values

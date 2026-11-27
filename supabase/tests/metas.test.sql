@@ -37,8 +37,11 @@ insert into public.movimientos_bolsa (user_id, bolsa_id, tipo, sentido, fecha, v
   ('00000000-0000-0000-0000-0000000000a1', '00000000-0000-0000-0003-000000000014', 'saldo_inicial', 'entrada', '2027-01-01', 500000, '00000000-0000-0000-0007-000000000004'),
   ('00000000-0000-0000-0000-0000000000a1', '00000000-0000-0000-0003-000000000015', 'saldo_inicial', 'entrada', '2027-01-01', 600000, '00000000-0000-0000-0007-000000000005'),
   ('00000000-0000-0000-0000-0000000000a1', '00000000-0000-0000-0003-000000000015', 'aporte', 'entrada', '2027-02-01', 200000, '00000000-0000-0000-0007-000000000005');
-insert into public.periodos (user_id, fecha_inicio, fecha_fin, presupuesto) values
-  ('00000000-0000-0000-0000-0000000000a1', '2027-01-01', '2027-01-31', 1000000);
+insert into public.periodos (user_id, fecha_inicio, fecha_fin) values
+  ('00000000-0000-0000-0000-0000000000a1', '2027-01-01', '2027-01-31');
+insert into public.ingresos (user_id, titulo, fecha, valor, categoria_id, es_salario, monto_presupuesto)
+select '00000000-0000-0000-0000-0000000000a1', 'Salario', '2027-01-01', 1000000, c.id, true, 1000000 from public.categorias c
+ where c.user_id = '00000000-0000-0000-0000-0000000000a1' and c.tipo = 'ingreso' and c.padre_id is null order by c.created_at limit 1;
 
 -- Generación (servidor).
 select is(public.generar_aportes_de('00000000-0000-0000-0000-0000000000a1', '2027-03-31'), 9,

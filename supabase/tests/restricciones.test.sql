@@ -32,22 +32,22 @@ select lives_ok($$
   insert into public.reglas_aporte (id, user_id, meta_id, valor, frecuencia, dia, bolsa_id, proxima_fecha) values
     ('00000000-0000-0000-0008-000000000001', '00000000-0000-0000-0000-0000000000a1', '00000000-0000-0000-0007-000000000001',
      200000, 'mensual', 15, '00000000-0000-0000-0003-000000000001', '2026-03-15');
-  insert into public.periodos (id, user_id, fecha_inicio, fecha_fin, presupuesto) values
-    ('00000000-0000-0000-0009-000000000001', '00000000-0000-0000-0000-0000000000a1', '2026-03-01', '2026-03-31', 2000000);
+  insert into public.periodos (id, user_id, fecha_inicio, fecha_fin) values
+    ('00000000-0000-0000-0009-000000000001', '00000000-0000-0000-0000-0000000000a1', '2026-03-01', '2026-03-31');
 $$, 'montaje: catálogos, regla periódica, deuda, meta, regla de aporte y período de A');
 
 -- 3.1 Períodos
 select throws_ok(
-  $$ insert into public.periodos (user_id, fecha_inicio, fecha_fin, presupuesto)
-     values ('00000000-0000-0000-0000-0000000000a1', '2026-03-15', '2026-04-14', 2000000) $$,
+  $$ insert into public.periodos (user_id, fecha_inicio, fecha_fin)
+     values ('00000000-0000-0000-0000-0000000000a1', '2026-03-15', '2026-04-14') $$,
   '23P01', null, 'dos períodos de A no se pueden solapar');
 select lives_ok(
-  $$ insert into public.periodos (user_id, fecha_inicio, fecha_fin, presupuesto)
-     values ('00000000-0000-0000-0000-0000000000b2', '2026-03-15', '2026-04-14', 2000000) $$,
+  $$ insert into public.periodos (user_id, fecha_inicio, fecha_fin)
+     values ('00000000-0000-0000-0000-0000000000b2', '2026-03-15', '2026-04-14') $$,
   'B sí puede tener un período en esas fechas');
 select throws_ok(
-  $$ insert into public.periodos (user_id, fecha_inicio, fecha_fin, presupuesto)
-     values ('00000000-0000-0000-0000-0000000000a1', '2026-05-31', '2026-05-01', 2000000) $$,
+  $$ insert into public.periodos (user_id, fecha_inicio, fecha_fin)
+     values ('00000000-0000-0000-0000-0000000000a1', '2026-05-31', '2026-05-01') $$,
   '23514', null, 'el fin de un período no puede ser anterior a su inicio');
 
 -- 3.1 Día de inicio del período (perfil creado por los datos de arranque)

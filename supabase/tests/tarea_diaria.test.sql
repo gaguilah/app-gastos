@@ -7,7 +7,8 @@ select plan(13);
 insert into auth.users (id, email) values
   ('00000000-0000-0000-0000-0000000000a1', 'a@prueba.local'),
   ('00000000-0000-0000-0000-0000000000b2', 'b@prueba.local');
-update public.perfiles set presupuesto_defecto = 1000000 where user_id = '00000000-0000-0000-0000-0000000000a1';
+update public.perfiles set salario_base = 1000000, presupuesto_salario_base = 1000000
+ where user_id = '00000000-0000-0000-0000-0000000000a1';
 
 insert into public.categorias (id, user_id, nombre, icono, color, tipo) values
   ('00000000-0000-0000-0001-000000000001', '00000000-0000-0000-0000-0000000000a1', 'Hogar prueba', 'house', '#b45309', 'gasto'),
@@ -20,8 +21,11 @@ insert into public.bolsas (id, user_id, nombre) values
   ('00000000-0000-0000-0003-000000000001', '00000000-0000-0000-0000-0000000000a1', 'Bolsa de la meta');
 insert into public.metas_ahorro (id, user_id, nombre, monto_meta, fecha_final, bolsa_id) values
   ('00000000-0000-0000-0007-000000000001', '00000000-0000-0000-0000-0000000000a1', 'Viaje', 3000000, '2027-12-31', '00000000-0000-0000-0003-000000000001');
-insert into public.periodos (user_id, fecha_inicio, fecha_fin, presupuesto) values
-  ('00000000-0000-0000-0000-0000000000a1', '2026-10-01', '2026-10-31', 1000000);
+insert into public.periodos (user_id, fecha_inicio, fecha_fin) values
+  ('00000000-0000-0000-0000-0000000000a1', '2026-10-01', '2026-10-31');
+insert into public.ingresos (user_id, titulo, fecha, valor, categoria_id, es_salario, monto_presupuesto)
+select '00000000-0000-0000-0000-0000000000a1', 'Salario', '2026-10-01', 1000000, c.id, true, 1000000 from public.categorias c
+ where c.user_id = '00000000-0000-0000-0000-0000000000a1' and c.tipo = 'ingreso' and c.padre_id is null order by c.created_at limit 1;
 insert into public.reglas_periodicas (user_id, titulo, valor, categoria_id, medio_id, frecuencia, dia, fecha_inicio, proxima_fecha) values
   ('00000000-0000-0000-0000-0000000000a1', 'Internet', 90000, '00000000-0000-0000-0001-000000000001',
    '00000000-0000-0000-0002-000000000001', 'mensual', 15, '2026-10-15', '2026-10-15');
@@ -39,11 +43,12 @@ select is(
   '{"periodos_cerrados": 1, "periodicos": 2, "cuotas": 1, "aportes": 2}'::jsonb,
   'devuelve cuánto hizo: cierra octubre, 2 periódicos (15-oct y 15-nov), la cuota del 5-nov y 2 aportes (1 y 16-nov)');
 select results_eq(
-  $$ select fecha_inicio, fecha_fin, presupuesto, cerrado_at is not null, resumen is not null from public.periodos
-      where user_id = '00000000-0000-0000-0000-0000000000a1' order by fecha_inicio $$,
+  $$ select p.fecha_inicio, p.fecha_fin, d.presupuesto, p.cerrado_at is not null, p.resumen is not null
+       from public.periodos p join public.disponible_periodo d on d.periodo_id = p.id
+      where p.user_id = '00000000-0000-0000-0000-0000000000a1' order by p.fecha_inicio $$,
   $$ values ('2026-10-01'::date, '2026-10-31'::date, 1000000::bigint, true, true),
             ('2026-11-01', '2026-11-30', 1000000, false, false) $$,
-  'crea el período de hoy con el presupuesto por defecto y cierra el vencido con su resumen');
+  'crea el período de hoy con su salario base (Etapa 6A) y cierra el vencido con su resumen');
 select results_eq(
   $$ select fecha, estado from public.gastos where user_id = '00000000-0000-0000-0000-0000000000a1' and regla_id is not null order by fecha $$,
   $$ values ('2026-10-15'::date, 'pendiente'), ('2026-11-15', 'pendiente') $$, 'genera los periódicos atrasados');

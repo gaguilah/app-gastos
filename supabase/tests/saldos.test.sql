@@ -24,9 +24,15 @@ insert into public.bolsas (id, user_id, nombre, forma_pago_id) values
   ('00000000-0000-0000-0003-000000000004', '00000000-0000-0000-0000-0000000000a1', 'Bolsa de la meta', null);
 insert into public.metas_ahorro (id, user_id, nombre, monto_meta, fecha_final, bolsa_id) values
   ('00000000-0000-0000-0007-000000000001', '00000000-0000-0000-0000-0000000000a1', 'Viaje', 3000000, '2027-06-30', '00000000-0000-0000-0003-000000000004');
-insert into public.periodos (id, user_id, fecha_inicio, fecha_fin, presupuesto) values
-  ('00000000-0000-0000-0009-000000000001', '00000000-0000-0000-0000-0000000000a1', '2026-11-01', '2026-11-30', 1000000),
-  ('00000000-0000-0000-0009-000000000002', '00000000-0000-0000-0000-0000000000a1', '2026-12-01', '2026-12-31', 1000000);
+insert into public.periodos (id, user_id, fecha_inicio, fecha_fin) values
+  ('00000000-0000-0000-0009-000000000001', '00000000-0000-0000-0000-0000000000a1', '2026-11-01', '2026-11-30'),
+  ('00000000-0000-0000-0009-000000000002', '00000000-0000-0000-0000-0000000000a1', '2026-12-01', '2026-12-31');
+insert into public.ingresos (user_id, titulo, fecha, valor, categoria_id, es_salario, monto_presupuesto)
+select '00000000-0000-0000-0000-0000000000a1', 'Salario', '2026-11-01', 1000000, c.id, true, 1000000 from public.categorias c
+ where c.user_id = '00000000-0000-0000-0000-0000000000a1' and c.tipo = 'ingreso' and c.padre_id is null order by c.created_at limit 1;
+insert into public.ingresos (user_id, titulo, fecha, valor, categoria_id, es_salario, monto_presupuesto)
+select '00000000-0000-0000-0000-0000000000a1', 'Salario', '2026-12-01', 1000000, c.id, true, 1000000 from public.categorias c
+ where c.user_id = '00000000-0000-0000-0000-0000000000a1' and c.tipo = 'ingreso' and c.padre_id is null order by c.created_at limit 1;
 
 set local role authenticated;
 set local request.jwt.claims = '{"sub":"00000000-0000-0000-0000-0000000000a1","role":"authenticated"}';
@@ -35,19 +41,20 @@ set local request.jwt.claims = '{"sub":"00000000-0000-0000-0000-0000000000a1","r
 -- ingreso a Nequi, ingreso a presupuesto, gasto confirmado y gasto pendiente.
 insert into public.movimientos_bolsa (bolsa_id, tipo, sentido, fecha, valor)
 values ('00000000-0000-0000-0003-000000000001', 'recarga', 'entrada', '2026-10-28', 100000);
-insert into public.ingresos (titulo, fecha, valor, categoria_id, bolsa_id) values
-  ('A Nequi', '2026-11-05', 50000, '00000000-0000-0000-0001-000000000002', '00000000-0000-0000-0003-000000000001'),
-  ('Salario', '2026-11-05', 200000, '00000000-0000-0000-0001-000000000002', null);
+insert into public.ingresos (titulo, fecha, valor, categoria_id, bolsa_id, suma_presupuesto) values
+  ('A Nequi', '2026-11-05', 50000, '00000000-0000-0000-0001-000000000002', '00000000-0000-0000-0003-000000000001', false),
+  ('Extra', '2026-11-05', 200000, '00000000-0000-0000-0001-000000000002', null, true);
 insert into public.gastos (titulo, fecha, valor, categoria_id, medio_id, estado) values
   ('Mercado', '2026-11-06', 300000, '00000000-0000-0000-0001-000000000001', '00000000-0000-0000-0002-000000000002', 'confirmado'),
   ('Pendiente', '2026-11-07', 100000, '00000000-0000-0000-0001-000000000001', '00000000-0000-0000-0002-000000000002', 'pendiente');
 
 select is((select disponible from public.disponible_periodo where periodo_id = '00000000-0000-0000-0009-000000000001'),
-  900000::bigint, 'disponible = presupuesto + ingresos a presupuesto − gastos confirmados (el pendiente no cuenta)');
+  900000::bigint, 'disponible = salario al presupuesto + ingresos que suman − gastos confirmados (el pendiente no cuenta)');
 select results_eq(
   $$ select presupuesto, ingresos_presupuesto, gastado, aportes_presupuesto
        from public.disponible_periodo where periodo_id = '00000000-0000-0000-0009-000000000001' $$,
-  $$ values (1000000::bigint, 200000::bigint, 300000::bigint, 0::bigint) $$,
+  -- Etapa 6A: presupuesto = salario al presupuesto (1.000.000) + ingresos que suman (200.000).
+  $$ values (1200000::bigint, 200000::bigint, 300000::bigint, 0::bigint) $$,
   'el desglose del disponible: el ingreso a Nequi no suma al presupuesto');
 
 -- Gasto desde Nequi con canal Bre-B: descuenta de Nequi y del presupuesto.

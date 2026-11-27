@@ -100,6 +100,13 @@ export type Database = {
             foreignKeyName: "alertas_enviadas_periodo_id_user_id_fkey";
             columns: ["periodo_id", "user_id"];
             isOneToOne: false;
+            referencedRelation: "cierre_periodos";
+            referencedColumns: ["periodo_id", "user_id"];
+          },
+          {
+            foreignKeyName: "alertas_enviadas_periodo_id_user_id_fkey";
+            columns: ["periodo_id", "user_id"];
+            isOneToOne: false;
             referencedRelation: "disponible_periodo";
             referencedColumns: ["periodo_id", "user_id"];
           },
@@ -636,11 +643,14 @@ export type Database = {
           cuenta_estadisticas: boolean;
           descripcion: string | null;
           deuda_id: string | null;
+          es_salario: boolean;
           fecha: string;
           id: string;
+          monto_presupuesto: number | null;
           prestamo_id: string | null;
           subcategoria_id: string | null;
           subcategoria_nombre: string | null;
+          suma_presupuesto: boolean;
           titulo: string;
           user_id: string;
           valor: number;
@@ -656,11 +666,14 @@ export type Database = {
           cuenta_estadisticas?: boolean;
           descripcion?: string | null;
           deuda_id?: string | null;
+          es_salario?: boolean;
           fecha: string;
           id?: string;
+          monto_presupuesto?: number | null;
           prestamo_id?: string | null;
           subcategoria_id?: string | null;
           subcategoria_nombre?: string | null;
+          suma_presupuesto?: boolean;
           titulo: string;
           user_id?: string;
           valor: number;
@@ -675,11 +688,14 @@ export type Database = {
           cuenta_estadisticas?: boolean;
           descripcion?: string | null;
           deuda_id?: string | null;
+          es_salario?: boolean;
           fecha?: string;
           id?: string;
+          monto_presupuesto?: number | null;
           prestamo_id?: string | null;
           subcategoria_id?: string | null;
           subcategoria_nombre?: string | null;
+          suma_presupuesto?: boolean;
           titulo?: string;
           user_id?: string;
           valor?: number;
@@ -867,6 +883,8 @@ export type Database = {
           medio_id: string | null;
           meta_id: string | null;
           nota: string | null;
+          origen_sobrante: string | null;
+          periodo_origen_id: string | null;
           regla_aporte_id: string | null;
           saldo_real: number | null;
           sentido: string;
@@ -887,6 +905,8 @@ export type Database = {
           medio_id?: string | null;
           meta_id?: string | null;
           nota?: string | null;
+          origen_sobrante?: string | null;
+          periodo_origen_id?: string | null;
           regla_aporte_id?: string | null;
           saldo_real?: number | null;
           sentido: string;
@@ -906,6 +926,8 @@ export type Database = {
           medio_id?: string | null;
           meta_id?: string | null;
           nota?: string | null;
+          origen_sobrante?: string | null;
+          periodo_origen_id?: string | null;
           regla_aporte_id?: string | null;
           saldo_real?: number | null;
           sentido?: string;
@@ -939,6 +961,13 @@ export type Database = {
             foreignKeyName: "movimientos_bolsa_enlace_id_user_id_fkey";
             columns: ["enlace_id", "user_id"];
             isOneToOne: false;
+            referencedRelation: "destinos_sobrante";
+            referencedColumns: ["id", "user_id"];
+          },
+          {
+            foreignKeyName: "movimientos_bolsa_enlace_id_user_id_fkey";
+            columns: ["enlace_id", "user_id"];
+            isOneToOne: false;
             referencedRelation: "movimientos_bolsa";
             referencedColumns: ["id", "user_id"];
           },
@@ -961,6 +990,27 @@ export type Database = {
             columns: ["meta_id", "user_id"];
             isOneToOne: false;
             referencedRelation: "metas_ahorro";
+            referencedColumns: ["id", "user_id"];
+          },
+          {
+            foreignKeyName: "movimientos_bolsa_periodo_origen_fkey";
+            columns: ["periodo_origen_id", "user_id"];
+            isOneToOne: false;
+            referencedRelation: "cierre_periodos";
+            referencedColumns: ["periodo_id", "user_id"];
+          },
+          {
+            foreignKeyName: "movimientos_bolsa_periodo_origen_fkey";
+            columns: ["periodo_origen_id", "user_id"];
+            isOneToOne: false;
+            referencedRelation: "disponible_periodo";
+            referencedColumns: ["periodo_id", "user_id"];
+          },
+          {
+            foreignKeyName: "movimientos_bolsa_periodo_origen_fkey";
+            columns: ["periodo_origen_id", "user_id"];
+            isOneToOne: false;
+            referencedRelation: "periodos";
             referencedColumns: ["id", "user_id"];
           },
           {
@@ -1002,34 +1052,55 @@ export type Database = {
       };
       perfiles: {
         Row: {
+          categoria_salario_id: string | null;
           created_at: string;
           dia_inicio: number;
           id: string;
           idioma: string;
           nombre: string | null;
-          presupuesto_defecto: number;
+          presupuesto_salario_base: number;
+          salario_base: number;
           user_id: string;
         };
         ComputedFields: never;
         Insert: {
+          categoria_salario_id?: string | null;
           created_at?: string;
           dia_inicio?: number;
           id?: string;
           idioma?: string;
           nombre?: string | null;
-          presupuesto_defecto?: number;
+          presupuesto_salario_base?: number;
+          salario_base?: number;
           user_id?: string;
         };
         Update: {
+          categoria_salario_id?: string | null;
           created_at?: string;
           dia_inicio?: number;
           id?: string;
           idioma?: string;
           nombre?: string | null;
-          presupuesto_defecto?: number;
+          presupuesto_salario_base?: number;
+          salario_base?: number;
           user_id?: string;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "perfiles_categoria_salario_fkey";
+            columns: ["categoria_salario_id", "user_id"];
+            isOneToOne: false;
+            referencedRelation: "categorias";
+            referencedColumns: ["id", "user_id"];
+          },
+          {
+            foreignKeyName: "perfiles_categoria_salario_fkey";
+            columns: ["categoria_salario_id", "user_id"];
+            isOneToOne: false;
+            referencedRelation: "uso_categorias";
+            referencedColumns: ["categoria_id", "user_id"];
+          },
+        ];
       };
       periodos: {
         Row: {
@@ -1038,8 +1109,7 @@ export type Database = {
           fecha_fin: string;
           fecha_inicio: string;
           id: string;
-          nota_presupuesto: string | null;
-          presupuesto: number;
+          recerrado_at: string | null;
           resumen: Json | null;
           user_id: string;
         };
@@ -1050,8 +1120,7 @@ export type Database = {
           fecha_fin: string;
           fecha_inicio: string;
           id?: string;
-          nota_presupuesto?: string | null;
-          presupuesto: number;
+          recerrado_at?: string | null;
           resumen?: Json | null;
           user_id?: string;
         };
@@ -1061,8 +1130,7 @@ export type Database = {
           fecha_fin?: string;
           fecha_inicio?: string;
           id?: string;
-          nota_presupuesto?: string | null;
-          presupuesto?: number;
+          recerrado_at?: string | null;
           resumen?: Json | null;
           user_id?: string;
         };
@@ -1432,6 +1500,96 @@ export type Database = {
       };
     };
     Views: {
+      cierre_periodos: {
+        Row: {
+          cerrado_at: string | null;
+          destinado_presupuesto: number | null;
+          destinado_salario: number | null;
+          disponible: number | null;
+          excedido: number | null;
+          fecha_fin: string;
+          fecha_inicio: string;
+          no_destinado_presupuesto: number | null;
+          no_destinado_salario: number | null;
+          periodo_id: string;
+          presupuesto: number | null;
+          recerrado_at: string | null;
+          salario: number | null;
+          salario_presupuesto: number | null;
+          sobrante_presupuesto: number | null;
+          sobrante_salario: number | null;
+          user_id: string;
+        };
+        ComputedFields: never;
+        Relationships: [];
+      };
+      destinos_sobrante: {
+        Row: {
+          bolsa_id: string;
+          destino_nombre: string | null;
+          fecha: string;
+          id: string;
+          meta_icono: string | null;
+          meta_id: string | null;
+          nota: string | null;
+          origen: string | null;
+          periodo_id: string | null;
+          user_id: string;
+          valor: number;
+        };
+        ComputedFields: never;
+        Relationships: [
+          {
+            foreignKeyName: "movimientos_bolsa_bolsa_id_user_id_fkey";
+            columns: ["bolsa_id", "user_id"];
+            isOneToOne: false;
+            referencedRelation: "bolsas";
+            referencedColumns: ["id", "user_id"];
+          },
+          {
+            foreignKeyName: "movimientos_bolsa_bolsa_id_user_id_fkey";
+            columns: ["bolsa_id", "user_id"];
+            isOneToOne: false;
+            referencedRelation: "saldos_bolsa";
+            referencedColumns: ["bolsa_id", "user_id"];
+          },
+          {
+            foreignKeyName: "movimientos_bolsa_bolsa_id_user_id_fkey";
+            columns: ["bolsa_id", "user_id"];
+            isOneToOne: false;
+            referencedRelation: "uso_bolsas";
+            referencedColumns: ["bolsa_id", "user_id"];
+          },
+          {
+            foreignKeyName: "movimientos_bolsa_meta_id_user_id_fkey";
+            columns: ["meta_id", "user_id"];
+            isOneToOne: false;
+            referencedRelation: "metas_ahorro";
+            referencedColumns: ["id", "user_id"];
+          },
+          {
+            foreignKeyName: "movimientos_bolsa_periodo_origen_fkey";
+            columns: ["periodo_id", "user_id"];
+            isOneToOne: false;
+            referencedRelation: "cierre_periodos";
+            referencedColumns: ["periodo_id", "user_id"];
+          },
+          {
+            foreignKeyName: "movimientos_bolsa_periodo_origen_fkey";
+            columns: ["periodo_id", "user_id"];
+            isOneToOne: false;
+            referencedRelation: "disponible_periodo";
+            referencedColumns: ["periodo_id", "user_id"];
+          },
+          {
+            foreignKeyName: "movimientos_bolsa_periodo_origen_fkey";
+            columns: ["periodo_id", "user_id"];
+            isOneToOne: false;
+            referencedRelation: "periodos";
+            referencedColumns: ["id", "user_id"];
+          },
+        ];
+      };
       disponible_periodo: {
         Row: {
           aportes_presupuesto: number | null;
@@ -1441,7 +1599,9 @@ export type Database = {
           gastado: number | null;
           ingresos_presupuesto: number | null;
           periodo_id: string;
-          presupuesto: number;
+          presupuesto: number | null;
+          salario: number | null;
+          salario_presupuesto: number | null;
           user_id: string;
         };
         ComputedFields: never;
@@ -1601,26 +1761,7 @@ export type Database = {
       };
     };
     Functions: {
-      ajustar_presupuesto_periodo: {
-        Args: { p_ajuste: number; p_nota?: string; p_periodo_id: string };
-        Returns: {
-          cerrado_at: string | null;
-          created_at: string;
-          fecha_fin: string;
-          fecha_inicio: string;
-          id: string;
-          nota_presupuesto: string | null;
-          presupuesto: number;
-          resumen: Json | null;
-          user_id: string;
-        };
-        SetofOptions: {
-          from: "*";
-          to: "periodos";
-          isOneToOne: true;
-          isSetofReturn: false;
-        };
-      };
+      advertencia_sobrante: { Args: { p_fecha: string }; Returns: boolean };
       ajustar_saldo: {
         Args: { p_bolsa_id: string; p_fecha?: string; p_nota?: string; p_saldo_real: number };
         Returns: string;
@@ -1651,6 +1792,8 @@ export type Database = {
           medio_id: string | null;
           meta_id: string | null;
           nota: string | null;
+          origen_sobrante: string | null;
+          periodo_origen_id: string | null;
           regla_aporte_id: string | null;
           saldo_real: number | null;
           sentido: string;
@@ -1673,8 +1816,7 @@ export type Database = {
           fecha_fin: string;
           fecha_inicio: string;
           id: string;
-          nota_presupuesto: string | null;
-          presupuesto: number;
+          recerrado_at: string | null;
           resumen: Json | null;
           user_id: string;
         };
@@ -1693,8 +1835,7 @@ export type Database = {
           fecha_fin: string;
           fecha_inicio: string;
           id: string;
-          nota_presupuesto: string | null;
-          presupuesto: number;
+          recerrado_at: string | null;
           resumen: Json | null;
           user_id: string;
         };
@@ -1730,10 +1871,7 @@ export type Database = {
           fecha_inicio: string;
         }[];
       };
-      cambiar_presupuesto_defecto: {
-        Args: { p_actual?: boolean; p_hoy?: string; p_valor: number };
-        Returns: undefined;
-      };
+      categoria_salario_de: { Args: { p_user_id: string }; Returns: string };
       cerrar_periodo: {
         Args: { p_periodo_id: string };
         Returns: {
@@ -1742,8 +1880,7 @@ export type Database = {
           fecha_fin: string;
           fecha_inicio: string;
           id: string;
-          nota_presupuesto: string | null;
-          presupuesto: number;
+          recerrado_at: string | null;
           resumen: Json | null;
           user_id: string;
         };
@@ -1755,6 +1892,16 @@ export type Database = {
         };
       };
       cerrar_periodos_de: { Args: { p_hoy: string; p_user_id: string }; Returns: number };
+      configurar_salario: {
+        Args: {
+          p_actual?: boolean;
+          p_categoria_id?: string;
+          p_hoy?: string;
+          p_presupuesto: number;
+          p_salario: number;
+        };
+        Returns: undefined;
+      };
       confirmar_aporte: {
         Args: { p_en_adelante?: boolean; p_movimiento_id: string; p_valor?: number };
         Returns: {
@@ -1769,6 +1916,8 @@ export type Database = {
           medio_id: string | null;
           meta_id: string | null;
           nota: string | null;
+          origen_sobrante: string | null;
+          periodo_origen_id: string | null;
           regla_aporte_id: string | null;
           saldo_real: number | null;
           sentido: string;
@@ -1854,7 +2003,21 @@ export type Database = {
           id: string;
         }[];
       };
+      crear_salario_en: { Args: { p_inicio: string; p_user_id: string }; Returns: string };
+      destinar_sobrante: {
+        Args: {
+          p_bolsa_id?: string;
+          p_fecha?: string;
+          p_meta_id?: string;
+          p_nota?: string;
+          p_origen: string;
+          p_periodo_id: string;
+          p_valor: number;
+        };
+        Returns: string;
+      };
       dia_en_mes: { Args: { p_dia: number; p_mes: string }; Returns: string };
+      editar_destino: { Args: { p_movimiento_id: string; p_valor: number }; Returns: undefined };
       editar_meta: {
         Args: {
           p_afecta_presupuesto?: boolean;
@@ -1872,11 +2035,48 @@ export type Database = {
         };
         Returns: undefined;
       };
+      editar_salario: {
+        Args: {
+          p_desde_ahora?: boolean;
+          p_ingreso_id: string;
+          p_monto_presupuesto: number;
+          p_valor: number;
+        };
+        Returns: {
+          bolsa_id: string | null;
+          categoria_color: string | null;
+          categoria_icono: string | null;
+          categoria_id: string;
+          categoria_nombre: string;
+          created_at: string;
+          cuenta_estadisticas: boolean;
+          descripcion: string | null;
+          deuda_id: string | null;
+          es_salario: boolean;
+          fecha: string;
+          id: string;
+          monto_presupuesto: number | null;
+          prestamo_id: string | null;
+          subcategoria_id: string | null;
+          subcategoria_nombre: string | null;
+          suma_presupuesto: boolean;
+          titulo: string;
+          user_id: string;
+          valor: number;
+        };
+        SetofOptions: {
+          from: "*";
+          to: "ingresos";
+          isOneToOne: true;
+          isSetofReturn: false;
+        };
+      };
       eliminar_bolsa: {
         Args: { p_bolsa_id: string; p_destino?: string; p_fecha?: string };
         Returns: string;
       };
       eliminar_categoria: { Args: { p_id: string }; Returns: string };
+      eliminar_destino: { Args: { p_movimiento_id: string }; Returns: undefined };
       eliminar_forma_pago: { Args: { p_id: string }; Returns: string };
       eliminar_lugar: { Args: { p_id: string }; Returns: string };
       eliminar_meta: {
@@ -1906,6 +2106,10 @@ export type Database = {
       };
       exigir_datos_meta: {
         Args: { p_fecha_final: string; p_hoy: string; p_monto: number };
+        Returns: undefined;
+      };
+      exigir_datos_salario: {
+        Args: { p_presupuesto: number; p_salario: number };
         Returns: undefined;
       };
       exigir_nombre_bolsa_libre: {
@@ -1963,6 +2167,7 @@ export type Database = {
           isSetofReturn: false;
         };
       };
+      no_destinado: { Args: { p_origen: string; p_periodo_id: string }; Returns: number };
       normalizar_nombre: { Args: { texto: string }; Returns: string };
       omitir_aporte: {
         Args: { p_movimiento_id: string };
@@ -1978,6 +2183,8 @@ export type Database = {
           medio_id: string | null;
           meta_id: string | null;
           nota: string | null;
+          origen_sobrante: string | null;
+          periodo_origen_id: string | null;
           regla_aporte_id: string | null;
           saldo_real: number | null;
           sentido: string;
@@ -1993,6 +2200,25 @@ export type Database = {
         };
       };
       pausar_meta: { Args: { p_meta_id: string }; Returns: undefined };
+      periodo_cerrado: {
+        Args: { p_periodo_id: string };
+        Returns: {
+          cerrado_at: string | null;
+          created_at: string;
+          fecha_fin: string;
+          fecha_inicio: string;
+          id: string;
+          recerrado_at: string | null;
+          resumen: Json | null;
+          user_id: string;
+        };
+        SetofOptions: {
+          from: "*";
+          to: "periodos";
+          isOneToOne: true;
+          isSetofReturn: false;
+        };
+      };
       ponerse_al_dia: { Args: Record<PropertyKey, never>; Returns: Json };
       posibles_duplicados: {
         Args: { p_entidad: string };
@@ -2053,6 +2279,7 @@ export type Database = {
       registrar_alertas: { Args: { p_periodo_id: string }; Returns: number };
       registrar_alertas_en: { Args: { p_fecha: string; p_user_id: string }; Returns: number };
       renombrar_bolsa: { Args: { p_bolsa_id: string; p_nombre: string }; Returns: undefined };
+      resumen_completo: { Args: { p_periodo_id: string }; Returns: Json };
       resumen_dinero: { Args: { p_periodo_id: string }; Returns: Json };
       retirar_meta: {
         Args: {
@@ -2063,6 +2290,13 @@ export type Database = {
           p_valor: number;
         };
         Returns: string;
+      };
+      saldos_bolsa_al: {
+        Args: { p_fecha: string };
+        Returns: {
+          bolsa_id: string;
+          saldo: number;
+        }[];
       };
       sugerir_aporte: {
         Args: {
@@ -2108,6 +2342,25 @@ export type Database = {
           fecha_inicio: string;
           orden: number;
         }[];
+      };
+      volver_a_cerrar: {
+        Args: { p_periodo_id: string };
+        Returns: {
+          cerrado_at: string | null;
+          created_at: string;
+          fecha_fin: string;
+          fecha_inicio: string;
+          id: string;
+          recerrado_at: string | null;
+          resumen: Json | null;
+          user_id: string;
+        };
+        SetofOptions: {
+          from: "*";
+          to: "periodos";
+          isOneToOne: true;
+          isSetofReturn: false;
+        };
       };
     };
     Enums: {
