@@ -7,8 +7,8 @@ select is_empty($$
   select f from unnest(array[
     'public.crear_bolsa(text, bigint, date)', 'public.renombrar_bolsa(uuid, text)',
     'public.recargar_bolsa(uuid, bigint, date, text)', 'public.trasladar(uuid, uuid, bigint, date, text)',
+    -- cambiar_presupuesto_defecto y ajustar_presupuesto_periodo se quitaron en la Etapa 6A (issue #30).
     'public.eliminar_bolsa(uuid, uuid, date)', 'public.vista_previa_periodos(integer, date)',
-    'public.cambiar_presupuesto_defecto(bigint, boolean, date)', 'public.ajustar_presupuesto_periodo(uuid, bigint, text)',
     'public.sugerir_aporte(bigint, bigint, date, text, integer, date)',
     'public.crear_meta(text, text, bigint, date, bigint, bigint, text, integer, uuid, uuid, boolean, date)',
     'public.editar_meta(uuid, text, text, bigint, date, bigint, text, integer, uuid, uuid, boolean, date)',

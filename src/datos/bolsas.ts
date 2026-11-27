@@ -56,7 +56,16 @@ export function useBolsas() {
 }
 
 export type TipoMovimiento =
-  "gasto" | "ingreso" | "recarga" | "traslado" | "ajuste" | "saldo_inicial" | "aporte" | "retiro";
+  | "gasto"
+  | "ingreso"
+  | "recarga"
+  | "traslado"
+  | "ajuste"
+  | "saldo_inicial"
+  | "aporte"
+  | "retiro"
+  /** Destino del sobrante de un período cerrado (Etapa 6A). */
+  | "sobrante";
 
 export type Movimiento = {
   id: string;
@@ -89,6 +98,22 @@ export function useMovimientosBolsa(bolsaId: string) {
         valor: m.valor ?? 0,
         contraparte: m.contraparte,
       }));
+    },
+  });
+}
+
+/**
+ * Saldo de cada bolsa al final de un día (saldos_bolsa_al). Con el día antes del período en curso
+ * da «Viene del período anterior» (S6); se recalcula solo si llega un gasto atrasado.
+ */
+export function useSaldosAl(fecha: string | undefined) {
+  return useQuery({
+    queryKey: [...claveBolsas, "saldosAl", fecha],
+    enabled: Boolean(fecha),
+    queryFn: async (): Promise<Map<string, number>> => {
+      const { data, error } = await supabase.rpc("saldos_bolsa_al", { p_fecha: fecha! });
+      if (error) throw error;
+      return new Map(data.map((s) => [s.bolsa_id, s.saldo]));
     },
   });
 }

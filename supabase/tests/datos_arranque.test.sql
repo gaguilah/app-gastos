@@ -8,8 +8,8 @@ insert into auth.users (id, email) values
 
 select results_eq($$ select count(*)::int from public.perfiles where user_id = '00000000-0000-0000-0000-0000000000a1' $$,
   $$ values (1) $$, 'el usuario nuevo tiene su perfil');
-select results_eq($$ select idioma, dia_inicio, presupuesto_defecto from public.perfiles where user_id = '00000000-0000-0000-0000-0000000000a1' $$,
-  $$ values ('es'::text, 1::smallint, 0::bigint) $$, 'el perfil arranca en español, día 1 y presupuesto 0');
+select results_eq($$ select idioma, dia_inicio, salario_base, presupuesto_salario_base from public.perfiles where user_id = '00000000-0000-0000-0000-0000000000a1' $$,
+  $$ values ('es'::text, 1::smallint, 0::bigint, 0::bigint) $$, 'el perfil arranca en español, día 1 y salario base 0 (Etapa 6A)');
 select results_eq($$ select count(*)::int from public.categorias where user_id = '00000000-0000-0000-0000-0000000000a1' and tipo = 'gasto' $$,
   $$ values (12) $$, '12 categorías de gasto (incluye Gasto desconocido)');
 select results_eq($$ select count(*)::int from public.categorias where user_id = '00000000-0000-0000-0000-0000000000a1' and clave_sistema is not null $$,

@@ -31,8 +31,8 @@ select lives_ok($$
   insert into public.reglas_aporte (id, user_id, meta_id, valor, frecuencia, dia, bolsa_id, proxima_fecha) values
     ('00000000-0000-0000-0008-000000000001', '00000000-0000-0000-0000-0000000000a1', '00000000-0000-0000-0007-000000000001',
      200000, 'mensual', 15, '00000000-0000-0000-0003-000000000001', '2026-03-15');
-  insert into public.periodos (id, user_id, fecha_inicio, fecha_fin, presupuesto) values
-    ('00000000-0000-0000-0009-000000000001', '00000000-0000-0000-0000-0000000000a1', '2026-03-01', '2026-03-31', 2000000);
+  insert into public.periodos (id, user_id, fecha_inicio, fecha_fin) values
+    ('00000000-0000-0000-0009-000000000001', '00000000-0000-0000-0000-0000000000a1', '2026-03-01', '2026-03-31');
 $$, 'montaje: catálogos, regla periódica, deuda, meta, regla de aporte y período de A');
 
 -- 3.9 Lugares

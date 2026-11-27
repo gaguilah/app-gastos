@@ -147,8 +147,6 @@
       "traslado_misma_bolsa": "Elige una bolsa distinta.",
       "periodo_dia_invalido": "Elige un día entre 1 y 31.",
       "periodo_no_existe": "Ese período ya no existe.",
-      "periodo_cerrado": "Ese período ya cerró y no se puede ajustar.",
-      "presupuesto_valor_invalido": "El presupuesto no puede quedar por debajo de $0.",
       "ajuste_saldo_invalido": "Escribe un saldo de $0 o más.",
       "meta_no_existe": "Esa meta ya no existe.",
       "meta_monto_invalido": "El monto a alcanzar debe ser mayor que $0.",
@@ -158,7 +156,16 @@
       "aporte_origen_invalido": "Elige de dónde sale el aporte.",
       "aporte_afecta_desde_bolsa": "Un aporte desde una bolsa no afecta el presupuesto.",
       "aporte_no_existe": "Ese aporte ya no existe.",
-      "pendiente_ya_confirmado": "Ese aporte ya se confirmó u omitió."
+      "pendiente_ya_confirmado": "Ese aporte ya se confirmó u omitió.",
+      "periodo_abierto": "Ese período sigue abierto. Se puede destinar o volver a cerrar cuando termine.",
+      "salario_con_bolsa": "El salario no entra a ninguna bolsa.",
+      "salario_monto_invalido": "Lo que va al presupuesto debe estar entre $0 y el salario.",
+      "salario_duplicado": "Este período ya tiene salario. Edítalo y suma todos los pagos en uno solo.",
+      "ingreso_no_existe": "Ese ingreso ya no existe.",
+      "sobrante_origen_invalido": "Elige si destinas el sobrante del salario o el del presupuesto.",
+      "sobrante_destino_invalido": "Elige una bolsa o una meta.",
+      "sobrante_insuficiente": "No puedes destinar más de lo que sobró.",
+      "destino_no_existe": "Ese destino ya no existe."
     }
   },
   "selector": {
@@ -472,7 +479,8 @@
         "ajuste": "Ajuste de saldo",
         "saldo_inicial": "Saldo inicial",
         "aporte": "Aporte a ahorro",
-        "retiro": "Retiro de ahorro"
+        "retiro": "Retiro de ahorro",
+        "sobrante": "Sobrante del período"
       },
       "detalle": {
         "recarga": "recarga",
@@ -482,7 +490,8 @@
         "hacia": "hacia {{nombre}}",
         "aporte": "aporte a {{nombre}}",
         "retiro": "retiro de {{nombre}}"
-      }
+      },
+      "vieneAnterior": "Viene del período anterior"
     },
     "recargar": {
       "titulo": "Recargar {{nombre}}",
@@ -543,19 +552,14 @@
       "porcentaje": "{{porcentaje}} %"
     },
     "titulo": "Presupuesto y período",
-    "descripcion": "Cómo se abre y se mide cada período.",
+    "descripcion": "Tu presupuesto sale de tu salario y de los ingresos que suman.",
     "configuracion": "Configuración",
     "diaInicio": "Día de inicio",
     "diaInicioUno": "Día 1 · del 1 al fin de mes",
     "diaInicioOtro": "Día {{dia}} · del {{dia}} al {{anterior}} del mes siguiente",
     "cambiarDia": "Cambiar día de inicio",
-    "defecto": "Presupuesto por defecto",
-    "defectoAyuda": "Con este abre cada período",
-    "cambiarDefecto": "Cambiar presupuesto por defecto",
     "periodos": "Períodos",
-    "ajustar": "Ajustar este período",
-    "nota": "Ajuste: {{nota}}",
-    "conIngresos": "Presupuesto {{presupuesto}} + ingresos {{ingresos}}",
+    "conIngresos": "Salario {{salario}} + ingresos {{ingresos}}",
     "errorMensaje": "No pudimos cargar tu presupuesto. Nada se perdió; vuelve a intentarlo en un momento.",
     "guardado": "Listo, quedó guardado.",
     "columnas": {
@@ -563,14 +567,14 @@
       "presupuesto": "Presupuesto",
       "gastado": "Gastado",
       "uso": "Uso",
-      "estado": "Estado",
-      "acciones": "Acciones"
+      "estado": "Estado"
     },
     "estado": {
       "enCurso": "En curso",
       "dentro": "Dentro del presupuesto",
       "advertencia": "Advertencia",
-      "superado": "Superado"
+      "superado": "Superado",
+      "sinPresupuesto": "Sin presupuesto"
     },
     "dia": {
       "titulo": "Día de inicio del período",
@@ -588,27 +592,39 @@
       "mesCorto": "Si un mes no tiene ese día, el período empieza el último día de ese mes.",
       "previaError": "No pudimos calcular los períodos. Puedes guardar de todas formas."
     },
-    "defectoDialogo": {
-      "titulo": "Presupuesto por defecto",
-      "valor": "Valor",
-      "ayuda": "Es el presupuesto con el que abre cada período nuevo. El período actual no cambia.",
-      "usarEnActual": "Usar también en el período actual",
-      "requerido": "Escribe un valor de $0 o más."
-    },
-    "ajuste": {
-      "titulo": "Ajustar el período {{rango}}",
-      "valor": "Ajuste",
-      "ayudaValor": "Escribe un valor negativo para bajarlo, por ejemplo −100.000.",
-      "motivo": "Motivo (opcional)",
-      "base": "Presupuesto base",
-      "conAjuste": "Con el ajuste",
+    "sinPresupuesto": "Sin presupuesto · gastado {{gastado}}",
+    "ultimoDia": "Hoy se cierra el período, recuerda registrar todo.",
+    "enCurso": {
+      "titulo": "Período en curso",
+      "salario": "salario {{salario}}",
+      "salarioPresupuesto": "Del salario",
+      "ingresos": "Ingresos que suman",
+      "presupuesto": "Presupuesto",
       "gastado": "Gastado",
-      "quedarias": "Quedarías en {{nuevo}} % gastado, en vez de {{actual}} %.",
-      "soloEste": "Solo cambia este período. El presupuesto por defecto queda igual.",
-      "requerido": "Escribe un ajuste distinto de $0.",
-      "negativo": "El presupuesto no puede quedar por debajo de $0.",
-      "aplicar": "Aplicar ajuste"
-    }
+      "disponible": "Disponible"
+    },
+    "sinIngresos": {
+      "titulo": "Este período aún no tiene presupuesto.",
+      "mensaje": "Registra tu salario o un ingreso para tener presupuesto. Los gastos se registran igual ({{gastado}} hasta ahora), pero sin % de uso ni alertas.",
+      "accion": "Registrar ingreso"
+    },
+    "salario": {
+      "titulo": "Salario base",
+      "sinConfigurar": "Sin configurar: los períodos empiezan sin salario.",
+      "resumen": "{{presupuesto}} al presupuesto",
+      "configurar": "Configurar salario",
+      "cambiar": "Cambiar salario",
+      "salario": "Salario del período",
+      "ayuda": "Cada período empieza con este salario. Si te pagan por quincenas o semanas, suma todos los pagos del período. Con $0 no se crea.",
+      "salarioRequerido": "Escribe el salario, o $0 si no quieres que se cree.",
+      "montoPresupuesto": "Para el presupuesto",
+      "montoPresupuestoAyuda": "Lo demás queda como sobrante del salario.",
+      "montoInvalido": "Escribe un monto de $0 hasta el salario.",
+      "categoria": "Categoría del salario",
+      "actual": "Usar también en el período actual",
+      "actualAyuda": "Crea o actualiza el salario del período en curso. Los cerrados no cambian."
+    },
+    "verCierre": "Ver el cierre de {{rango}}"
   },
   "ingresos": {
     "titulo": "Ingresos",
@@ -621,7 +637,7 @@
     "errorMensaje": "No pudimos cargar tus ingresos. Nada se perdió; vuelve a intentarlo en un momento.",
     "vacio": {
       "titulo": "Aún no hay ingresos en este período",
-      "mensaje": "Registra un ingreso y elige si entra al presupuesto o a una bolsa."
+      "mensaje": "Registra tu salario o un ingreso. Tú eliges si entra a una bolsa y si suma al presupuesto."
     },
     "kpi": {
       "total": "Total del período",
@@ -638,7 +654,10 @@
     },
     "destino": {
       "presupuesto": "Presupuesto",
-      "hacia": "→ {{destino}}"
+      "hacia": "→ {{destino}}",
+      "salario": "Salario",
+      "ninguno": "Sin bolsa",
+      "bolsaYPresupuesto": "{{nombre}} + presupuesto"
     },
     "origen": {
       "prestamo": "Préstamo",
@@ -652,7 +671,8 @@
     },
     "avisos": {
       "guardado": "Ingreso guardado.",
-      "eliminado": "Ingreso eliminado."
+      "eliminado": "Ingreso eliminado.",
+      "sobranteNegativo": "Quedó guardado, pero el sobrante de un período cerrado quedó en negativo. Revisa sus destinos en Presupuesto."
     },
     "formulario": {
       "nuevo": "Nuevo ingreso",
@@ -663,9 +683,7 @@
       "categoria": "Categoría de ingreso",
       "destino": "Destino",
       "descripcion": "Descripción (opcional)",
-      "presupuesto": "Presupuesto del período",
-      "presupuestoAyuda": "Suma al disponible",
-      "efectoPresupuesto": "Suma al disponible del período. Ninguna bolsa cambia.",
+      "efectoPresupuesto": "Suma al presupuesto del período. Ninguna bolsa cambia.",
       "efectoBolsa": "Entra a la bolsa {{nombre}}. El presupuesto del período no cambia.",
       "guardar": "Guardar ingreso",
       "guardarCambios": "Guardar cambios",
@@ -675,8 +693,23 @@
       "fechaRequerida": "Elige una fecha.",
       "fechaFutura": "La fecha no puede ser futura.",
       "categoriaRequerida": "Elige una categoría.",
-      "destinoRequerido": "Elige a dónde entra el dinero.",
-      "descripcionLarga": "Máximo 500 caracteres."
+      "destinoRequerido": "Elige una bolsa o «Ninguna bolsa».",
+      "descripcionLarga": "Máximo 500 caracteres.",
+      "esSalario": "Es salario",
+      "salario": "Salario del período",
+      "ayudaSalario": "Si te pagan por quincenas o semanas, suma todos los pagos del período.",
+      "montoPresupuesto": "Para el presupuesto",
+      "montoPresupuestoAyuda": "Lo demás queda como sobrante del salario. No entra a ninguna bolsa.",
+      "montoInvalido": "Escribe un valor entre $0 y el salario.",
+      "sinBolsa": "Ninguna bolsa",
+      "sinBolsaAyuda": "Por ejemplo, si llega a tu cuenta del banco",
+      "sumaPresupuesto": "Suma al presupuesto",
+      "efectoSalario": "Suma {{monto}} al presupuesto del período. {{resto}} quedan como sobrante del salario.",
+      "efectoNinguno": "No cambia el presupuesto ni las bolsas. Cuenta en tus estadísticas de ingresos.",
+      "efectoBolsaPresupuesto": "Entra a la bolsa {{nombre}} y suma al presupuesto del período.",
+      "alcance": "¿Desde cuándo?",
+      "alcancePeriodo": "Solo este período",
+      "alcanceBase": "Desde ahora (nuevo salario base)"
     },
     "detalle": {
       "titulo": "Detalle del ingreso",
@@ -685,7 +718,10 @@
       "efecto": "Efecto",
       "efectoPresupuesto": "Sumó {{valor}} al disponible del período",
       "efectoBolsa": "Sumó {{valor}} a {{nombre}}",
-      "descripcion": "Descripción"
+      "descripcion": "Descripción",
+      "efectoSalario": "Sumó {{monto}} al presupuesto; {{resto}} quedaron como sobrante del salario",
+      "efectoBolsaPresupuesto": "Sumó {{valor}} a {{nombre}} y al presupuesto del período",
+      "efectoNinguno": "No cambió el presupuesto ni las bolsas"
     },
     "eliminar": {
       "titulo": "¿Eliminar «{{titulo}}»?",
@@ -890,6 +926,78 @@
       "destino": "Pasar el dinero a",
       "eliminar": "Eliminar meta",
       "elegirDestino": "Elige a qué bolsa pasa el dinero."
+    }
+  },
+  "cierre": {
+    "titulo": "Cierre del período",
+    "volver": "Volver a Presupuesto",
+    "estado": {
+      "cerrado": "Cerrado el {{fecha}}.",
+      "recerrado": "Cerrado de nuevo el {{fecha}}.",
+      "abierto": "Abierto: se cierra solo el {{fecha}}. Cuando se cierre podrás destinar los sobrantes."
+    },
+    "salario": {
+      "titulo": "Sobrante del salario",
+      "detalle": "Salario {{salario}} − {{presupuesto}} al presupuesto"
+    },
+    "presupuesto": {
+      "titulo": "Sobrante del presupuesto",
+      "detalle": "Presupuesto {{presupuesto}} − usado {{usado}}"
+    },
+    "excedido": "Te pasaste por {{valor}}. No se descuenta del sobrante del salario.",
+    "destinado": "Destinado",
+    "noDestinado": "No destinado",
+    "negativo": "Algo registrado después dejó este sobrante en negativo. Edita o quita un destino para corregirlo.",
+    "bolsas": {
+      "titulo": "Disponible en cada bolsa",
+      "ayuda": "Se queda en cada bolsa y pasa al período nuevo.",
+      "vacio": "Aparece cuando el período se cierra."
+    },
+    "destinos": {
+      "titulo": "Destinos",
+      "vacio": "Aún no has destinado nada.",
+      "salario": "Del salario",
+      "presupuesto": "Del presupuesto",
+      "editar": "Editar valor",
+      "eliminar": "Quitar destino"
+    },
+    "destinar": "Destinar",
+    "volverACerrar": "Volver a cerrar",
+    "volviendo": "Cerrando…",
+    "avisos": {
+      "destinado": "Listo, quedó destinado.",
+      "recerrado": "Listo, el cierre quedó al día.",
+      "guardado": "Listo, quedó guardado.",
+      "eliminado": "Listo, volvió a «No destinado»."
+    },
+    "dialogo": {
+      "titulo": "Destinar sobrante",
+      "origen": "¿Qué sobrante?",
+      "origenSalario": "Del salario",
+      "origenPresupuesto": "Del presupuesto",
+      "quedan": "quedan {{valor}}",
+      "destino": "Destino {{n}}",
+      "elegir": "Elige una meta o una bolsa",
+      "metas": "Metas",
+      "bolsas": "Bolsas",
+      "valor": "Valor del destino {{n}}",
+      "agregar": "Agregar otro destino",
+      "quitar": "Quitar el destino {{n}}",
+      "restante": "Queda sin destinar: {{valor}}",
+      "excede": "Te pasas por {{valor}} de lo que sobra.",
+      "destinoRequerido": "Elige a dónde va.",
+      "valorRequerido": "Escribe un valor mayor que $0.",
+      "sinSobrante": "No queda nada de este sobrante por destinar."
+    },
+    "editar": {
+      "titulo": "Editar destino",
+      "valor": "Valor destinado a {{nombre}}",
+      "valorRequerido": "Escribe un valor mayor que $0."
+    },
+    "eliminar": {
+      "titulo": "¿Quitar este destino?",
+      "descripcion": "{{valor}} sale de {{nombre}} y vuelve a «No destinado».",
+      "quitar": "Quitar"
     }
   }
 }

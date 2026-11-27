@@ -40,9 +40,9 @@ select gen_random_uuid(), u.id, u.id::text,
   from auth.users u
  where u.email like '%@prueba.local';
 
--- Datos inventados del usuario A: un período, un lugar, un gasto y un ingreso.
-insert into public.periodos (user_id, fecha_inicio, fecha_fin, presupuesto)
-values ('11111111-1111-1111-1111-111111111111', '2026-11-01', '2026-11-30', 2000000);
+-- Datos inventados del usuario A: un período, un lugar, un gasto y su salario (2.000.000 al presupuesto).
+insert into public.periodos (user_id, fecha_inicio, fecha_fin)
+values ('11111111-1111-1111-1111-111111111111', '2026-11-01', '2026-11-30');
 
 insert into public.lugares (user_id, nombre)
 values ('11111111-1111-1111-1111-111111111111', 'Tienda de la esquina');
@@ -53,6 +53,22 @@ select '11111111-1111-1111-1111-111111111111', 'Mercado de la semana', '2026-11-
        (select id from public.lugares where user_id = '11111111-1111-1111-1111-111111111111'),
        (select id from public.bolsas where user_id = '11111111-1111-1111-1111-111111111111' and nombre = 'Efectivo');
 
-insert into public.ingresos (user_id, titulo, fecha, valor, categoria_id)
-select '11111111-1111-1111-1111-111111111111', 'Salario de noviembre', '2026-11-01', 3500000,
+insert into public.ingresos (user_id, titulo, fecha, valor, es_salario, monto_presupuesto, categoria_id)
+select '11111111-1111-1111-1111-111111111111', 'Salario de noviembre', '2026-11-01', 3500000, true, 2000000,
        (select id from public.categorias where user_id = '11111111-1111-1111-1111-111111111111' and nombre = 'Salario');
+
+-- Etapa 6A: octubre cerrado para probar el cierre (salario 4.000.000 con 3.000.000 al presupuesto,
+-- gastado 2.500.000 con Débito, sin bolsa): sobrante del salario 1.000.000 y del presupuesto 500.000.
+insert into public.periodos (user_id, fecha_inicio, fecha_fin)
+values ('11111111-1111-1111-1111-111111111111', '2026-10-01', '2026-10-31');
+
+insert into public.ingresos (user_id, titulo, fecha, valor, es_salario, monto_presupuesto, categoria_id)
+select '11111111-1111-1111-1111-111111111111', 'Salario de octubre', '2026-10-01', 4000000, true, 3000000,
+       (select id from public.categorias where user_id = '11111111-1111-1111-1111-111111111111' and nombre = 'Salario');
+
+insert into public.gastos (user_id, titulo, fecha, valor, categoria_id, medio_id)
+select '11111111-1111-1111-1111-111111111111', 'Gastos de octubre', '2026-10-15', 2500000,
+       (select id from public.categorias where user_id = '11111111-1111-1111-1111-111111111111' and nombre = 'Alimentación'),
+       (select id from public.formas_pago where user_id = '11111111-1111-1111-1111-111111111111' and nombre = 'Débito');
+
+select public.cerrar_periodos_de('11111111-1111-1111-1111-111111111111', '2026-11-01');

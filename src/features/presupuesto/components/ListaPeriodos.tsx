@@ -1,7 +1,6 @@
-import { SlidersHorizontal } from "lucide-react";
+import { Link } from "react-router";
 import { useTranslation } from "react-i18next";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -19,13 +18,12 @@ import { estadoPeriodo, varianteEstado } from "../estado";
 
 type Props = {
   periodos: Periodo[];
-  /** Id del período en curso: el único con «Ajustar este período». */
+  /** Id del período en curso. */
   enCursoId?: string;
-  alAjustar: (periodo: Periodo) => void;
 };
 
 /** Períodos del más reciente al más antiguo: tabla en computador, tarjetas en móvil y tablet. */
-export function ListaPeriodos({ periodos, enCursoId, alAjustar }: Props) {
+export function ListaPeriodos({ periodos, enCursoId }: Props) {
   const { t, i18n } = useTranslation();
   const esComputador = useEsComputador();
 
@@ -33,30 +31,40 @@ export function ListaPeriodos({ periodos, enCursoId, alAjustar }: Props) {
     const estado = estadoPeriodo(p, p.id === enCursoId);
     return <Badge variant={varianteEstado[estado]}>{t(`presupuesto.estado.${estado}`)}</Badge>;
   };
+  // Cada período lleva a su cierre (Etapa 6A): el rango es el enlace.
+  const enlace = (p: Periodo, clase = "") => {
+    const rango = rangoPeriodo(p.inicio, p.fin, i18n.language);
+    return (
+      <Link
+        to={`/presupuesto/${p.id}`}
+        aria-label={t("presupuesto.verCierre", { rango })}
+        className={`text-title text-primary underline-offset-4 hover:underline ${clase}`}
+      >
+        {rango}
+      </Link>
+    );
+  };
+  // Sin ingresos al presupuesto no hay % de uso (decisión 4).
+  const barra = (p: Periodo, conDetalle: boolean) =>
+    p.presupuesto > 0 ? (
+      <BarraPresupuesto usado={p.usado} base={p.presupuesto} conDetalle={conDetalle} />
+    ) : (
+      <span className="text-body-sm text-muted-foreground">
+        {t("presupuesto.sinPresupuesto", { gastado: formatearPesos(p.usado) })}
+      </span>
+    );
   const detalle = (p: Periodo) => (
     <>
       {p.ingresosPresupuesto > 0 && (
         <span className="block text-body-sm text-muted-foreground">
           {t("presupuesto.conIngresos", {
-            presupuesto: formatearPesos(p.presupuesto),
+            salario: formatearPesos(p.salarioPresupuesto),
             ingresos: formatearPesos(p.ingresosPresupuesto),
           })}
         </span>
       )}
-      {p.nota && (
-        <span className="block text-body-sm text-muted-foreground">
-          {t("presupuesto.nota", { nota: p.nota })}
-        </span>
-      )}
     </>
   );
-  const ajustar = (p: Periodo) =>
-    p.id === enCursoId && (
-      <Button variant="secondary" onClick={() => alAjustar(p)}>
-        <SlidersHorizontal aria-hidden="true" />
-        {t("presupuesto.ajustar")}
-      </Button>
-    );
 
   if (esComputador) {
     return (
@@ -69,29 +77,23 @@ export function ListaPeriodos({ periodos, enCursoId, alAjustar }: Props) {
               <TableHead className="text-right">{t("presupuesto.columnas.gastado")}</TableHead>
               <TableHead className="w-1/4">{t("presupuesto.columnas.uso")}</TableHead>
               <TableHead>{t("presupuesto.columnas.estado")}</TableHead>
-              <TableHead>
-                <span className="sr-only">{t("presupuesto.columnas.acciones")}</span>
-              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {periodos.map((p) => (
               <TableRow key={p.id}>
                 <TableCell>
-                  <span className="text-title">{rangoPeriodo(p.inicio, p.fin, i18n.language)}</span>
+                  {enlace(p, "whitespace-nowrap")}
                   {detalle(p)}
                 </TableCell>
                 <TableCell className="text-right font-mono tabular-nums">
-                  {formatearPesos(p.base)}
+                  {formatearPesos(p.presupuesto)}
                 </TableCell>
                 <TableCell className="text-right font-mono tabular-nums">
                   {formatearPesos(p.usado)}
                 </TableCell>
-                <TableCell>
-                  <BarraPresupuesto usado={p.usado} base={p.base} conDetalle={false} />
-                </TableCell>
+                <TableCell>{barra(p, false)}</TableCell>
                 <TableCell>{insignia(p)}</TableCell>
-                <TableCell className="text-right">{ajustar(p)}</TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -106,13 +108,12 @@ export function ListaPeriodos({ periodos, enCursoId, alAjustar }: Props) {
         <li key={p.id} className="flex flex-col gap-sm rounded-card border bg-card p-md">
           <div className="flex flex-wrap items-start justify-between gap-sm">
             <div className="flex min-w-0 flex-col">
-              <span className="text-title">{rangoPeriodo(p.inicio, p.fin, i18n.language)}</span>
+              {enlace(p)}
               {detalle(p)}
             </div>
             {insignia(p)}
           </div>
-          <BarraPresupuesto usado={p.usado} base={p.base} />
-          {ajustar(p)}
+          {barra(p, true)}
         </li>
       ))}
     </ul>

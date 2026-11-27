@@ -1,6 +1,6 @@
 -- 3.2 Alertas de presupuesto: umbrales 70 a 100 cada 5 % y "superado" (101), una vez por período.
 -- Etapa 3, issue #8 (supuesto 8). Porcentaje = (base − disponible) × 100 ÷ base, en enteros,
--- con base = presupuesto + ingresos a presupuesto. Fechas fijas.
+-- con base = presupuesto (parte del salario + ingresos que suman, Etapa 6A). Fechas fijas.
 begin;
 select plan(13);
 
@@ -14,14 +14,32 @@ insert into public.bolsas (id, user_id, nombre) values
   ('00000000-0000-0000-0003-000000000001', '00000000-0000-0000-0000-0000000000a1', 'Bolsa de la meta');
 insert into public.metas_ahorro (id, user_id, nombre, monto_meta, fecha_final, bolsa_id) values
   ('00000000-0000-0000-0007-000000000001', '00000000-0000-0000-0000-0000000000a1', 'Viaje', 3000000, '2027-12-31', '00000000-0000-0000-0003-000000000001');
-insert into public.periodos (id, user_id, fecha_inicio, fecha_fin, presupuesto) values
-  ('00000000-0000-0000-0009-000000000011', '00000000-0000-0000-0000-0000000000a1', '2026-11-01', '2026-11-30', 1000000),
-  ('00000000-0000-0000-0009-000000000012', '00000000-0000-0000-0000-0000000000a1', '2026-12-01', '2026-12-31', 1000000),
-  ('00000000-0000-0000-0009-000000000013', '00000000-0000-0000-0000-0000000000a1', '2027-01-01', '2027-01-31', 0),
-  ('00000000-0000-0000-0009-000000000014', '00000000-0000-0000-0000-0000000000a1', '2027-02-01', '2027-02-28', 1000000),
-  ('00000000-0000-0000-0009-000000000015', '00000000-0000-0000-0000-0000000000a1', '2027-03-01', '2027-03-31', 1000000),
-  ('00000000-0000-0000-0009-000000000016', '00000000-0000-0000-0000-0000000000a1', '2027-04-01', '2027-04-30', 2000000),
-  ('00000000-0000-0000-0009-000000000017', '00000000-0000-0000-0000-0000000000a1', '2027-05-01', '2027-05-31', 1000000);
+insert into public.periodos (id, user_id, fecha_inicio, fecha_fin) values
+  ('00000000-0000-0000-0009-000000000011', '00000000-0000-0000-0000-0000000000a1', '2026-11-01', '2026-11-30'),
+  ('00000000-0000-0000-0009-000000000012', '00000000-0000-0000-0000-0000000000a1', '2026-12-01', '2026-12-31'),
+  ('00000000-0000-0000-0009-000000000013', '00000000-0000-0000-0000-0000000000a1', '2027-01-01', '2027-01-31'),
+  ('00000000-0000-0000-0009-000000000014', '00000000-0000-0000-0000-0000000000a1', '2027-02-01', '2027-02-28'),
+  ('00000000-0000-0000-0009-000000000015', '00000000-0000-0000-0000-0000000000a1', '2027-03-01', '2027-03-31'),
+  ('00000000-0000-0000-0009-000000000016', '00000000-0000-0000-0000-0000000000a1', '2027-04-01', '2027-04-30'),
+  ('00000000-0000-0000-0009-000000000017', '00000000-0000-0000-0000-0000000000a1', '2027-05-01', '2027-05-31');
+insert into public.ingresos (user_id, titulo, fecha, valor, categoria_id, es_salario, monto_presupuesto)
+select '00000000-0000-0000-0000-0000000000a1', 'Salario', '2026-11-01', 1000000, c.id, true, 1000000 from public.categorias c
+ where c.user_id = '00000000-0000-0000-0000-0000000000a1' and c.tipo = 'ingreso' and c.padre_id is null order by c.created_at limit 1;
+insert into public.ingresos (user_id, titulo, fecha, valor, categoria_id, es_salario, monto_presupuesto)
+select '00000000-0000-0000-0000-0000000000a1', 'Salario', '2026-12-01', 1000000, c.id, true, 1000000 from public.categorias c
+ where c.user_id = '00000000-0000-0000-0000-0000000000a1' and c.tipo = 'ingreso' and c.padre_id is null order by c.created_at limit 1;
+insert into public.ingresos (user_id, titulo, fecha, valor, categoria_id, es_salario, monto_presupuesto)
+select '00000000-0000-0000-0000-0000000000a1', 'Salario', '2027-02-01', 1000000, c.id, true, 1000000 from public.categorias c
+ where c.user_id = '00000000-0000-0000-0000-0000000000a1' and c.tipo = 'ingreso' and c.padre_id is null order by c.created_at limit 1;
+insert into public.ingresos (user_id, titulo, fecha, valor, categoria_id, es_salario, monto_presupuesto)
+select '00000000-0000-0000-0000-0000000000a1', 'Salario', '2027-03-01', 1000000, c.id, true, 1000000 from public.categorias c
+ where c.user_id = '00000000-0000-0000-0000-0000000000a1' and c.tipo = 'ingreso' and c.padre_id is null order by c.created_at limit 1;
+insert into public.ingresos (user_id, titulo, fecha, valor, categoria_id, es_salario, monto_presupuesto)
+select '00000000-0000-0000-0000-0000000000a1', 'Salario', '2027-04-01', 2000000, c.id, true, 2000000 from public.categorias c
+ where c.user_id = '00000000-0000-0000-0000-0000000000a1' and c.tipo = 'ingreso' and c.padre_id is null order by c.created_at limit 1;
+insert into public.ingresos (user_id, titulo, fecha, valor, categoria_id, es_salario, monto_presupuesto)
+select '00000000-0000-0000-0000-0000000000a1', 'Salario', '2027-05-01', 1000000, c.id, true, 1000000 from public.categorias c
+ where c.user_id = '00000000-0000-0000-0000-0000000000a1' and c.tipo = 'ingreso' and c.padre_id is null order by c.created_at limit 1;
 
 set local role authenticated;
 set local request.jwt.claims = '{"sub":"00000000-0000-0000-0000-0000000000a1","role":"authenticated"}';
@@ -75,16 +93,16 @@ select is((select u from umbrales where periodo_id = '00000000-0000-0000-0009-00
 -- Marzo: un ingreso a presupuesto baja el porcentaje y borrar el gasto no borra avisos.
 insert into public.gastos (id, titulo, fecha, valor, categoria_id, medio_id) values
   ('00000000-0000-0000-0011-000000000002', 'G', '2027-03-05', 800000, '00000000-0000-0000-0001-000000000001', '00000000-0000-0000-0002-000000000001');
-insert into public.ingresos (titulo, fecha, valor, categoria_id)
-values ('Salario', '2027-03-10', 500000, '00000000-0000-0000-0001-000000000002');
+insert into public.ingresos (titulo, fecha, valor, categoria_id, suma_presupuesto)
+values ('Extra', '2027-03-10', 500000, '00000000-0000-0000-0001-000000000002', true);
 delete from public.gastos where id = '00000000-0000-0000-0011-000000000002';
 select is((select u from umbrales where periodo_id = '00000000-0000-0000-0009-000000000015'), '{70,75,80}'::smallint[],
   'un umbral avisado se queda aunque baje el porcentaje o se borre el gasto');
 
--- Abril: bajar el presupuesto del período también evalúa.
+-- Abril: bajar la parte del salario para el presupuesto también evalúa.
 insert into public.gastos (titulo, fecha, valor, categoria_id, medio_id) values
   ('G', '2027-04-05', 1500000, '00000000-0000-0000-0001-000000000001', '00000000-0000-0000-0002-000000000001');
-update public.periodos set presupuesto = 1600000 where id = '00000000-0000-0000-0009-000000000016';
+update public.ingresos set monto_presupuesto = 1600000 where es_salario and fecha = '2027-04-01';
 select is((select u from umbrales where periodo_id = '00000000-0000-0000-0009-000000000016'), '{70,75,80,85,90}'::smallint[],
   'bajar el presupuesto de 2.000.000 a 1.600.000 con 1.500.000 gastado avisa hasta el 90');
 

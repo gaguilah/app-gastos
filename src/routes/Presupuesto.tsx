@@ -1,17 +1,17 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { EstadoCarga, EstadoError } from "@/components/shared/Estado";
-import { periodoEnCurso, usePresupuesto, type Periodo } from "@/datos/presupuesto";
+import { periodoEnCurso, usePresupuesto } from "@/datos/presupuesto";
 import { diaBogota } from "@/dominio/fechas";
-import { DialogoAjustarPeriodo } from "@/features/presupuesto/components/DialogoAjustarPeriodo";
 import { DialogoDiaInicio } from "@/features/presupuesto/components/DialogoDiaInicio";
-import { DialogoPresupuestoDefecto } from "@/features/presupuesto/components/DialogoPresupuestoDefecto";
+import { DialogoSalarioBase } from "@/features/presupuesto/components/DialogoSalarioBase";
 import { ListaPeriodos } from "@/features/presupuesto/components/ListaPeriodos";
 import { TarjetaConfiguracion } from "@/features/presupuesto/components/TarjetaConfiguracion";
+import { TarjetaPeriodoEnCurso } from "@/features/presupuesto/components/TarjetaPeriodoEnCurso";
 
-type Abierta = { accion: "dia" } | { accion: "defecto" } | { accion: "ajustar"; periodo: Periodo };
+type Abierta = "dia" | "salario";
 
-/** Día de inicio, presupuesto por defecto y lista de períodos con su uso (3.1, 3.2). */
+/** Período en curso, salario base, día de inicio y lista de períodos con su uso (3.1, 3.2, 6A). */
 export function Presupuesto() {
   const { t } = useTranslation();
   const consulta = usePresupuesto();
@@ -36,27 +36,25 @@ export function Presupuesto() {
           alReintentar={() => void consulta.refetch()}
         />
       ) : (
-        <>
+        <div className="grid items-start gap-lg md:grid-cols-2">
+          {enCurso && <TarjetaPeriodoEnCurso periodo={enCurso} hoy={hoy} />}
           <TarjetaConfiguracion
             diaInicio={datos!.diaInicio}
-            presupuestoDefecto={datos!.presupuestoDefecto}
-            alCambiarDia={() => setAbierta({ accion: "dia" })}
-            alCambiarDefecto={() => setAbierta({ accion: "defecto" })}
+            salarioBase={datos!.salarioBase}
+            presupuestoSalarioBase={datos!.presupuestoSalarioBase}
+            alCambiarDia={() => setAbierta("dia")}
+            alCambiarSalario={() => setAbierta("salario")}
           />
-          <section aria-labelledby="titulo-periodos" className="flex flex-col gap-md">
+          <section aria-labelledby="titulo-periodos" className="flex flex-col gap-md md:col-span-2">
             <h2 id="titulo-periodos" className="text-headline-sm">
               {t("presupuesto.periodos")}
             </h2>
-            <ListaPeriodos
-              periodos={datos!.periodos}
-              enCursoId={enCurso?.id}
-              alAjustar={(periodo) => setAbierta({ accion: "ajustar", periodo })}
-            />
+            <ListaPeriodos periodos={datos!.periodos} enCursoId={enCurso?.id} />
           </section>
-        </>
+        </div>
       )}
 
-      {datos && abierta?.accion === "dia" && (
+      {datos && abierta === "dia" && (
         <DialogoDiaInicio
           abierta
           alCambiar={cerrar}
@@ -64,16 +62,13 @@ export function Presupuesto() {
           diaActual={datos.diaInicio}
         />
       )}
-      {datos && abierta?.accion === "defecto" && (
-        <DialogoPresupuestoDefecto
+      {datos && abierta === "salario" && (
+        <DialogoSalarioBase
           abierta
           alCambiar={cerrar}
-          valorActual={datos.presupuestoDefecto}
-          hayPeriodoEnCurso={Boolean(enCurso)}
+          datos={datos}
+          conPeriodoActual={Boolean(enCurso)}
         />
-      )}
-      {abierta?.accion === "ajustar" && (
-        <DialogoAjustarPeriodo abierta alCambiar={cerrar} periodo={abierta.periodo} />
       )}
     </main>
   );

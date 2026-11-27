@@ -7,8 +7,11 @@ select plan(35);
 insert into auth.users (id, email) values
   ('00000000-0000-0000-0000-0000000000a1', 'a@prueba.local'),
   ('00000000-0000-0000-0000-0000000000b2', 'b@prueba.local');
-insert into public.periodos (user_id, fecha_inicio, fecha_fin, presupuesto) values
-  ('00000000-0000-0000-0000-0000000000a1', '2026-11-01', '2026-11-30', 1000000);
+insert into public.periodos (user_id, fecha_inicio, fecha_fin) values
+  ('00000000-0000-0000-0000-0000000000a1', '2026-11-01', '2026-11-30');
+insert into public.ingresos (user_id, titulo, fecha, valor, categoria_id, es_salario, monto_presupuesto)
+select '00000000-0000-0000-0000-0000000000a1', 'Salario', '2026-11-01', 1000000, c.id, true, 1000000 from public.categorias c
+ where c.user_id = '00000000-0000-0000-0000-0000000000a1' and c.tipo = 'ingreso' and c.padre_id is null order by c.created_at limit 1;
 
 create temp table ids (nombre text primary key, id uuid);
 grant all on ids to authenticated;

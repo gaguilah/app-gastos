@@ -5,13 +5,14 @@ const periodo = (usado: number, base = 1000): Periodo => ({
   id: "p",
   inicio: "2026-11-01",
   fin: "2026-11-30",
-  presupuesto: base,
+  salario: base,
+  salarioPresupuesto: base,
   ingresosPresupuesto: 0,
-  base,
+  presupuesto: base,
   usado,
   disponible: base - usado,
   cerrado: false,
-  nota: null,
+  recerradoAt: null,
 });
 
 describe("estadoPeriodo", () => {
@@ -25,5 +26,10 @@ describe("estadoPeriodo", () => {
   it("el período en curso dice «En curso» salvo que esté superado", () => {
     expect(estadoPeriodo(periodo(900), true)).toBe("enCurso");
     expect(estadoPeriodo(periodo(1010), true)).toBe("superado");
+  });
+
+  it("sin presupuesto (sin ingresos) no hay % ni estado de uso, ni en curso (decisión 4)", () => {
+    expect(estadoPeriodo(periodo(500, 0), false)).toBe("sinPresupuesto");
+    expect(estadoPeriodo(periodo(500, 0), true)).toBe("enCurso");
   });
 });

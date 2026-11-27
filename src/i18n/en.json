@@ -147,8 +147,6 @@
       "traslado_misma_bolsa": "Choose a different wallet.",
       "periodo_dia_invalido": "Choose a day between 1 and 31.",
       "periodo_no_existe": "That period no longer exists.",
-      "periodo_cerrado": "That period is closed and can’t be adjusted.",
-      "presupuesto_valor_invalido": "The budget can’t go below $0.",
       "ajuste_saldo_invalido": "Enter a balance of $0 or more.",
       "meta_no_existe": "That goal no longer exists.",
       "meta_monto_invalido": "The target amount must be greater than $0.",
@@ -158,7 +156,16 @@
       "aporte_origen_invalido": "Choose where the contribution comes from.",
       "aporte_afecta_desde_bolsa": "A contribution from a wallet doesn’t affect the budget.",
       "aporte_no_existe": "That contribution no longer exists.",
-      "pendiente_ya_confirmado": "That contribution was already confirmed or skipped."
+      "pendiente_ya_confirmado": "That contribution was already confirmed or skipped.",
+      "periodo_abierto": "That period is still open. You can allocate or close it again once it ends.",
+      "salario_con_bolsa": "Your salary doesn't go into any wallet.",
+      "salario_monto_invalido": "The amount for the budget must be between $0 and your salary.",
+      "salario_duplicado": "This period already has a salary. Edit it and add up all payments in one.",
+      "ingreso_no_existe": "That income no longer exists.",
+      "sobrante_origen_invalido": "Choose whether you're allocating the salary or the budget left over.",
+      "sobrante_destino_invalido": "Choose a wallet or a goal.",
+      "sobrante_insuficiente": "You can't allocate more than what was left over.",
+      "destino_no_existe": "That allocation no longer exists."
     }
   },
   "selector": {
@@ -472,7 +479,8 @@
         "ajuste": "Balance adjustment",
         "saldo_inicial": "Opening balance",
         "aporte": "Savings contribution",
-        "retiro": "Savings withdrawal"
+        "retiro": "Savings withdrawal",
+        "sobrante": "Period left over"
       },
       "detalle": {
         "recarga": "top-up",
@@ -482,7 +490,8 @@
         "hacia": "to {{nombre}}",
         "aporte": "contribution to {{nombre}}",
         "retiro": "withdrawal from {{nombre}}"
-      }
+      },
+      "vieneAnterior": "Carried from last period"
     },
     "recargar": {
       "titulo": "Top up {{nombre}}",
@@ -543,19 +552,14 @@
       "porcentaje": "{{porcentaje}} %"
     },
     "titulo": "Budget and period",
-    "descripcion": "How each period opens and is measured.",
+    "descripcion": "Your budget comes from your salary and the income that adds to it.",
     "configuracion": "Settings",
     "diaInicio": "Start day",
     "diaInicioUno": "Day 1 · from the 1st to month end",
     "diaInicioOtro": "Day {{dia}} · from day {{dia}} to day {{anterior}} of the next month",
     "cambiarDia": "Change start day",
-    "defecto": "Default budget",
-    "defectoAyuda": "Each period starts with this",
-    "cambiarDefecto": "Change default budget",
     "periodos": "Periods",
-    "ajustar": "Adjust this period",
-    "nota": "Adjustment: {{nota}}",
-    "conIngresos": "Budget {{presupuesto}} + income {{ingresos}}",
+    "conIngresos": "Salary {{salario}} + income {{ingresos}}",
     "errorMensaje": "We couldn’t load your budget. Nothing was lost; try again in a moment.",
     "guardado": "Done, it’s saved.",
     "columnas": {
@@ -563,14 +567,14 @@
       "presupuesto": "Budget",
       "gastado": "Spent",
       "uso": "Usage",
-      "estado": "Status",
-      "acciones": "Actions"
+      "estado": "Status"
     },
     "estado": {
       "enCurso": "In progress",
       "dentro": "Within budget",
       "advertencia": "Warning",
-      "superado": "Over budget"
+      "superado": "Over budget",
+      "sinPresupuesto": "No budget"
     },
     "dia": {
       "titulo": "Period start day",
@@ -588,27 +592,39 @@
       "mesCorto": "If a month doesn’t have that day, the period starts on that month’s last day.",
       "previaError": "We couldn’t work out the periods. You can still save."
     },
-    "defectoDialogo": {
-      "titulo": "Default budget",
-      "valor": "Amount",
-      "ayuda": "The budget each new period starts with. The current period doesn’t change.",
-      "usarEnActual": "Also use in the current period",
-      "requerido": "Enter an amount of $0 or more."
-    },
-    "ajuste": {
-      "titulo": "Adjust the period {{rango}}",
-      "valor": "Adjustment",
-      "ayudaValor": "Enter a negative amount to lower it, for example −100.000.",
-      "motivo": "Reason (optional)",
-      "base": "Base budget",
-      "conAjuste": "With adjustment",
+    "sinPresupuesto": "No budget · spent {{gastado}}",
+    "ultimoDia": "The period closes today, remember to log everything.",
+    "enCurso": {
+      "titulo": "Current period",
+      "salario": "salary {{salario}}",
+      "salarioPresupuesto": "From salary",
+      "ingresos": "Income that adds",
+      "presupuesto": "Budget",
       "gastado": "Spent",
-      "quedarias": "You’d be at {{nuevo}} % spent instead of {{actual}} %.",
-      "soloEste": "Only this period changes. The default budget stays the same.",
-      "requerido": "Enter an adjustment other than $0.",
-      "negativo": "The budget can’t go below $0.",
-      "aplicar": "Apply adjustment"
-    }
+      "disponible": "Available"
+    },
+    "sinIngresos": {
+      "titulo": "This period has no budget yet.",
+      "mensaje": "Log your salary or an income to get a budget. Expenses are still logged ({{gastado}} so far), but without % used or alerts.",
+      "accion": "Log income"
+    },
+    "salario": {
+      "titulo": "Base salary",
+      "sinConfigurar": "Not set: periods start without a salary.",
+      "resumen": "{{presupuesto}} to the budget",
+      "configurar": "Set salary",
+      "cambiar": "Change salary",
+      "salario": "Salary for the period",
+      "ayuda": "Each period starts with this salary. If you're paid biweekly or weekly, add up all the period's payments. With $0 none is created.",
+      "salarioRequerido": "Enter the salary, or $0 if you don't want one created.",
+      "montoPresupuesto": "For the budget",
+      "montoPresupuestoAyuda": "The rest stays as salary left over.",
+      "montoInvalido": "Enter an amount from $0 up to the salary.",
+      "categoria": "Salary category",
+      "actual": "Also use it in the current period",
+      "actualAyuda": "Creates or updates the current period's salary. Closed ones don't change."
+    },
+    "verCierre": "See the close of {{rango}}"
   },
   "ingresos": {
     "titulo": "Income",
@@ -621,7 +637,7 @@
     "errorMensaje": "We couldn’t load your income. Nothing was lost; try again in a moment.",
     "vacio": {
       "titulo": "No income in this period yet",
-      "mensaje": "Log income and choose whether it goes to the budget or to a wallet."
+      "mensaje": "Log your salary or an income. You choose whether it goes into a wallet and adds to the budget."
     },
     "kpi": {
       "total": "Total this period",
@@ -638,7 +654,10 @@
     },
     "destino": {
       "presupuesto": "Budget",
-      "hacia": "→ {{destino}}"
+      "hacia": "→ {{destino}}",
+      "salario": "Salary",
+      "ninguno": "No wallet",
+      "bolsaYPresupuesto": "{{nombre}} + budget"
     },
     "origen": {
       "prestamo": "Loan",
@@ -652,7 +671,8 @@
     },
     "avisos": {
       "guardado": "Income saved.",
-      "eliminado": "Income deleted."
+      "eliminado": "Income deleted.",
+      "sobranteNegativo": "Saved, but a closed period’s left over went negative. Check its allocations in Budget."
     },
     "formulario": {
       "nuevo": "New income",
@@ -663,9 +683,7 @@
       "categoria": "Income category",
       "destino": "Destination",
       "descripcion": "Description (optional)",
-      "presupuesto": "Period budget",
-      "presupuestoAyuda": "Adds to what’s available",
-      "efectoPresupuesto": "Adds to what’s available this period. No wallet changes.",
+      "efectoPresupuesto": "Adds to the period’s budget. No wallet changes.",
       "efectoBolsa": "Goes into the {{nombre}} wallet. The period budget doesn’t change.",
       "guardar": "Save income",
       "guardarCambios": "Save changes",
@@ -675,8 +693,23 @@
       "fechaRequerida": "Choose a date.",
       "fechaFutura": "The date can’t be in the future.",
       "categoriaRequerida": "Choose a category.",
-      "destinoRequerido": "Choose where the money goes.",
-      "descripcionLarga": "500 characters max."
+      "destinoRequerido": "Choose a wallet or “No wallet”.",
+      "descripcionLarga": "500 characters max.",
+      "esSalario": "It’s my salary",
+      "salario": "Salary for the period",
+      "ayudaSalario": "If you’re paid biweekly or weekly, add up all the period’s payments.",
+      "montoPresupuesto": "For the budget",
+      "montoPresupuestoAyuda": "The rest is salary left over. It doesn’t go into any wallet.",
+      "montoInvalido": "Enter an amount between $0 and your salary.",
+      "sinBolsa": "No wallet",
+      "sinBolsaAyuda": "For example, if it goes to your bank account",
+      "sumaPresupuesto": "Adds to the budget",
+      "efectoSalario": "Adds {{monto}} to the period’s budget. {{resto}} is salary left over.",
+      "efectoNinguno": "Doesn’t change the budget or any wallet. It counts in your income stats.",
+      "efectoBolsaPresupuesto": "Goes into the {{nombre}} wallet and adds to the period’s budget.",
+      "alcance": "From when?",
+      "alcancePeriodo": "This period only",
+      "alcanceBase": "From now on (new base salary)"
     },
     "detalle": {
       "titulo": "Income details",
@@ -685,7 +718,10 @@
       "efecto": "Effect",
       "efectoPresupuesto": "Added {{valor}} to what’s available this period",
       "efectoBolsa": "Added {{valor}} to {{nombre}}",
-      "descripcion": "Description"
+      "descripcion": "Description",
+      "efectoSalario": "Added {{monto}} to the budget; {{resto}} was salary left over",
+      "efectoBolsaPresupuesto": "Added {{valor}} to {{nombre}} and to the period’s budget",
+      "efectoNinguno": "Didn’t change the budget or any wallet"
     },
     "eliminar": {
       "titulo": "Delete “{{titulo}}”?",
@@ -890,6 +926,78 @@
       "destino": "Move the money to",
       "eliminar": "Delete goal",
       "elegirDestino": "Choose the wallet the money goes to."
+    }
+  },
+  "cierre": {
+    "titulo": "Period close",
+    "volver": "Back to Budget",
+    "estado": {
+      "cerrado": "Closed on {{fecha}}.",
+      "recerrado": "Closed again on {{fecha}}.",
+      "abierto": "Open: it closes on its own on {{fecha}}. Once closed you can allocate what's left over."
+    },
+    "salario": {
+      "titulo": "Salary left over",
+      "detalle": "Salary {{salario}} − {{presupuesto}} to the budget"
+    },
+    "presupuesto": {
+      "titulo": "Budget left over",
+      "detalle": "Budget {{presupuesto}} − used {{usado}}"
+    },
+    "excedido": "Over by {{valor}}. It isn't taken from the salary left over.",
+    "destinado": "Allocated",
+    "noDestinado": "Not allocated",
+    "negativo": "Something logged later left this amount negative. Edit or remove an allocation to fix it.",
+    "bolsas": {
+      "titulo": "Available in each pocket",
+      "ayuda": "It stays in each pocket and carries over to the new period.",
+      "vacio": "Shown once the period closes."
+    },
+    "destinos": {
+      "titulo": "Allocations",
+      "vacio": "You haven't allocated anything yet.",
+      "salario": "From salary",
+      "presupuesto": "From budget",
+      "editar": "Edit amount",
+      "eliminar": "Remove allocation"
+    },
+    "destinar": "Allocate",
+    "volverACerrar": "Close again",
+    "volviendo": "Closing…",
+    "avisos": {
+      "destinado": "Done, it's allocated.",
+      "recerrado": "Done, the close is up to date.",
+      "guardado": "Done, it's saved.",
+      "eliminado": "Done, it's back to «Not allocated»."
+    },
+    "dialogo": {
+      "titulo": "Allocate left over",
+      "origen": "Which left over?",
+      "origenSalario": "From salary",
+      "origenPresupuesto": "From budget",
+      "quedan": "{{valor}} left",
+      "destino": "Destination {{n}}",
+      "elegir": "Choose a goal or a pocket",
+      "metas": "Goals",
+      "bolsas": "Pockets",
+      "valor": "Amount for destination {{n}}",
+      "agregar": "Add another destination",
+      "quitar": "Remove destination {{n}}",
+      "restante": "Left unallocated: {{valor}}",
+      "excede": "That's {{valor}} more than what's left.",
+      "destinoRequerido": "Choose where it goes.",
+      "valorRequerido": "Enter an amount above $0.",
+      "sinSobrante": "Nothing left of this amount to allocate."
+    },
+    "editar": {
+      "titulo": "Edit allocation",
+      "valor": "Amount allocated to {{nombre}}",
+      "valorRequerido": "Enter an amount above $0."
+    },
+    "eliminar": {
+      "titulo": "Remove this allocation?",
+      "descripcion": "{{valor}} leaves {{nombre}} and goes back to «Not allocated».",
+      "quitar": "Remove"
     }
   }
 }

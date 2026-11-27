@@ -1,5 +1,5 @@
 // Errores de la base de datos traducidos a claves de i18n. Nunca se muestra el texto crudo.
-// Las funciones de las Etapas 3, 5 y 6 lanzan P0001 (regla) o P0002 (no existe) con una clave.
+// Las funciones de las Etapas 3, 5, 6 y 6A lanzan P0001 (regla) o P0002 (no existe) con una clave.
 
 /** Claves que lanzan las funciones SQL y que tienen texto en errores.servidor. */
 const clavesServidor = [
@@ -23,8 +23,15 @@ const clavesServidor = [
   "traslado.misma_bolsa",
   "periodo.dia_invalido",
   "periodo.no_existe",
-  "periodo.cerrado",
-  "presupuesto.valor_invalido",
+  "periodo.abierto",
+  "salario.con_bolsa",
+  "salario.monto_invalido",
+  "salario.duplicado",
+  "ingreso.no_existe",
+  "sobrante.origen_invalido",
+  "sobrante.destino_invalido",
+  "sobrante.insuficiente",
+  "destino.no_existe",
   "ajuste.saldo_invalido",
   "meta.no_existe",
   "meta.monto_invalido",

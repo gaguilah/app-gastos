@@ -1,7 +1,7 @@
 -- 3.1 Período: fechas según el día de inicio, creación continua de períodos y cambio de día de inicio.
 -- Etapa 3, issue #8 (supuestos 1 a 4). Siempre con fechas fijas: nada depende del día en que corre.
 begin;
-select plan(24);
+select plan(25);
 
 insert into auth.users (id, email) values
   ('00000000-0000-0000-0000-0000000000a1', 'a@prueba.local'),
@@ -33,16 +33,18 @@ select results_eq($$ select * from public.calcular_periodo('2026-05-31', 31) $$,
   $$ values ('2026-05-31'::date, '2026-06-29'::date) $$, 'inicio 31 el 31 de mayo: termina el día antes del 30 de junio');
 
 -- ------------------------------------------------------------ asegurar_periodos como A
-update public.perfiles set dia_inicio = 15, presupuesto_defecto = 1500000
+update public.perfiles set dia_inicio = 15, salario_base = 1500000, presupuesto_salario_base = 1500000
  where user_id = '00000000-0000-0000-0000-0000000000a1';
 
 set local role authenticated;
 set local request.jwt.claims = '{"sub":"00000000-0000-0000-0000-0000000000a1","role":"authenticated"}';
 
 select results_eq(
-  $$ select fecha_inicio, fecha_fin, presupuesto from public.asegurar_periodos('2026-12-20') $$,
-  $$ values ('2026-12-15'::date, '2027-01-14'::date, 1500000::bigint) $$,
-  'el primer período se crea con el día de inicio y el presupuesto por defecto, y se devuelve');
+  $$ select fecha_inicio, fecha_fin from public.asegurar_periodos('2026-12-20') $$,
+  $$ values ('2026-12-15'::date, '2027-01-14'::date) $$,
+  'el primer período se crea con el día de inicio y se devuelve');
+select is((select presupuesto from public.disponible_periodo), 1500000::bigint,
+  'y nace con el salario base como presupuesto (Etapa 6A)');
 select is((select count(*)::int from public.periodos), 1, 'solo se crea el período de hoy');
 select lives_ok($$ select public.asegurar_periodos('2026-12-20') $$, 'correrla otra vez no falla');
 select is((select count(*)::int from public.periodos), 1, 'correrla otra vez no duplica');
@@ -59,10 +61,11 @@ select results_eq(
             ('2027-02-01'::date, '2027-02-28'::date) $$,
   'período de transición corto del 15 al 31 de enero, sin huecos ni solapes');
 
--- Presupuesto editado en un período: el siguiente nace con el presupuesto por defecto.
-update public.periodos set presupuesto = 2500000 where fecha_inicio = '2027-02-01';
-select is((select presupuesto from public.asegurar_periodos('2027-03-01')), 1500000::bigint,
-  'cada período nace con el presupuesto por defecto, aunque el anterior se haya ajustado');
+-- Salario editado en un período: el siguiente nace con el salario base (Etapa 6A).
+update public.ingresos set valor = 2500000, monto_presupuesto = 2500000 where es_salario and fecha = '2027-02-01';
+select public.asegurar_periodos('2027-03-01');
+select is((select presupuesto from public.disponible_periodo where fecha_inicio = '2027-03-01'), 1500000::bigint,
+  'cada período nace con el salario base, aunque el del anterior se haya cambiado');
 
 -- B no puede crear períodos para A ni ver los de A.
 set local request.jwt.claims = '{"sub":"00000000-0000-0000-0000-0000000000b2","role":"authenticated"}';
@@ -79,8 +82,8 @@ select throws_ok($$ select public.asegurar_periodos('2027-03-01') $$,
 -- Como servidor (la tarea diaria usa asegurar_periodos_de).
 reset role;
 update public.perfiles set dia_inicio = 31 where user_id = '00000000-0000-0000-0000-0000000000c3';
-insert into public.periodos (user_id, fecha_inicio, fecha_fin, presupuesto)
-values ('00000000-0000-0000-0000-0000000000c3', '2026-08-31', '2026-09-29', 1000000);
+insert into public.periodos (user_id, fecha_inicio, fecha_fin)
+values ('00000000-0000-0000-0000-0000000000c3', '2026-08-31', '2026-09-29');
 
 select results_eq(
   $$ select fecha_inicio, fecha_fin from public.asegurar_periodos_de('00000000-0000-0000-0000-0000000000c3', '2026-12-03') $$,

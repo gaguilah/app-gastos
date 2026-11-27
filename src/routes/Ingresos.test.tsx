@@ -1,6 +1,7 @@
 import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { createMemoryRouter, RouterProvider } from "react-router";
+import { toast } from "sonner";
 import { crearClienteConsultas } from "@/datos/consultas";
 import { supabase } from "@/datos/supabase";
 import { ponerMovil } from "@/test/setup";
@@ -15,6 +16,9 @@ const ingresoBase = {
   cuenta_estadisticas: true,
   prestamo_id: null,
   deuda_id: null,
+  es_salario: false,
+  monto_presupuesto: null,
+  suma_presupuesto: false,
 };
 
 let tablas: Record<string, unknown>;
@@ -24,7 +28,13 @@ const rangos: string[][] = [];
 
 function datos() {
   tablas = {
-    perfiles: { id: "yo", dia_inicio: 1, presupuesto_defecto: 3_200_000 },
+    perfiles: {
+      id: "yo",
+      dia_inicio: 1,
+      salario_base: 4_200_000,
+      presupuesto_salario_base: 3_200_000,
+      categoria_salario_id: null,
+    },
     disponible_periodo: [
       {
         periodo_id: "oct",
@@ -108,6 +118,8 @@ function datos() {
         categoria_nombre: "Salario",
         bolsa_id: null,
         bolsa: null,
+        es_salario: true,
+        monto_presupuesto: 4_200_000,
       },
       {
         ...ingresoBase,
@@ -206,7 +218,8 @@ describe("Ingresos", () => {
   it("en el móvil, tarjetas con «→ destino»", async () => {
     ponerMovil(true);
     abrir();
-    expect(await screen.findByText("→ Presupuesto")).toBeInTheDocument();
+    expect(await screen.findByText("→ Salario")).toBeInTheDocument();
+    expect(screen.getAllByText("→ Nequi")).toHaveLength(2);
     expect(screen.getByText("1 nov · Salario")).toBeInTheDocument();
   });
 
@@ -246,6 +259,9 @@ describe("Ingresos", () => {
         categoria_id: "ext",
         subcategoria_id: null,
         bolsa_id: "neq",
+        es_salario: false,
+        monto_presupuesto: null,
+        suma_presupuesto: false,
         categoria_nombre: "",
       }),
     );
@@ -259,7 +275,7 @@ describe("Ingresos", () => {
     expect(await within(dialogo).findByText("Escribe un valor mayor que $0.")).toBeInTheDocument();
     expect(within(dialogo).getByText("Escribe un título.")).toBeInTheDocument();
     expect(within(dialogo).getByText("Elige una categoría.")).toBeInTheDocument();
-    expect(within(dialogo).getByText("Elige a dónde entra el dinero.")).toBeInTheDocument();
+    expect(within(dialogo).getByText("Elige una bolsa o «Ninguna bolsa».")).toBeInTheDocument();
   });
 
   it("desde Recargar llega con la bolsa como destino", async () => {
@@ -268,20 +284,122 @@ describe("Ingresos", () => {
     expect(await within(dialogo).findByRole("radio", { name: /Efectivo/ })).toBeChecked();
   });
 
-  it("editar el destino de Nequi a Presupuesto", async () => {
+  it("editar: de Nequi a ninguna bolsa y que sume al presupuesto", async () => {
     abrir();
     await abrirMenu("Freelance: logo");
     fireEvent.click(await screen.findByRole("menuitem", { name: "Editar" }));
     const dialogo = await screen.findByRole("dialog", { name: "Editar ingreso" });
-    fireEvent.click(within(dialogo).getByRole("radio", { name: /Presupuesto del período/ }));
+    fireEvent.click(within(dialogo).getByRole("radio", { name: /Ninguna bolsa/ }));
+    expect(within(dialogo).getByText(/No cambia el presupuesto ni las bolsas/)).toBeInTheDocument();
+    fireEvent.click(within(dialogo).getByRole("checkbox", { name: "Suma al presupuesto" }));
+    expect(
+      within(dialogo).getByText("Suma al presupuesto del período. Ninguna bolsa cambia."),
+    ).toBeInTheDocument();
     fireEvent.click(within(dialogo).getByRole("button", { name: "Guardar cambios" }));
     await waitFor(() =>
       expect(escrito).toHaveBeenCalledWith(
         "update",
         "i1",
-        expect.objectContaining({ bolsa_id: null, valor: 350_000 }),
+        expect.objectContaining({ bolsa_id: null, suma_presupuesto: true, valor: 350_000 }),
       ),
     );
+    expect(rpc).toHaveBeenCalledWith("advertencia_sobrante", { p_fecha: "2026-11-09" });
+    expect(screen.queryByRole("radio", { name: "Desde ahora (nuevo salario base)" })).toBeNull();
+  });
+
+  it("una bolsa y «Suma al presupuesto» van juntas", async () => {
+    abrir();
+    fireEvent.click(await screen.findByRole("button", { name: "Registrar ingreso" }));
+    const dialogo = await screen.findByRole("dialog", { name: "Nuevo ingreso" });
+    fireEvent.click(await within(dialogo).findByRole("radio", { name: /Nequi/ }));
+    fireEvent.click(within(dialogo).getByRole("checkbox", { name: "Suma al presupuesto" }));
+    expect(
+      within(dialogo).getByText("Entra a la bolsa Nequi y suma al presupuesto del período."),
+    ).toBeInTheDocument();
+  });
+
+  it("nuevo salario: sin bolsa, con su parte para el presupuesto y el texto de las quincenas", async () => {
+    abrir();
+    fireEvent.click(await screen.findByRole("button", { name: "Registrar ingreso" }));
+    const dialogo = await screen.findByRole("dialog", { name: "Nuevo ingreso" });
+    fireEvent.click(within(dialogo).getByRole("checkbox", { name: "Es salario" }));
+    expect(within(dialogo).queryByRole("radio", { name: /Nequi/ })).not.toBeInTheDocument();
+    expect(within(dialogo).getByText(/suma todos los pagos del período/)).toBeInTheDocument();
+    fireEvent.change(within(dialogo).getByLabelText("Salario del período"), {
+      target: { value: "4000000" },
+    });
+    const parte = within(dialogo).getByLabelText("Para el presupuesto");
+    fireEvent.change(parte, { target: { value: "4100000" } });
+    fireEvent.change(within(dialogo).getByLabelText("Título"), { target: { value: "Salario" } });
+    fireEvent.click(await within(dialogo).findByRole("radio", { name: /Salario/ }));
+    fireEvent.click(within(dialogo).getByRole("button", { name: "Guardar ingreso" }));
+    expect(
+      await within(dialogo).findByText("Escribe un valor entre $0 y el salario."),
+    ).toBeInTheDocument();
+    fireEvent.change(parte, { target: { value: "3000000" } });
+    expect(
+      within(dialogo).getByText(
+        "Suma $3.000.000 al presupuesto del período. $1.000.000 quedan como sobrante del salario.",
+      ),
+    ).toBeInTheDocument();
+    fireEvent.click(within(dialogo).getByRole("button", { name: "Guardar ingreso" }));
+    await waitFor(() =>
+      expect(escrito).toHaveBeenCalledWith(
+        "insert",
+        "ingresos",
+        expect.objectContaining({
+          valor: 4_000_000,
+          es_salario: true,
+          monto_presupuesto: 3_000_000,
+          bolsa_id: null,
+          suma_presupuesto: false,
+        }),
+      ),
+    );
+    expect(rpc).not.toHaveBeenCalledWith("configurar_salario", expect.anything());
+  });
+
+  it("editar el salario «Desde ahora» cambia también el salario base", async () => {
+    abrir();
+    await abrirMenu("Salario de noviembre");
+    fireEvent.click(await screen.findByRole("menuitem", { name: "Editar" }));
+    const dialogo = await screen.findByRole("dialog", { name: "Editar ingreso" });
+    expect(within(dialogo).getByRole("checkbox", { name: "Es salario" })).toBeChecked();
+    expect(within(dialogo).getByRole("radio", { name: "Solo este período" })).toBeChecked();
+    fireEvent.change(within(dialogo).getByLabelText("Salario del período"), {
+      target: { value: "4500000" },
+    });
+    fireEvent.click(
+      within(dialogo).getByRole("radio", { name: "Desde ahora (nuevo salario base)" }),
+    );
+    fireEvent.click(within(dialogo).getByRole("button", { name: "Guardar cambios" }));
+    await waitFor(() =>
+      expect(rpc).toHaveBeenCalledWith("configurar_salario", {
+        p_salario: 4_500_000,
+        p_presupuesto: 4_200_000,
+      }),
+    );
+    expect(escrito).toHaveBeenCalledWith(
+      "update",
+      "i2",
+      expect.objectContaining({ valor: 4_500_000, es_salario: true, monto_presupuesto: 4_200_000 }),
+    );
+  });
+
+  it("si un cierre queda en negativo, guarda y advierte (decisión 8)", async () => {
+    const advertir = vi.spyOn(toast, "warning");
+    rpc.mockImplementation((nombre: string) =>
+      Promise.resolve({ data: nombre === "advertencia_sobrante", error: null }),
+    );
+    abrir();
+    await abrirMenu("Freelance: logo");
+    fireEvent.click(await screen.findByRole("menuitem", { name: "Eliminar" }));
+    const dialogo = await screen.findByRole("alertdialog");
+    fireEvent.click(within(dialogo).getByRole("button", { name: "Eliminar ingreso" }));
+    await waitFor(() =>
+      expect(advertir).toHaveBeenCalledWith(expect.stringMatching(/quedó en negativo/)),
+    );
+    expect(escrito).toHaveBeenCalledWith("delete", "i1");
   });
 
   it("eliminar dice cuánto baja la bolsa", async () => {

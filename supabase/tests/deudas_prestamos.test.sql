@@ -14,8 +14,11 @@ insert into public.formas_pago (id, user_id, nombre, clase) values
 insert into public.personas (id, user_id, nombre, tipo) values
   ('00000000-0000-0000-0004-000000000001', '00000000-0000-0000-0000-0000000000a1', 'Banco Prueba', 'banco'),
   ('00000000-0000-0000-0004-000000000002', '00000000-0000-0000-0000-0000000000a1', 'Ana Prueba', 'persona');
-insert into public.periodos (user_id, fecha_inicio, fecha_fin, presupuesto) values
-  ('00000000-0000-0000-0000-0000000000a1', '2026-12-01', '2026-12-31', 2000000);
+insert into public.periodos (user_id, fecha_inicio, fecha_fin) values
+  ('00000000-0000-0000-0000-0000000000a1', '2026-12-01', '2026-12-31');
+insert into public.ingresos (user_id, titulo, fecha, valor, categoria_id, es_salario, monto_presupuesto)
+select '00000000-0000-0000-0000-0000000000a1', 'Salario', '2026-12-01', 2000000, c.id, true, 2000000 from public.categorias c
+ where c.user_id = '00000000-0000-0000-0000-0000000000a1' and c.tipo = 'ingreso' and c.padre_id is null order by c.created_at limit 1;
 
 set local role authenticated;
 set local request.jwt.claims = '{"sub":"00000000-0000-0000-0000-0000000000a1","role":"authenticated"}';

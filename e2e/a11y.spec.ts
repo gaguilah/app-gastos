@@ -82,7 +82,7 @@ for (const locale of ["es-CO", "en-US"]) {
     }) => {
       await iniciarSesion(page);
       for (const [ruta, boton] of [
-        ["/presupuesto", /^(Ajustar este período|Adjust this period)$/],
+        ["/presupuesto", /^(Configurar|Cambiar) salario$|^(Set|Change) salary$/],
         ["/bolsas", /^(Nueva bolsa|New wallet)$/],
         ["/ingresos", /^(Registrar ingreso|Log income)$/],
         ["/ahorros", /^(Nueva meta|New goal)$/],
@@ -92,6 +92,19 @@ for (const locale of ["es-CO", "en-US"]) {
         await expect(page.getByRole("dialog")).toBeVisible();
         await sinViolaciones(page);
       }
+    });
+
+    test("el cierre del período y el diálogo de destinar no tienen violaciones", async ({
+      page,
+    }) => {
+      await iniciarSesion(page, "/presupuesto");
+      await page.getByRole("link", { name: /^(Ver el cierre|See the close) .*oct/i }).click();
+      await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+      await expect(page.getByRole("region").first()).toBeVisible();
+      await sinViolaciones(page);
+      await page.getByRole("button", { name: /^(Destinar|Allocate)$/ }).click();
+      await expect(page.getByRole("dialog")).toBeVisible();
+      await sinViolaciones(page);
     });
 
     test("la franja sin conexión no tiene violaciones", async ({ page, context }) => {

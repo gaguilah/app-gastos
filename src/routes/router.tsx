@@ -58,6 +58,13 @@ export const crearRutas = (): RouteObject[] => [
                 lazy: pantallas[ruta]?.() ?? enConstruccion(),
               })),
               {
+                path: "/presupuesto/:periodoId",
+                handle: { titulo: "nav.presupuesto" } satisfies DatosRuta,
+                lazy: {
+                  Component: async () => (await import("./CierrePeriodo")).CierrePeriodo,
+                },
+              },
+              {
                 path: "/ajustes",
                 lazy: { Component: async () => (await import("./Ajustes")).Ajustes },
               },
