@@ -147,8 +147,6 @@
       "traslado_misma_bolsa": "Elige una bolsa distinta.",
       "periodo_dia_invalido": "Elige un día entre 1 y 31.",
       "periodo_no_existe": "Ese período ya no existe.",
-      "periodo_cerrado": "Ese período ya cerró y no se puede ajustar.",
-      "presupuesto_valor_invalido": "El presupuesto no puede quedar por debajo de $0.",
       "ajuste_saldo_invalido": "Escribe un saldo de $0 o más.",
       "meta_no_existe": "Esa meta ya no existe.",
       "meta_monto_invalido": "El monto a alcanzar debe ser mayor que $0.",
@@ -158,7 +156,16 @@
       "aporte_origen_invalido": "Elige de dónde sale el aporte.",
       "aporte_afecta_desde_bolsa": "Un aporte desde una bolsa no afecta el presupuesto.",
       "aporte_no_existe": "Ese aporte ya no existe.",
-      "pendiente_ya_confirmado": "Ese aporte ya se confirmó u omitió."
+      "pendiente_ya_confirmado": "Ese aporte ya se confirmó u omitió.",
+      "periodo_abierto": "Ese período sigue abierto. Se puede destinar o volver a cerrar cuando termine.",
+      "salario_con_bolsa": "El salario no entra a ninguna bolsa.",
+      "salario_monto_invalido": "Lo que va al presupuesto debe estar entre $0 y el salario.",
+      "salario_duplicado": "Este período ya tiene salario. Edítalo y suma todos los pagos en uno solo.",
+      "ingreso_no_existe": "Ese ingreso ya no existe.",
+      "sobrante_origen_invalido": "Elige si destinas el sobrante del salario o el del presupuesto.",
+      "sobrante_destino_invalido": "Elige una bolsa o una meta.",
+      "sobrante_insuficiente": "No puedes destinar más de lo que sobró.",
+      "destino_no_existe": "Ese destino ya no existe."
     }
   },
   "selector": {
@@ -549,13 +556,8 @@
     "diaInicioUno": "Día 1 · del 1 al fin de mes",
     "diaInicioOtro": "Día {{dia}} · del {{dia}} al {{anterior}} del mes siguiente",
     "cambiarDia": "Cambiar día de inicio",
-    "defecto": "Presupuesto por defecto",
-    "defectoAyuda": "Con este abre cada período",
-    "cambiarDefecto": "Cambiar presupuesto por defecto",
     "periodos": "Períodos",
-    "ajustar": "Ajustar este período",
-    "nota": "Ajuste: {{nota}}",
-    "conIngresos": "Presupuesto {{presupuesto}} + ingresos {{ingresos}}",
+    "conIngresos": "Salario {{salario}} + ingresos {{ingresos}}",
     "errorMensaje": "No pudimos cargar tu presupuesto. Nada se perdió; vuelve a intentarlo en un momento.",
     "guardado": "Listo, quedó guardado.",
     "columnas": {
@@ -563,8 +565,7 @@
       "presupuesto": "Presupuesto",
       "gastado": "Gastado",
       "uso": "Uso",
-      "estado": "Estado",
-      "acciones": "Acciones"
+      "estado": "Estado"
     },
     "estado": {
       "enCurso": "En curso",
@@ -587,27 +588,6 @@
       "explicaOtro": "Con el día {{dia}}, cada período iría del {{dia}} al {{anterior}} del mes siguiente. El cambio aplica desde el próximo período.",
       "mesCorto": "Si un mes no tiene ese día, el período empieza el último día de ese mes.",
       "previaError": "No pudimos calcular los períodos. Puedes guardar de todas formas."
-    },
-    "defectoDialogo": {
-      "titulo": "Presupuesto por defecto",
-      "valor": "Valor",
-      "ayuda": "Es el presupuesto con el que abre cada período nuevo. El período actual no cambia.",
-      "usarEnActual": "Usar también en el período actual",
-      "requerido": "Escribe un valor de $0 o más."
-    },
-    "ajuste": {
-      "titulo": "Ajustar el período {{rango}}",
-      "valor": "Ajuste",
-      "ayudaValor": "Escribe un valor negativo para bajarlo, por ejemplo −100.000.",
-      "motivo": "Motivo (opcional)",
-      "base": "Presupuesto base",
-      "conAjuste": "Con el ajuste",
-      "gastado": "Gastado",
-      "quedarias": "Quedarías en {{nuevo}} % gastado, en vez de {{actual}} %.",
-      "soloEste": "Solo cambia este período. El presupuesto por defecto queda igual.",
-      "requerido": "Escribe un ajuste distinto de $0.",
-      "negativo": "El presupuesto no puede quedar por debajo de $0.",
-      "aplicar": "Aplicar ajuste"
     }
   },
   "ingresos": {

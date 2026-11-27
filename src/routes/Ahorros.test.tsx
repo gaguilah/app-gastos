@@ -69,7 +69,7 @@ function datos() {
       },
     ],
     aportes: [{ valor: 250_000 }, { valor: 100_000 }],
-    perfiles: { id: "yo", dia_inicio: 1, presupuesto_defecto: 3_200_000 },
+    perfiles: { id: "yo", dia_inicio: 1, salario_base: 0, presupuesto_salario_base: 0 },
     disponible_periodo: [
       {
         periodo_id: "nov",
@@ -80,7 +80,7 @@ function datos() {
         disponible: 3_000_000,
       },
     ],
-    periodos: [{ id: "nov", cerrado_at: null, nota_presupuesto: null }],
+    periodos: [{ id: "nov", cerrado_at: null, recerrado_at: null }],
     bolsas: [
       { id: "efe", nombre: "Efectivo" },
       { id: "neq", nombre: "Nequi" },

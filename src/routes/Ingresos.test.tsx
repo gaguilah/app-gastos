@@ -15,6 +15,9 @@ const ingresoBase = {
   cuenta_estadisticas: true,
   prestamo_id: null,
   deuda_id: null,
+  es_salario: false,
+  monto_presupuesto: null,
+  suma_presupuesto: false,
 };
 
 let tablas: Record<string, unknown>;
@@ -24,7 +27,13 @@ const rangos: string[][] = [];
 
 function datos() {
   tablas = {
-    perfiles: { id: "yo", dia_inicio: 1, presupuesto_defecto: 3_200_000 },
+    perfiles: {
+      id: "yo",
+      dia_inicio: 1,
+      salario_base: 4_200_000,
+      presupuesto_salario_base: 3_200_000,
+      categoria_salario_id: null,
+    },
     disponible_periodo: [
       {
         periodo_id: "oct",
@@ -108,6 +117,8 @@ function datos() {
         categoria_nombre: "Salario",
         bolsa_id: null,
         bolsa: null,
+        es_salario: true,
+        monto_presupuesto: 4_200_000,
       },
       {
         ...ingresoBase,
@@ -246,6 +257,9 @@ describe("Ingresos", () => {
         categoria_id: "ext",
         subcategoria_id: null,
         bolsa_id: "neq",
+        es_salario: false,
+        monto_presupuesto: null,
+        suma_presupuesto: false,
         categoria_nombre: "",
       }),
     );

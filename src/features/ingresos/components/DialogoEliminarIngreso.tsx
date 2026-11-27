@@ -42,12 +42,15 @@ export function DialogoEliminarIngreso({ abierta, alCambiar, ingreso }: Props) {
   };
 
   const confirmar = () =>
-    eliminar.mutate(ingreso.id, {
-      onSuccess: () => {
-        toast.success(t("ingresos.avisos.eliminado"));
-        alCambiar(false);
+    eliminar.mutate(
+      { id: ingreso.id, fecha: ingreso.fecha },
+      {
+        onSuccess: () => {
+          toast.success(t("ingresos.avisos.eliminado"));
+          alCambiar(false);
+        },
       },
-    });
+    );
 
   return (
     <Ventana

@@ -6,7 +6,13 @@ import { ponerMovil } from "@/test/setup";
 import { Presupuesto } from "./Presupuesto";
 
 const tablas: Record<string, unknown> = {
-  perfiles: { id: "yo", dia_inicio: 1, presupuesto_defecto: 3_200_000 },
+  perfiles: {
+    id: "yo",
+    dia_inicio: 1,
+    salario_base: 4_000_000,
+    presupuesto_salario_base: 3_200_000,
+    categoria_salario_id: null,
+  },
   disponible_periodo: [
     {
       periodo_id: "oct",
@@ -15,19 +21,23 @@ const tablas: Record<string, unknown> = {
       presupuesto: 3_000_000,
       ingresos_presupuesto: 0,
       disponible: -104_000,
+      salario: 4_000_000,
+      salario_presupuesto: 3_000_000,
     },
     {
       periodo_id: "nov",
       fecha_inicio: "2026-11-01",
       fecha_fin: "2026-11-30",
-      presupuesto: 3_200_000,
+      presupuesto: 3_400_000,
       ingresos_presupuesto: 200_000,
       disponible: 1_415_500,
+      salario: 4_000_000,
+      salario_presupuesto: 3_200_000,
     },
   ],
   periodos: [
-    { id: "oct", cerrado_at: "2026-11-01T05:00:00Z", nota_presupuesto: null },
-    { id: "nov", cerrado_at: null, nota_presupuesto: "Prima" },
+    { id: "oct", cerrado_at: "2026-11-01T05:00:00Z", recerrado_at: null },
+    { id: "nov", cerrado_at: null, recerrado_at: null },
   ],
 };
 
@@ -76,14 +86,13 @@ describe("Presupuesto", () => {
   it("muestra la configuración y los períodos con uso y estado", async () => {
     abrir();
     expect(await screen.findByText("Día 1 · del 1 al fin de mes")).toBeInTheDocument();
-    expect(screen.getByText("$3.200.000")).toBeInTheDocument();
     const nov = screen.getByText("1 – 30 nov 2026").closest("tr")!;
-    // Base = 3.200.000 + 200.000; usado = 3.400.000 − 1.415.500.
+    // Presupuesto = 3.200.000 del salario + 200.000; usado = 3.400.000 − 1.415.500.
     expect(within(nov).getByText("$3.400.000")).toBeInTheDocument();
     expect(within(nov).getByText("$1.984.500")).toBeInTheDocument();
     expect(within(nov).getByText("58 %")).toBeInTheDocument();
     expect(within(nov).getByText("En curso")).toBeInTheDocument();
-    expect(within(nov).getByText("Ajuste: Prima")).toBeInTheDocument();
+    expect(within(nov).getByText("Salario $3.200.000 + ingresos $200.000")).toBeInTheDocument();
     const oct = screen.getByText("1 – 31 oct 2026").closest("tr")!;
     expect(within(oct).getByText("103 %")).toBeInTheDocument();
     expect(within(oct).getByText("Superado")).toBeInTheDocument();
@@ -94,7 +103,7 @@ describe("Presupuesto", () => {
     ponerMovil(true);
     abrir();
     expect(await screen.findByText("Gastado $1.984.500 de $3.400.000")).toBeInTheDocument();
-    expect(screen.getAllByRole("button", { name: "Ajustar este período" })).toHaveLength(1);
+    expect(screen.queryByRole("button", { name: "Ajustar este período" })).not.toBeInTheDocument();
   });
 
   it("cambiar el día de inicio muestra la vista previa y guarda en el perfil", async () => {
@@ -122,50 +131,6 @@ describe("Presupuesto", () => {
     fireEvent.change(campo, { target: { value: "30" } });
     expect(within(dialogo).getByText(/el período empieza el último día/)).toBeInTheDocument();
     expect(update).not.toHaveBeenCalled();
-  });
-
-  it("cambiar el presupuesto por defecto puede aplicarse al período actual", async () => {
-    abrir();
-    fireEvent.click(await screen.findByRole("button", { name: "Cambiar presupuesto por defecto" }));
-    const dialogo = await screen.findByRole("dialog", { name: "Presupuesto por defecto" });
-    fireEvent.change(within(dialogo).getByLabelText("Valor"), { target: { value: "3500000" } });
-    fireEvent.click(within(dialogo).getByLabelText("Usar también en el período actual"));
-    fireEvent.click(within(dialogo).getByRole("button", { name: "Guardar" }));
-    await waitFor(() =>
-      expect(rpc).toHaveBeenCalledWith("cambiar_presupuesto_defecto", {
-        p_valor: 3_500_000,
-        p_actual: true,
-      }),
-    );
-  });
-
-  it("ajustar el período en curso: vista previa, no por debajo de $0 y con motivo", async () => {
-    abrir();
-    fireEvent.click(await screen.findByRole("button", { name: "Ajustar este período" }));
-    const dialogo = await screen.findByRole("dialog", {
-      name: "Ajustar el período 1 – 30 nov 2026",
-    });
-    const campo = within(dialogo).getByLabelText("Ajuste");
-    fireEvent.change(campo, { target: { value: "-4000000" } });
-    expect(
-      within(dialogo).getByText("El presupuesto no puede quedar por debajo de $0."),
-    ).toBeInTheDocument();
-    fireEvent.change(campo, { target: { value: "-200000" } });
-    expect(within(dialogo).getByText("$3.000.000")).toBeInTheDocument();
-    expect(
-      within(dialogo).getByText("Quedarías en 62 % gastado, en vez de 58 %."),
-    ).toBeInTheDocument();
-    const motivo = within(dialogo).getByLabelText("Motivo (opcional)");
-    expect(motivo).toHaveValue("Prima");
-    fireEvent.change(motivo, { target: { value: "Gasto fuera de plan" } });
-    fireEvent.click(within(dialogo).getByRole("button", { name: "Aplicar ajuste" }));
-    await waitFor(() =>
-      expect(rpc).toHaveBeenCalledWith("ajustar_presupuesto_periodo", {
-        p_periodo_id: "nov",
-        p_ajuste: -200_000,
-        p_nota: "Gasto fuera de plan",
-      }),
-    );
   });
 
   it("si falla la carga, ofrece reintentar", async () => {

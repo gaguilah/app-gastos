@@ -96,6 +96,10 @@ export function FormularioIngreso({
           categoriaId: v.categoria.categoria,
           subcategoriaId: v.categoria.subcategoria,
           bolsaId: v.destino === PRESUPUESTO ? null : v.destino,
+          // shortcut: T3 (Etapa 6A) cambia el destino por «Es salario» y «Suma al presupuesto».
+          esSalario: ingreso?.esSalario ?? false,
+          montoPresupuesto: ingreso?.montoPresupuesto ?? null,
+          sumaPresupuesto: v.destino === PRESUPUESTO,
         },
       },
       {

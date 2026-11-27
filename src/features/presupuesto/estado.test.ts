@@ -5,13 +5,14 @@ const periodo = (usado: number, base = 1000): Periodo => ({
   id: "p",
   inicio: "2026-11-01",
   fin: "2026-11-30",
-  presupuesto: base,
+  salario: base,
+  salarioPresupuesto: base,
   ingresosPresupuesto: 0,
-  base,
+  presupuesto: base,
   usado,
   disponible: base - usado,
   cerrado: false,
-  nota: null,
+  recerradoAt: null,
 });
 
 describe("estadoPeriodo", () => {

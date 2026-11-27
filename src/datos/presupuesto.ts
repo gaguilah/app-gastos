@@ -5,21 +5,28 @@ export type Periodo = {
   id: string;
   inicio: string;
   fin: string;
-  presupuesto: number;
+  /** Salario del período y la parte que va al presupuesto (Etapa 6A, decisión 1). */
+  salario: number;
+  salarioPresupuesto: number;
+  /** Ingresos con «Suma al presupuesto». */
   ingresosPresupuesto: number;
-  /** Presupuesto + ingresos al presupuesto: la base de las alertas (3.2). */
-  base: number;
-  /** base − disponible: gastos y aportes que afectan el presupuesto. */
+  /** Parte del salario + ingresos que suman: la base de las alertas (3.2). */
+  presupuesto: number;
+  /** presupuesto − disponible: gastos y aportes que afectan el presupuesto. */
   usado: number;
   disponible: number;
   cerrado: boolean;
-  nota: string | null;
+  /** Última vez que se volvió a cerrar, si alguna. */
+  recerradoAt: string | null;
 };
 
 export type Presupuesto = {
   perfilId: string;
   diaInicio: number;
-  presupuestoDefecto: number;
+  /** Salario base con que abre cada período (decisión 2). */
+  salarioBase: number;
+  presupuestoSalarioBase: number;
+  categoriaSalarioId: string | null;
   /** Del más reciente al más antiguo. */
   periodos: Periodo[];
 };
@@ -28,36 +35,42 @@ export const clavePresupuesto = ["presupuesto"] as const;
 
 async function leerPresupuesto(): Promise<Presupuesto> {
   const [perfil, disponibles, periodos] = await Promise.all([
-    supabase.from("perfiles").select("id, dia_inicio, presupuesto_defecto").single(),
+    supabase
+      .from("perfiles")
+      .select("id, dia_inicio, salario_base, presupuesto_salario_base, categoria_salario_id")
+      .single(),
     supabase
       .from("disponible_periodo")
-      .select("periodo_id, fecha_inicio, fecha_fin, presupuesto, ingresos_presupuesto, disponible"),
-    supabase.from("periodos").select("id, cerrado_at, nota_presupuesto"),
+      .select(
+        "periodo_id, fecha_inicio, fecha_fin, presupuesto, ingresos_presupuesto, disponible, salario, salario_presupuesto",
+      ),
+    supabase.from("periodos").select("id, cerrado_at, recerrado_at"),
   ]);
   for (const r of [perfil, disponibles, periodos]) if (r.error) throw r.error;
   const extra = new Map(periodos.data!.map((p) => [p.id, p]));
   return {
     perfilId: perfil.data!.id,
     diaInicio: perfil.data!.dia_inicio,
-    presupuestoDefecto: perfil.data!.presupuesto_defecto,
+    salarioBase: perfil.data!.salario_base,
+    presupuestoSalarioBase: perfil.data!.presupuesto_salario_base,
+    categoriaSalarioId: perfil.data!.categoria_salario_id,
     periodos: disponibles
       .data!.map((d) => {
         const presupuesto = d.presupuesto ?? 0;
-        const ingresosPresupuesto = d.ingresos_presupuesto ?? 0;
-        const base = presupuesto + ingresosPresupuesto;
         const disponible = d.disponible ?? 0;
         const p = extra.get(d.periodo_id!);
         return {
           id: d.periodo_id!,
           inicio: d.fecha_inicio!,
           fin: d.fecha_fin!,
+          salario: d.salario ?? 0,
+          salarioPresupuesto: d.salario_presupuesto ?? 0,
+          ingresosPresupuesto: d.ingresos_presupuesto ?? 0,
           presupuesto,
-          ingresosPresupuesto,
-          base,
-          usado: base - disponible,
+          usado: presupuesto - disponible,
           disponible,
           cerrado: Boolean(p?.cerrado_at),
-          nota: p?.nota_presupuesto ?? null,
+          recerradoAt: p?.recerrado_at ?? null,
         };
       })
       .sort((a, b) => b.inicio.localeCompare(a.inicio)),
@@ -68,7 +81,7 @@ export function usePresupuesto() {
   return useQuery({ queryKey: clavePresupuesto, queryFn: leerPresupuesto });
 }
 
-/** El período que contiene hoy y sigue abierto: el único que se ajusta (supuesto 10). */
+/** El período que contiene hoy y sigue abierto. */
 export const periodoEnCurso = (periodos: Periodo[], hoy: string) =>
   periodos.find((p) => !p.cerrado && p.inicio <= hoy && hoy <= p.fin);
 
@@ -105,25 +118,31 @@ export function useCambiarDiaInicio() {
   });
 }
 
-export function useCambiarPresupuestoDefecto() {
-  return useMutacionPresupuesto(async ({ valor, actual }: { valor: number; actual: boolean }) => {
-    const { error } = await supabase.rpc("cambiar_presupuesto_defecto", {
-      p_valor: valor,
-      p_actual: actual,
-    });
-    if (error) throw error;
-  });
-}
+export type DatosSalario = {
+  salario: number;
+  presupuesto: number;
+  categoriaId: string | null;
+  /** También el salario del período en curso (lo crea o lo actualiza). */
+  actual: boolean;
+};
 
-export function useAjustarPeriodo() {
-  return useMutacionPresupuesto(
-    async ({ periodoId, ajuste, nota }: { periodoId: string; ajuste: number; nota: string }) => {
-      const { error } = await supabase.rpc("ajustar_presupuesto_periodo", {
-        p_periodo_id: periodoId,
-        p_ajuste: ajuste,
-        p_nota: nota,
+/** Salario base con que abre cada período (decisión 2, S1). */
+export function useConfigurarSalario() {
+  const cliente = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ salario, presupuesto, categoriaId, actual }: DatosSalario) => {
+      const { error } = await supabase.rpc("configurar_salario", {
+        p_salario: salario,
+        p_presupuesto: presupuesto,
+        p_categoria_id: categoriaId ?? undefined,
+        p_actual: actual,
       });
       if (error) throw error;
     },
-  );
+    // El salario del período es un ingreso: cambia ingresos y presupuesto.
+    onSettled: () =>
+      Promise.all(
+        [clavePresupuesto, ["ingresos"]].map((queryKey) => cliente.invalidateQueries({ queryKey })),
+      ),
+  });
 }

@@ -1,7 +1,5 @@
-import { SlidersHorizontal } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -19,13 +17,12 @@ import { estadoPeriodo, varianteEstado } from "../estado";
 
 type Props = {
   periodos: Periodo[];
-  /** Id del período en curso: el único con «Ajustar este período». */
+  /** Id del período en curso. */
   enCursoId?: string;
-  alAjustar: (periodo: Periodo) => void;
 };
 
 /** Períodos del más reciente al más antiguo: tabla en computador, tarjetas en móvil y tablet. */
-export function ListaPeriodos({ periodos, enCursoId, alAjustar }: Props) {
+export function ListaPeriodos({ periodos, enCursoId }: Props) {
   const { t, i18n } = useTranslation();
   const esComputador = useEsComputador();
 
@@ -38,25 +35,13 @@ export function ListaPeriodos({ periodos, enCursoId, alAjustar }: Props) {
       {p.ingresosPresupuesto > 0 && (
         <span className="block text-body-sm text-muted-foreground">
           {t("presupuesto.conIngresos", {
-            presupuesto: formatearPesos(p.presupuesto),
+            salario: formatearPesos(p.salarioPresupuesto),
             ingresos: formatearPesos(p.ingresosPresupuesto),
           })}
         </span>
       )}
-      {p.nota && (
-        <span className="block text-body-sm text-muted-foreground">
-          {t("presupuesto.nota", { nota: p.nota })}
-        </span>
-      )}
     </>
   );
-  const ajustar = (p: Periodo) =>
-    p.id === enCursoId && (
-      <Button variant="secondary" onClick={() => alAjustar(p)}>
-        <SlidersHorizontal aria-hidden="true" />
-        {t("presupuesto.ajustar")}
-      </Button>
-    );
 
   if (esComputador) {
     return (
@@ -69,9 +54,6 @@ export function ListaPeriodos({ periodos, enCursoId, alAjustar }: Props) {
               <TableHead className="text-right">{t("presupuesto.columnas.gastado")}</TableHead>
               <TableHead className="w-1/4">{t("presupuesto.columnas.uso")}</TableHead>
               <TableHead>{t("presupuesto.columnas.estado")}</TableHead>
-              <TableHead>
-                <span className="sr-only">{t("presupuesto.columnas.acciones")}</span>
-              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -82,16 +64,15 @@ export function ListaPeriodos({ periodos, enCursoId, alAjustar }: Props) {
                   {detalle(p)}
                 </TableCell>
                 <TableCell className="text-right font-mono tabular-nums">
-                  {formatearPesos(p.base)}
+                  {formatearPesos(p.presupuesto)}
                 </TableCell>
                 <TableCell className="text-right font-mono tabular-nums">
                   {formatearPesos(p.usado)}
                 </TableCell>
                 <TableCell>
-                  <BarraPresupuesto usado={p.usado} base={p.base} conDetalle={false} />
+                  <BarraPresupuesto usado={p.usado} base={p.presupuesto} conDetalle={false} />
                 </TableCell>
                 <TableCell>{insignia(p)}</TableCell>
-                <TableCell className="text-right">{ajustar(p)}</TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -111,8 +92,7 @@ export function ListaPeriodos({ periodos, enCursoId, alAjustar }: Props) {
             </div>
             {insignia(p)}
           </div>
-          <BarraPresupuesto usado={p.usado} base={p.base} />
-          {ajustar(p)}
+          <BarraPresupuesto usado={p.usado} base={p.presupuesto} />
         </li>
       ))}
     </ul>
