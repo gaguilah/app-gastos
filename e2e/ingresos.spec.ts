@@ -3,7 +3,9 @@ import { bolsaDePrueba, elegirAccion, esperarSaldo, marca, registro } from "./ap
 import { iniciarSesion } from "./apoyo/sesion";
 
 test.describe("Ingresos", () => {
-  test("a una bolsa, cambiar el destino a Presupuesto y eliminar", async ({ page }) => {
+  test("a una bolsa, cambiarlo a ninguna bolsa con suma al presupuesto y eliminar", async ({
+    page,
+  }) => {
     const bolsa = `Nequi ${marca()}`;
     const titulo = `Freelance ${marca()}`;
     await bolsaDePrueba(bolsa, 62_300);
@@ -27,7 +29,8 @@ test.describe("Ingresos", () => {
 
     await (await elegirAccion(page, titulo, "Editar")).click();
     const editar = page.getByRole("dialog", { name: "Editar ingreso" });
-    await editar.getByRole("radio", { name: /Presupuesto del período/ }).click();
+    await editar.getByRole("radio", { name: /Ninguna bolsa/ }).click();
+    await editar.getByRole("checkbox", { name: "Suma al presupuesto" }).click();
     await editar.getByRole("button", { name: "Guardar cambios" }).click();
     await expect(editar).toBeHidden();
     await esperarSaldo(page, bolsa, "$62.300");

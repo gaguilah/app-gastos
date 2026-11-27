@@ -1,16 +1,21 @@
 import { expect, test } from "@playwright/test";
 import { iniciarSesion } from "./apoyo/sesion";
 
-// Solo vistas previas: el presupuesto del período es de todo el usuario y las corridas en
-// paralelo lo cambiarían a la vez.
+// Solo vistas previas y guardados sin cambios: el presupuesto es de todo el usuario y las corridas
+// en paralelo lo cambiarían a la vez.
 test.describe("Presupuesto y período", () => {
-  test("ajustar este período muestra el resultado antes de aplicar", async ({ page }) => {
+  test("el período en curso muestra el desglose del presupuesto", async ({ page }) => {
     await iniciarSesion(page, "/presupuesto");
-    await page.getByRole("button", { name: "Ajustar este período" }).first().click();
-    const dialogo = page.getByRole("dialog", { name: /^Ajustar el período/ });
-    await dialogo.getByLabel("Ajuste").fill("200000");
-    await expect(dialogo).toContainText("Con el ajuste");
-    await expect(dialogo).toContainText(/Quedarías en \d+ % gastado/);
+    const enCurso = page.getByRole("region", { name: "Período en curso" });
+    for (const texto of [
+      "Del salario",
+      "Ingresos que suman",
+      "Presupuesto",
+      "Gastado",
+      "Disponible",
+    ])
+      await expect(enCurso).toContainText(texto);
+    await expect(enCurso).toContainText(/\d+ %/);
   });
 
   test("cambiar el día de inicio muestra el período actual y el siguiente", async ({ page }) => {
@@ -22,24 +27,25 @@ test.describe("Presupuesto y período", () => {
     await expect(dialogo).toContainText(/Siguiente.*– 14 /);
   });
 
-  test("el presupuesto por defecto ofrece usarlo también en el período actual", async ({
-    page,
-  }) => {
+  test("el salario base valida el monto al presupuesto", async ({ page }) => {
     await iniciarSesion(page, "/presupuesto");
-    await page.getByRole("button", { name: "Cambiar presupuesto por defecto" }).click();
-    const dialogo = page.getByRole("dialog", { name: "Presupuesto por defecto" });
-    await expect(dialogo).toContainText("El período actual no cambia.");
-    await expect(
-      dialogo.getByRole("checkbox", { name: "Usar también en el período actual" }),
-    ).not.toBeChecked();
+    await page.getByRole("button", { name: /^(Configurar|Cambiar) salario$/ }).click();
+    const dialogo = page.getByRole("dialog", { name: "Salario base" });
+    await dialogo.getByLabel("Salario del período").fill("1000000");
+    await dialogo.getByLabel("Para el presupuesto").fill("2000000");
+    await dialogo.getByRole("button", { name: "Guardar" }).click();
+    await expect(dialogo).toContainText("Escribe un monto de $0 hasta el salario.");
   });
 
-  test("guardar el presupuesto por defecto funciona con la API real", async ({ page }) => {
+  test("guardar el salario base funciona con la API real", async ({ page }) => {
     // Supabase carga safeupdate en la API: un UPDATE sin WHERE falla (error del 26-nov-2026).
-    // Se guarda el mismo valor que ya tiene, para no cambiar los datos de las demás pruebas.
+    // Se guarda $0 sin tocar el período actual, como en supabase/seed.sql.
     await iniciarSesion(page, "/presupuesto");
-    await page.getByRole("button", { name: "Cambiar presupuesto por defecto" }).click();
-    const dialogo = page.getByRole("dialog", { name: "Presupuesto por defecto" });
+    await page.getByRole("button", { name: /^(Configurar|Cambiar) salario$/ }).click();
+    const dialogo = page.getByRole("dialog", { name: "Salario base" });
+    await dialogo.getByLabel("Salario del período").fill("0");
+    await dialogo.getByLabel("Para el presupuesto").fill("0");
+    await expect(dialogo.getByRole("checkbox")).toHaveCount(0);
     await dialogo.getByRole("button", { name: "Guardar" }).click();
     await expect(page.getByText("Listo, quedó guardado.")).toBeVisible();
     await expect(dialogo).toBeHidden();

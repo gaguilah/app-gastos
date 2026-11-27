@@ -211,7 +211,7 @@ describe("Bolsas", () => {
       { id: "oct", cerrado_at: "2026-11-01T05:00:00Z", recerrado_at: null },
       { id: "nov", cerrado_at: null, recerrado_at: null },
     ];
-    tablas.movimientos_de_bolsa.push({
+    tablas.movimientos_de_bolsa!.push({
       id: "s1",
       tipo: "sobrante",
       fecha: "2026-10-30",

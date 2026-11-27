@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 import { rutasProtegidas } from "../src/routes/rutas";
 
 // La lista sale de src/routes/rutas.ts: una ruta nueva queda cubierta sola.
-for (const ruta of [...rutasProtegidas, "/no-existe"]) {
+for (const ruta of [...rutasProtegidas, "/presupuesto/un-periodo", "/no-existe"]) {
   test(`sin sesión, ${ruta} redirige a /login`, async ({ page }) => {
     await page.goto(ruta);
     await expect(page).toHaveURL(`/login?siguiente=${encodeURIComponent(ruta)}`);
