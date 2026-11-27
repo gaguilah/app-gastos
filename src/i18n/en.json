@@ -601,7 +601,7 @@
     "errorMensaje": "We couldn’t load your income. Nothing was lost; try again in a moment.",
     "vacio": {
       "titulo": "No income in this period yet",
-      "mensaje": "Log income and choose whether it goes to the budget or to a wallet."
+      "mensaje": "Log your salary or an income. You choose whether it goes into a wallet and adds to the budget."
     },
     "kpi": {
       "total": "Total this period",
@@ -618,7 +618,10 @@
     },
     "destino": {
       "presupuesto": "Budget",
-      "hacia": "→ {{destino}}"
+      "hacia": "→ {{destino}}",
+      "salario": "Salary",
+      "ninguno": "No wallet",
+      "bolsaYPresupuesto": "{{nombre}} + budget"
     },
     "origen": {
       "prestamo": "Loan",
@@ -632,7 +635,8 @@
     },
     "avisos": {
       "guardado": "Income saved.",
-      "eliminado": "Income deleted."
+      "eliminado": "Income deleted.",
+      "sobranteNegativo": "Saved, but a closed period’s left over went negative. Check its allocations in Budget."
     },
     "formulario": {
       "nuevo": "New income",
@@ -643,9 +647,7 @@
       "categoria": "Income category",
       "destino": "Destination",
       "descripcion": "Description (optional)",
-      "presupuesto": "Period budget",
-      "presupuestoAyuda": "Adds to what’s available",
-      "efectoPresupuesto": "Adds to what’s available this period. No wallet changes.",
+      "efectoPresupuesto": "Adds to the period’s budget. No wallet changes.",
       "efectoBolsa": "Goes into the {{nombre}} wallet. The period budget doesn’t change.",
       "guardar": "Save income",
       "guardarCambios": "Save changes",
@@ -655,8 +657,23 @@
       "fechaRequerida": "Choose a date.",
       "fechaFutura": "The date can’t be in the future.",
       "categoriaRequerida": "Choose a category.",
-      "destinoRequerido": "Choose where the money goes.",
-      "descripcionLarga": "500 characters max."
+      "destinoRequerido": "Choose a wallet or “No wallet”.",
+      "descripcionLarga": "500 characters max.",
+      "esSalario": "It’s my salary",
+      "salario": "Salary for the period",
+      "ayudaSalario": "If you’re paid biweekly or weekly, add up all the period’s payments.",
+      "montoPresupuesto": "For the budget",
+      "montoPresupuestoAyuda": "The rest is salary left over. It doesn’t go into any wallet.",
+      "montoInvalido": "Enter an amount between $0 and your salary.",
+      "sinBolsa": "No wallet",
+      "sinBolsaAyuda": "For example, if it goes to your bank account",
+      "sumaPresupuesto": "Adds to the budget",
+      "efectoSalario": "Adds {{monto}} to the period’s budget. {{resto}} is salary left over.",
+      "efectoNinguno": "Doesn’t change the budget or any wallet. It counts in your income stats.",
+      "efectoBolsaPresupuesto": "Goes into the {{nombre}} wallet and adds to the period’s budget.",
+      "alcance": "From when?",
+      "alcancePeriodo": "This period only",
+      "alcanceBase": "From now on (new base salary)"
     },
     "detalle": {
       "titulo": "Income details",
@@ -665,7 +682,10 @@
       "efecto": "Effect",
       "efectoPresupuesto": "Added {{valor}} to what’s available this period",
       "efectoBolsa": "Added {{valor}} to {{nombre}}",
-      "descripcion": "Description"
+      "descripcion": "Description",
+      "efectoSalario": "Added {{monto}} to the budget; {{resto}} was salary left over",
+      "efectoBolsaPresupuesto": "Added {{valor}} to {{nombre}} and to the period’s budget",
+      "efectoNinguno": "Didn’t change the budget or any wallet"
     },
     "eliminar": {
       "titulo": "Delete “{{titulo}}”?",

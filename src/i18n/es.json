@@ -601,7 +601,7 @@
     "errorMensaje": "No pudimos cargar tus ingresos. Nada se perdió; vuelve a intentarlo en un momento.",
     "vacio": {
       "titulo": "Aún no hay ingresos en este período",
-      "mensaje": "Registra un ingreso y elige si entra al presupuesto o a una bolsa."
+      "mensaje": "Registra tu salario o un ingreso. Tú eliges si entra a una bolsa y si suma al presupuesto."
     },
     "kpi": {
       "total": "Total del período",
@@ -618,7 +618,10 @@
     },
     "destino": {
       "presupuesto": "Presupuesto",
-      "hacia": "→ {{destino}}"
+      "hacia": "→ {{destino}}",
+      "salario": "Salario",
+      "ninguno": "Sin bolsa",
+      "bolsaYPresupuesto": "{{nombre}} + presupuesto"
     },
     "origen": {
       "prestamo": "Préstamo",
@@ -632,7 +635,8 @@
     },
     "avisos": {
       "guardado": "Ingreso guardado.",
-      "eliminado": "Ingreso eliminado."
+      "eliminado": "Ingreso eliminado.",
+      "sobranteNegativo": "Quedó guardado, pero el sobrante de un período cerrado quedó en negativo. Revisa sus destinos en Presupuesto."
     },
     "formulario": {
       "nuevo": "Nuevo ingreso",
@@ -643,9 +647,7 @@
       "categoria": "Categoría de ingreso",
       "destino": "Destino",
       "descripcion": "Descripción (opcional)",
-      "presupuesto": "Presupuesto del período",
-      "presupuestoAyuda": "Suma al disponible",
-      "efectoPresupuesto": "Suma al disponible del período. Ninguna bolsa cambia.",
+      "efectoPresupuesto": "Suma al presupuesto del período. Ninguna bolsa cambia.",
       "efectoBolsa": "Entra a la bolsa {{nombre}}. El presupuesto del período no cambia.",
       "guardar": "Guardar ingreso",
       "guardarCambios": "Guardar cambios",
@@ -655,8 +657,23 @@
       "fechaRequerida": "Elige una fecha.",
       "fechaFutura": "La fecha no puede ser futura.",
       "categoriaRequerida": "Elige una categoría.",
-      "destinoRequerido": "Elige a dónde entra el dinero.",
-      "descripcionLarga": "Máximo 500 caracteres."
+      "destinoRequerido": "Elige una bolsa o «Ninguna bolsa».",
+      "descripcionLarga": "Máximo 500 caracteres.",
+      "esSalario": "Es salario",
+      "salario": "Salario del período",
+      "ayudaSalario": "Si te pagan por quincenas o semanas, suma todos los pagos del período.",
+      "montoPresupuesto": "Para el presupuesto",
+      "montoPresupuestoAyuda": "Lo demás queda como sobrante del salario. No entra a ninguna bolsa.",
+      "montoInvalido": "Escribe un valor entre $0 y el salario.",
+      "sinBolsa": "Ninguna bolsa",
+      "sinBolsaAyuda": "Por ejemplo, si llega a tu cuenta del banco",
+      "sumaPresupuesto": "Suma al presupuesto",
+      "efectoSalario": "Suma {{monto}} al presupuesto del período. {{resto}} quedan como sobrante del salario.",
+      "efectoNinguno": "No cambia el presupuesto ni las bolsas. Cuenta en tus estadísticas de ingresos.",
+      "efectoBolsaPresupuesto": "Entra a la bolsa {{nombre}} y suma al presupuesto del período.",
+      "alcance": "¿Desde cuándo?",
+      "alcancePeriodo": "Solo este período",
+      "alcanceBase": "Desde ahora (nuevo salario base)"
     },
     "detalle": {
       "titulo": "Detalle del ingreso",
@@ -665,7 +682,10 @@
       "efecto": "Efecto",
       "efectoPresupuesto": "Sumó {{valor}} al disponible del período",
       "efectoBolsa": "Sumó {{valor}} a {{nombre}}",
-      "descripcion": "Descripción"
+      "descripcion": "Descripción",
+      "efectoSalario": "Sumó {{monto}} al presupuesto; {{resto}} quedaron como sobrante del salario",
+      "efectoBolsaPresupuesto": "Sumó {{valor}} a {{nombre}} y al presupuesto del período",
+      "efectoNinguno": "No cambió el presupuesto ni las bolsas"
     },
     "eliminar": {
       "titulo": "¿Eliminar «{{titulo}}»?",

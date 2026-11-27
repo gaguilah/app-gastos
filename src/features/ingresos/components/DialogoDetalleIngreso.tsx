@@ -6,7 +6,7 @@ import { Ventana } from "@/components/shared/Ventana";
 import type { Ingreso } from "@/datos/ingresos";
 import { formatearPesos } from "@/dominio/dinero";
 import { fechaLarga } from "@/dominio/fechas";
-import { categoriaIngreso, destinoIngreso } from "../textos";
+import { categoriaIngreso, destinoIngreso, efectoIngreso } from "../textos";
 
 type Props = {
   abierta: boolean;
@@ -18,16 +18,10 @@ type Props = {
 /** Detalle: fecha completa, destino y qué efecto tuvo el ingreso. */
 export function DialogoDetalleIngreso({ abierta, alCambiar, ingreso, alEditar }: Props) {
   const { t, i18n } = useTranslation();
-  const valor = formatearPesos(ingreso.valor);
   const filas = [
     ["fecha", fechaLarga(ingreso.fecha, i18n.language)],
     ["destino", destinoIngreso(ingreso, t)],
-    [
-      "efecto",
-      ingreso.bolsaNombre
-        ? t("ingresos.detalle.efectoBolsa", { valor, nombre: ingreso.bolsaNombre })
-        : t("ingresos.detalle.efectoPresupuesto", { valor }),
-    ],
+    ["efecto", efectoIngreso(ingreso, t)],
     ...(ingreso.descripcion ? [["descripcion", ingreso.descripcion] as const] : []),
   ] as const;
 
