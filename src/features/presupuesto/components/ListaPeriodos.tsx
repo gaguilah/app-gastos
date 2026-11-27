@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import { useTranslation } from "react-i18next";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -29,6 +30,19 @@ export function ListaPeriodos({ periodos, enCursoId }: Props) {
   const insignia = (p: Periodo) => {
     const estado = estadoPeriodo(p, p.id === enCursoId);
     return <Badge variant={varianteEstado[estado]}>{t(`presupuesto.estado.${estado}`)}</Badge>;
+  };
+  // Cada período lleva a su cierre (Etapa 6A): el rango es el enlace.
+  const enlace = (p: Periodo, clase = "") => {
+    const rango = rangoPeriodo(p.inicio, p.fin, i18n.language);
+    return (
+      <Link
+        to={`/presupuesto/${p.id}`}
+        aria-label={t("presupuesto.verCierre", { rango })}
+        className={`text-title text-primary underline-offset-4 hover:underline ${clase}`}
+      >
+        {rango}
+      </Link>
+    );
   };
   // Sin ingresos al presupuesto no hay % de uso (decisión 4).
   const barra = (p: Periodo, conDetalle: boolean) =>
@@ -69,9 +83,7 @@ export function ListaPeriodos({ periodos, enCursoId }: Props) {
             {periodos.map((p) => (
               <TableRow key={p.id}>
                 <TableCell>
-                  <span className="text-title whitespace-nowrap">
-                    {rangoPeriodo(p.inicio, p.fin, i18n.language)}
-                  </span>
+                  {enlace(p, "whitespace-nowrap")}
                   {detalle(p)}
                 </TableCell>
                 <TableCell className="text-right font-mono tabular-nums">
@@ -96,7 +108,7 @@ export function ListaPeriodos({ periodos, enCursoId }: Props) {
         <li key={p.id} className="flex flex-col gap-sm rounded-card border bg-card p-md">
           <div className="flex flex-wrap items-start justify-between gap-sm">
             <div className="flex min-w-0 flex-col">
-              <span className="text-title">{rangoPeriodo(p.inicio, p.fin, i18n.language)}</span>
+              {enlace(p)}
               {detalle(p)}
             </div>
             {insignia(p)}

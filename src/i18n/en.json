@@ -621,7 +621,8 @@
       "categoria": "Salary category",
       "actual": "Also use it in the current period",
       "actualAyuda": "Creates or updates the current period's salary. Closed ones don't change."
-    }
+    },
+    "verCierre": "See the close of {{rango}}"
   },
   "ingresos": {
     "titulo": "Income",
@@ -923,6 +924,78 @@
       "destino": "Move the money to",
       "eliminar": "Delete goal",
       "elegirDestino": "Choose the wallet the money goes to."
+    }
+  },
+  "cierre": {
+    "titulo": "Period close",
+    "volver": "Back to Budget",
+    "estado": {
+      "cerrado": "Closed on {{fecha}}.",
+      "recerrado": "Closed again on {{fecha}}.",
+      "abierto": "Open: it closes on its own on {{fecha}}. Once closed you can allocate what's left over."
+    },
+    "salario": {
+      "titulo": "Salary left over",
+      "detalle": "Salary {{salario}} − {{presupuesto}} to the budget"
+    },
+    "presupuesto": {
+      "titulo": "Budget left over",
+      "detalle": "Budget {{presupuesto}} − used {{usado}}"
+    },
+    "excedido": "Over by {{valor}}. It isn't taken from the salary left over.",
+    "destinado": "Allocated",
+    "noDestinado": "Not allocated",
+    "negativo": "Something logged later left this amount negative. Edit or remove an allocation to fix it.",
+    "bolsas": {
+      "titulo": "Available in each pocket",
+      "ayuda": "It stays in each pocket and carries over to the new period.",
+      "vacio": "Shown once the period closes."
+    },
+    "destinos": {
+      "titulo": "Allocations",
+      "vacio": "You haven't allocated anything yet.",
+      "salario": "From salary",
+      "presupuesto": "From budget",
+      "editar": "Edit amount",
+      "eliminar": "Remove allocation"
+    },
+    "destinar": "Allocate",
+    "volverACerrar": "Close again",
+    "volviendo": "Closing…",
+    "avisos": {
+      "destinado": "Done, it's allocated.",
+      "recerrado": "Done, the close is up to date.",
+      "guardado": "Done, it's saved.",
+      "eliminado": "Done, it's back to «Not allocated»."
+    },
+    "dialogo": {
+      "titulo": "Allocate left over",
+      "origen": "Which left over?",
+      "origenSalario": "From salary",
+      "origenPresupuesto": "From budget",
+      "quedan": "{{valor}} left",
+      "destino": "Destination {{n}}",
+      "elegir": "Choose a goal or a pocket",
+      "metas": "Goals",
+      "bolsas": "Pockets",
+      "valor": "Amount for destination {{n}}",
+      "agregar": "Add another destination",
+      "quitar": "Remove destination {{n}}",
+      "restante": "Left unallocated: {{valor}}",
+      "excede": "That's {{valor}} more than what's left.",
+      "destinoRequerido": "Choose where it goes.",
+      "valorRequerido": "Enter an amount above $0.",
+      "sinSobrante": "Nothing left of this amount to allocate."
+    },
+    "editar": {
+      "titulo": "Edit allocation",
+      "valor": "Amount allocated to {{nombre}}",
+      "valorRequerido": "Enter an amount above $0."
+    },
+    "eliminar": {
+      "titulo": "Remove this allocation?",
+      "descripcion": "{{valor}} leaves {{nombre}} and goes back to «Not allocated».",
+      "quitar": "Remove"
     }
   }
 }

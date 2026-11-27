@@ -621,7 +621,8 @@
       "categoria": "Categoría del salario",
       "actual": "Usar también en el período actual",
       "actualAyuda": "Crea o actualiza el salario del período en curso. Los cerrados no cambian."
-    }
+    },
+    "verCierre": "Ver el cierre de {{rango}}"
   },
   "ingresos": {
     "titulo": "Ingresos",
@@ -923,6 +924,78 @@
       "destino": "Pasar el dinero a",
       "eliminar": "Eliminar meta",
       "elegirDestino": "Elige a qué bolsa pasa el dinero."
+    }
+  },
+  "cierre": {
+    "titulo": "Cierre del período",
+    "volver": "Volver a Presupuesto",
+    "estado": {
+      "cerrado": "Cerrado el {{fecha}}.",
+      "recerrado": "Cerrado de nuevo el {{fecha}}.",
+      "abierto": "Abierto: se cierra solo el {{fecha}}. Cuando se cierre podrás destinar los sobrantes."
+    },
+    "salario": {
+      "titulo": "Sobrante del salario",
+      "detalle": "Salario {{salario}} − {{presupuesto}} al presupuesto"
+    },
+    "presupuesto": {
+      "titulo": "Sobrante del presupuesto",
+      "detalle": "Presupuesto {{presupuesto}} − usado {{usado}}"
+    },
+    "excedido": "Te pasaste por {{valor}}. No se descuenta del sobrante del salario.",
+    "destinado": "Destinado",
+    "noDestinado": "No destinado",
+    "negativo": "Algo registrado después dejó este sobrante en negativo. Edita o quita un destino para corregirlo.",
+    "bolsas": {
+      "titulo": "Disponible en cada bolsa",
+      "ayuda": "Se queda en cada bolsa y pasa al período nuevo.",
+      "vacio": "Aparece cuando el período se cierra."
+    },
+    "destinos": {
+      "titulo": "Destinos",
+      "vacio": "Aún no has destinado nada.",
+      "salario": "Del salario",
+      "presupuesto": "Del presupuesto",
+      "editar": "Editar valor",
+      "eliminar": "Quitar destino"
+    },
+    "destinar": "Destinar",
+    "volverACerrar": "Volver a cerrar",
+    "volviendo": "Cerrando…",
+    "avisos": {
+      "destinado": "Listo, quedó destinado.",
+      "recerrado": "Listo, el cierre quedó al día.",
+      "guardado": "Listo, quedó guardado.",
+      "eliminado": "Listo, volvió a «No destinado»."
+    },
+    "dialogo": {
+      "titulo": "Destinar sobrante",
+      "origen": "¿Qué sobrante?",
+      "origenSalario": "Del salario",
+      "origenPresupuesto": "Del presupuesto",
+      "quedan": "quedan {{valor}}",
+      "destino": "Destino {{n}}",
+      "elegir": "Elige una meta o una bolsa",
+      "metas": "Metas",
+      "bolsas": "Bolsas",
+      "valor": "Valor del destino {{n}}",
+      "agregar": "Agregar otro destino",
+      "quitar": "Quitar el destino {{n}}",
+      "restante": "Queda sin destinar: {{valor}}",
+      "excede": "Te pasas por {{valor}} de lo que sobra.",
+      "destinoRequerido": "Elige a dónde va.",
+      "valorRequerido": "Escribe un valor mayor que $0.",
+      "sinSobrante": "No queda nada de este sobrante por destinar."
+    },
+    "editar": {
+      "titulo": "Editar destino",
+      "valor": "Valor destinado a {{nombre}}",
+      "valorRequerido": "Escribe un valor mayor que $0."
+    },
+    "eliminar": {
+      "titulo": "¿Quitar este destino?",
+      "descripcion": "{{valor}} sale de {{nombre}} y vuelve a «No destinado».",
+      "quitar": "Quitar"
     }
   }
 }

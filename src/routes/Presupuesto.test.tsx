@@ -100,6 +100,9 @@ describe("Presupuesto", () => {
     expect(within(oct).getByText("103 %")).toBeInTheDocument();
     expect(within(oct).getByText("Superado")).toBeInTheDocument();
     expect(within(oct).queryByRole("button")).not.toBeInTheDocument();
+    expect(
+      within(oct).getByRole("link", { name: "Ver el cierre de 1 – 31 oct 2026" }),
+    ).toHaveAttribute("href", "/presupuesto/oct");
   });
 
   it("en el móvil, tarjetas con la barra y el detalle", async () => {
